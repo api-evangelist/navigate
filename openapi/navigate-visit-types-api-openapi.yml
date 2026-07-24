@@ -1,0 +1,61 @@
+openapi: 3.1.0
+info:
+  title: NavigateAI Access codes Visit types API
+  version: 1.0.0
+  description: The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.
+servers:
+- url: https://api.navigateai.co
+tags:
+- name: Visit types
+paths:
+  /v1/visit_types:
+    get:
+      operationId: api_external_api_visit_type_list_visit_types
+      summary: List visit types
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListVisitTypesResponse'
+      tags:
+      - Visit types
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    ListVisitTypesResponse:
+      properties:
+        visit_types:
+          items:
+            $ref: '#/components/schemas/VisitTypeExternalSchema'
+          title: Visit Types
+          type: array
+      required:
+      - visit_types
+      title: ListVisitTypesResponse
+      type: object
+    VisitTypeExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        display_name:
+          title: Display Name
+          type: string
+        slug:
+          description: URL-friendly identifier for this visit type.
+          title: Slug
+          type: string
+      required:
+      - id
+      - display_name
+      - slug
+      title: VisitType
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: http
+      scheme: bearer

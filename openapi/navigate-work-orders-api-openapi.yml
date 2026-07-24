@@ -1,0 +1,954 @@
+openapi: 3.1.0
+info:
+  title: NavigateAI Access codes Work orders API
+  version: 1.0.0
+  description: The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.
+servers:
+- url: https://api.navigateai.co
+tags:
+- name: Work orders
+paths:
+  /v1/location/{location_id}/work_order:
+    post:
+      operationId: api_external_api_location_create_work_order
+      summary: Create a work order
+      parameters:
+      - in: path
+        name: location_id
+        schema:
+          title: Location Id
+          type: string
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkOrderResponse'
+      tags:
+      - Work orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWorkOrderRequest'
+        required: true
+      security:
+      - ApiKeyAuth: []
+  /v1/location/{location_id}/work_orders:
+    get:
+      operationId: api_external_api_location_list_work_orders
+      summary: List work orders
+      parameters:
+      - in: path
+        name: location_id
+        schema:
+          title: Location Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListWorkOrdersResponse'
+      tags:
+      - Work orders
+      security:
+      - ApiKeyAuth: []
+  /v1/location/{location_id}/work_order/{work_order_id}:
+    get:
+      operationId: api_external_api_location_get_work_order
+      summary: Get a work order
+      parameters:
+      - in: path
+        name: location_id
+        schema:
+          title: Location Id
+          type: string
+        required: true
+      - in: path
+        name: work_order_id
+        schema:
+          title: Work Order Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkOrderResponse'
+      tags:
+      - Work orders
+      security:
+      - ApiKeyAuth: []
+  /v1/location/{location_id}/work_order/{work_order_id}/process_photos:
+    post:
+      operationId: api_external_api_location_start_photo_processing
+      summary: Start photo processing
+      parameters:
+      - in: path
+        name: location_id
+        schema:
+          title: Location Id
+          type: string
+        required: true
+      - in: path
+        name: work_order_id
+        schema:
+          title: Work Order Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkOrderProcessPhotosResponse'
+      tags:
+      - Work orders
+      security:
+      - ApiKeyAuth: []
+  /v1/location/{location_id}/work_order/{work_order_id}/start_review:
+    post:
+      operationId: api_external_api_location_start_work_order_review
+      summary: Start work order review
+      parameters:
+      - in: path
+        name: location_id
+        schema:
+          title: Location Id
+          type: string
+        required: true
+      - in: path
+        name: work_order_id
+        schema:
+          title: Work Order Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkOrderStartProcessingResponse'
+      tags:
+      - Work orders
+      security:
+      - ApiKeyAuth: []
+  /v1/location/{location_id}/work_order/{work_order_id}/complete:
+    post:
+      operationId: api_external_api_location_complete_work_order
+      summary: Complete a work order
+      parameters:
+      - in: path
+        name: location_id
+        schema:
+          title: Location Id
+          type: string
+        required: true
+      - in: path
+        name: work_order_id
+        schema:
+          title: Work Order Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkOrderResponse'
+      tags:
+      - Work orders
+      security:
+      - ApiKeyAuth: []
+  /v1/location/{location_id}/line_item/{line_item_id}/work_order:
+    post:
+      operationId: api_external_api_location_set_line_item_work_order
+      summary: Assign a line item to a work order
+      parameters:
+      - in: path
+        name: location_id
+        schema:
+          title: Location Id
+          type: string
+        required: true
+      - in: path
+        name: line_item_id
+        schema:
+          title: Line Item Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetLineItemWorkOrderResponse'
+      tags:
+      - Work orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetLineItemWorkOrderRequest'
+        required: true
+      security:
+      - ApiKeyAuth: []
+  /v1/location/{location_id}/work_order/{work_order_id}/line_item/{line_item_id}/photos:
+    post:
+      operationId: api_external_api_location_upload_photos_to_work_order_line_item
+      summary: Upload photos for a work order line item
+      parameters:
+      - in: path
+        name: location_id
+        schema:
+          title: Location Id
+          type: string
+        required: true
+      - in: path
+        name: work_order_id
+        schema:
+          title: Work Order Id
+          type: string
+        required: true
+      - in: path
+        name: line_item_id
+        schema:
+          title: Line Item Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadPhotosResponse'
+      tags:
+      - Work orders
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                photos:
+                  items:
+                    format: binary
+                    type: string
+                  title: Photos
+                  type: array
+                reference_key:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                  description: Optional external identifier for the photo. Can only be provided when uploading a single photo.
+                  title: Reference Key
+              required:
+              - photos
+              title: MultiPartBodyParams
+              type: object
+        required: true
+      security:
+      - ApiKeyAuth: []
+  /v1/location/{location_id}/work_order/{work_order_id}/line_item_proposal/{line_item_row_proposal_id}/vendor_override:
+    post:
+      operationId: api_external_api_location_vendor_override_line_item_row_status
+      summary: Override a line item status as vendor
+      parameters:
+      - in: path
+        name: location_id
+        schema:
+          title: Location Id
+          type: string
+        required: true
+      - in: path
+        name: work_order_id
+        schema:
+          title: Work Order Id
+          type: string
+        required: true
+      - in: path
+        name: line_item_row_proposal_id
+        schema:
+          title: Line Item Row Proposal Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationSuccessSchema'
+      tags:
+      - Work orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VendorOverrideLineItemRowStatusRequest'
+        required: true
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    WorkOrderThinExternalSchema:
+      description: Lightweight work order schema without line items for list endpoints.
+      properties:
+        id:
+          title: Id
+          type: string
+        status:
+          enum:
+          - open
+          - processing
+          - in_review
+          - reviewed
+          - completed
+          title: Status
+          type: string
+        reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reference Key
+        location_id:
+          title: Location Id
+          type: string
+        default_vendor:
+          anyOf:
+          - $ref: '#/components/schemas/VendorOrganizationExternalSchema'
+          - type: 'null'
+      required:
+      - id
+      - status
+      - reference_key
+      - location_id
+      - default_vendor
+      title: WorkOrderSummary
+      type: object
+    WorkOrderResponse:
+      properties:
+        work_order:
+          $ref: '#/components/schemas/WorkOrderExternalSchema'
+      required:
+      - work_order
+      title: WorkOrderResponse
+      type: object
+    TextEvidenceExternalSchema:
+      properties:
+        type:
+          const: text
+          default: text
+          title: Type
+          type: string
+        text:
+          title: Text
+          type: string
+      required:
+      - text
+      title: TextEvidence
+      type: object
+    ListWorkOrdersResponse:
+      properties:
+        work_orders:
+          items:
+            $ref: '#/components/schemas/WorkOrderThinExternalSchema'
+          title: Work Orders
+          type: array
+      required:
+      - work_orders
+      title: ListWorkOrdersResponse
+      type: object
+    SetLineItemWorkOrderRequest:
+      properties:
+        work_order_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Work Order Id
+      title: SetLineItemWorkOrderRequest
+      type: object
+    SetLineItemWorkOrderResponse:
+      properties: {}
+      title: SetLineItemWorkOrderResponse
+      type: object
+    AudioEvidenceExternalSchema:
+      properties:
+        type:
+          const: audio
+          default: audio
+          title: Type
+          type: string
+        start_ms:
+          description: Start timestamp in the source video, in milliseconds.
+          title: Start Ms
+          type: integer
+        end_ms:
+          description: End timestamp in the source video, in milliseconds.
+          title: End Ms
+          type: integer
+        text:
+          description: Transcribed text from this audio segment.
+          title: Text
+          type: string
+      required:
+      - start_ms
+      - end_ms
+      - text
+      title: AudioEvidence
+      type: object
+    LineItemRowProposalExternalSchema:
+      description: 'Schema for WorkOrder latest_line_item_row_proposals.
+
+        Only includes image evidence from the photo proof of service visit.'
+      properties:
+        id:
+          title: Id
+          type: string
+        line_item_row_id:
+          description: The stable location-level line item ID.
+          title: Line Item Row Id
+          type: string
+        title:
+          title: Title
+          type: string
+        description:
+          title: Description
+          type: string
+        status:
+          enum:
+          - suggested
+          - not_complete
+          - complete
+          - rejected
+          title: Status
+          type: string
+        quantity:
+          deprecated: true
+          description: 'Deprecated: Use cost_components instead. Total quantity (integer).'
+          title: Quantity
+          type: integer
+        unit_type:
+          deprecated: true
+          description: 'Deprecated: Use cost_components instead. Unit of measurement (e.g. "each", "sqft").'
+          title: Unit Type
+          type: string
+        unit_cost_cents:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          deprecated: true
+          description: 'Deprecated: Use cost_components instead. Cost per unit in cents.'
+          title: Unit Cost Cents
+        cost_components:
+          description: Granular cost breakdown. Replaces the legacy quantity/unit_type/unit_cost_cents fields.
+          items:
+            $ref: '#/components/schemas/CostComponentExternalSchema'
+          title: Cost Components
+          type: array
+        price_override_reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The reason recorded when a cost component's price was overridden (e.g. a labor cost change), if a reason was provided. Reflects the most recent price override. Null when no reason was recorded.
+          title: Price Override Reason
+        price_reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Your external identifier for the pricing item used.
+          title: Price Reference Key
+        notes:
+          title: Notes
+          type: string
+        custom_fields:
+          title: Custom Fields
+          type: object
+        evidence:
+          description: Supporting evidence — images, audio segments, or text notes.
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/ImageEvidenceExternalSchema'
+            - $ref: '#/components/schemas/AudioEvidenceExternalSchema'
+            - $ref: '#/components/schemas/TextEvidenceExternalSchema'
+          title: Evidence
+          type: array
+        area_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          deprecated: true
+          description: 'Deprecated: Use room.name instead. The room or area this line item applies to.'
+          title: Area Name
+        room:
+          anyOf:
+          - $ref: '#/components/schemas/LineItemRoomExternalSchema'
+          - type: 'null'
+          description: The room or area this line item applies to.
+        rejection_reason_option_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: ID of the selected [rejection reason option](/api-reference/rejection-reason-options/rejection-reason-option-object), if applicable.
+          title: Rejection Reason Option Id
+        rejection_reason_text:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Reason the line item was rejected, if applicable.
+          title: Rejection Reason Text
+        vendor:
+          anyOf:
+          - $ref: '#/components/schemas/VendorOrganizationExternalSchema'
+          - type: 'null'
+          description: The vendor assigned to this line item.
+        visit_id:
+          description: The visit that produced this proposal.
+          title: Visit Id
+          type: string
+        vendor_status_override:
+          anyOf:
+          - $ref: '#/components/schemas/LineItemEditVendorStatusOverrideExternalSchema'
+          - type: 'null'
+          description: Present when the vendor has overridden the assessed status for this line item.
+      required:
+      - id
+      - line_item_row_id
+      - title
+      - description
+      - status
+      - quantity
+      - unit_type
+      - unit_cost_cents
+      - cost_components
+      - price_reference_key
+      - notes
+      - custom_fields
+      - evidence
+      - area_name
+      - room
+      - visit_id
+      - vendor_status_override
+      title: LineItemRowProposal
+      type: object
+    WorkOrderExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        status:
+          enum:
+          - open
+          - processing
+          - in_review
+          - reviewed
+          - completed
+          title: Status
+          type: string
+        reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Optional unique identifier for this work order in your system.
+          title: Reference Key
+        location_id:
+          title: Location Id
+          type: string
+        review_url:
+          description: Link to the NavigateAI dashboard for reviewing this work order.
+          title: Review Url
+          type: string
+        default_vendor:
+          anyOf:
+          - $ref: '#/components/schemas/VendorOrganizationExternalSchema'
+          - type: 'null'
+          description: The default vendor applied to each line item in the work order.
+        line_items:
+          description: Location-level line items attached to this work order.
+          items:
+            $ref: '#/components/schemas/LineItemRowExternalSchema'
+          title: Line Items
+          type: array
+        latest_line_item_row_proposals:
+          description: The most recent visit-level observations for each line item.
+          items:
+            $ref: '#/components/schemas/LineItemRowProposalExternalSchema'
+          title: Latest Line Item Row Proposals
+          type: array
+      required:
+      - id
+      - status
+      - reference_key
+      - location_id
+      - review_url
+      - default_vendor
+      - line_items
+      - latest_line_item_row_proposals
+      title: WorkOrder
+      type: object
+    CostComponentExternalSchema:
+      description: A cost component representing a portion of a line item's pricing (e.g. labor, material).
+      properties:
+        kind:
+          description: 'The type of cost component: "total", "labor", or "material".'
+          enum:
+          - total
+          - labor
+          - material
+          title: Kind
+          type: string
+        label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Optional display label for this component.
+          title: Label
+        unit_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Unit of measurement (e.g. "each", "sqft"). Defaults to "each" if omitted.
+          title: Unit Type
+        unit_cost_in_cents:
+          anyOf:
+          - minimum: 0
+            type: integer
+          - type: 'null'
+          description: Cost per unit in cents.
+          title: Unit Cost In Cents
+        quantity:
+          description: Number of units as a decimal string (e.g. "1", "2.5").
+          title: Quantity
+          type: string
+      required:
+      - kind
+      - quantity
+      title: CostComponent
+      type: object
+    LineItemRowExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        line_item_row_id:
+          description: The stable location-level line item ID.
+          title: Line Item Row Id
+          type: string
+          x-excluded: true
+        title:
+          title: Title
+          type: string
+        description:
+          title: Description
+          type: string
+        status:
+          enum:
+          - suggested
+          - not_complete
+          - complete
+          - rejected
+          title: Status
+          type: string
+        quantity:
+          deprecated: true
+          description: 'Deprecated: Use cost_components instead. Total quantity (integer).'
+          title: Quantity
+          type: integer
+        unit_type:
+          deprecated: true
+          description: 'Deprecated: Use cost_components instead. Unit of measurement (e.g. "each", "sqft").'
+          title: Unit Type
+          type: string
+        unit_cost_cents:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          deprecated: true
+          description: 'Deprecated: Use cost_components instead. Cost per unit in cents.'
+          title: Unit Cost Cents
+        cost_components:
+          description: Granular cost breakdown. Replaces the legacy quantity/unit_type/unit_cost_cents fields.
+          items:
+            $ref: '#/components/schemas/CostComponentExternalSchema'
+          title: Cost Components
+          type: array
+        price_override_reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The reason recorded when a cost component's price was overridden (e.g. a labor cost change), if a reason was provided. Reflects the most recent price override. Null when no reason was recorded.
+          title: Price Override Reason
+        price_reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Your external identifier for the pricing item used.
+          title: Price Reference Key
+        notes:
+          title: Notes
+          type: string
+        custom_fields:
+          title: Custom Fields
+          type: object
+        evidence:
+          description: Supporting evidence — images, audio segments, or text notes.
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/ImageEvidenceExternalSchema'
+            - $ref: '#/components/schemas/AudioEvidenceExternalSchema'
+            - $ref: '#/components/schemas/TextEvidenceExternalSchema'
+          title: Evidence
+          type: array
+        area_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          deprecated: true
+          description: 'Deprecated: Use room.name instead. The room or area this line item applies to.'
+          title: Area Name
+        room:
+          anyOf:
+          - $ref: '#/components/schemas/LineItemRoomExternalSchema'
+          - type: 'null'
+          description: The room or area this line item applies to.
+        rejection_reason_option_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: ID of the selected [rejection reason option](/api-reference/rejection-reason-options/rejection-reason-option-object), if applicable.
+          title: Rejection Reason Option Id
+        rejection_reason_text:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Reason the line item was rejected, if applicable.
+          title: Rejection Reason Text
+        vendor:
+          anyOf:
+          - $ref: '#/components/schemas/VendorOrganizationExternalSchema'
+          - type: 'null'
+          description: The vendor assigned to this line item.
+      required:
+      - id
+      - line_item_row_id
+      - title
+      - description
+      - status
+      - quantity
+      - unit_type
+      - unit_cost_cents
+      - cost_components
+      - price_reference_key
+      - notes
+      - custom_fields
+      - evidence
+      - area_name
+      - room
+      title: LineItemRow
+      type: object
+    VendorOrganizationExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email
+        reference_key:
+          description: Optional unique identifier for this vendor in your system.
+          title: Reference Key
+          type: string
+        is_enabled:
+          description: Whether this vendor is enabled.
+          title: Is Enabled
+          type: boolean
+        market_ids:
+          description: IDs of the markets this vendor serves. A vendor with no market associations serves all markets.
+          items:
+            type: string
+          title: Market Ids
+          type: array
+      required:
+      - id
+      - name
+      - email
+      - reference_key
+      - is_enabled
+      - market_ids
+      title: Vendor
+      type: object
+    ImageEvidenceExternalSchema:
+      properties:
+        type:
+          const: image
+          default: image
+          title: Type
+          type: string
+        image_id:
+          description: Use with the Get Image endpoint to retrieve the image file.
+          title: Image Id
+          type: string
+        reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reference Key
+        visit_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The visit this image was captured during.
+          title: Visit Id
+        is_selected:
+          default: false
+          description: Whether this image was explicitly selected as evidence.
+          title: Is Selected
+          type: boolean
+        is_starred:
+          default: false
+          description: Whether this image was starred as the primary evidence photo.
+          title: Is Starred
+          type: boolean
+      required:
+      - image_id
+      title: ImageEvidence
+      type: object
+    WorkOrderProcessPhotosResponse:
+      properties:
+        visit_id:
+          title: Visit Id
+          type: string
+      required:
+      - visit_id
+      title: WorkOrderProcessPhotosResponse
+      type: object
+    LineItemEditVendorStatusOverrideExternalSchema:
+      properties:
+        status:
+          anyOf:
+          - enum:
+            - suggested
+            - not_complete
+            - complete
+            - canceled
+            - deleted
+            - ignored
+            - not_started
+            - in_progress
+            type: string
+          - type: 'null'
+          description: The vendor's claimed status for this line item.
+          title: Status
+        edit_justification:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The vendor's reason for the status override.
+          title: Edit Justification
+      required:
+      - status
+      - edit_justification
+      title: LineItemEditVendorStatusOverride
+      type: object
+    CreateWorkOrderRequest:
+      properties:
+        reference_key:
+          minLength: 1
+          title: Reference Key
+          type: string
+        default_vendor_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: ID of the vendor to assign as the default for this work order.
+          title: Default Vendor Id
+        line_item_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          description: Line item IDs to attach. Must belong to a completed scope and not already be assigned to a different work order.
+          title: Line Item Ids
+      required:
+      - reference_key
+      title: CreateWorkOrderRequest
+      type: object
+    OperationSuccessSchema:
+      properties:
+        success:
+          const: true
+          default: true
+          title: Success
+          type: boolean
+      title: OperationSuccessSchema
+      type: object
+    WorkOrderStartProcessingResponse:
+      properties: {}
+      title: WorkOrderStartProcessingResponse
+      type: object
+    LineItemRoomExternalSchema:
+      description: The room or area a line item applies to.
+      properties:
+        name:
+          description: Display name of the room or area (e.g. 'Bedroom 2', 'Kitchen'). Not guaranteed to be stable over time.
+          title: Name
+          type: string
+        room_type_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The [room type](/api-reference/room-types/room-type-object) ID.
+          title: Room Type Id
+      required:
+      - name
+      title: LineItemRoom
+      type: object
+    UploadPhotosResponse:
+      properties:
+        images:
+          items:
+            $ref: '#/components/schemas/ImageEvidenceExternalSchema'
+          title: Images
+          type: array
+      required:
+      - images
+      title: UploadPhotosResponse
+      type: object
+    VendorOverrideLineItemRowStatusRequest:
+      properties:
+        status:
+          enum:
+          - complete
+          - not_complete
+          title: Status
+          type: string
+        edit_justification:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Edit Justification
+      required:
+      - status
+      title: VendorOverrideLineItemRowStatusRequest
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: http
+      scheme: bearer

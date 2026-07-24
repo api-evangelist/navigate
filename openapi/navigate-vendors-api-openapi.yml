@@ -1,0 +1,268 @@
+openapi: 3.1.0
+info:
+  title: NavigateAI Access codes Vendors API
+  version: 1.0.0
+  description: The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.
+servers:
+- url: https://api.navigateai.co
+tags:
+- name: Vendors
+paths:
+  /v1/vendors:
+    post:
+      operationId: api_external_api_vendor_create_vendor_organization
+      summary: Create a vendor
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorOrganizationResponse'
+      tags:
+      - Vendors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateVendorOrganizationRequest'
+        required: true
+      security:
+      - ApiKeyAuth: []
+    get:
+      operationId: api_external_api_vendor_list_vendor_organizations
+      summary: List vendors
+      parameters:
+      - in: query
+        name: limit
+        schema:
+          default: 50
+          maximum: 1000
+          minimum: 1
+          title: Limit
+          type: integer
+        required: false
+      - in: query
+        name: cursor
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cursor
+        required: false
+      - in: query
+        name: reference_key
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reference Key
+        required: false
+      - in: query
+        name: is_enabled
+        schema:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: Filter to only vendors which are or are not enabled. Omit to list all vendors.
+          title: Is Enabled
+        required: false
+        description: Filter to only vendors which are or are not enabled. Omit to list all vendors.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListVendorOrganizationsResponse'
+      tags:
+      - Vendors
+      security:
+      - ApiKeyAuth: []
+  /v1/vendors/{vendor_id}:
+    get:
+      operationId: api_external_api_vendor_get_vendor_organization
+      summary: Get a vendor
+      parameters:
+      - in: path
+        name: vendor_id
+        schema:
+          title: Vendor Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorOrganizationResponse'
+      description: Also available at the deprecated `GET /v1/vendor/{vendor_id}` path for existing integrations.
+      tags:
+      - Vendors
+      security:
+      - ApiKeyAuth: []
+    patch:
+      operationId: api_external_api_vendor_update_vendor_organization_endpoint
+      summary: Update a vendor
+      parameters:
+      - in: path
+        name: vendor_id
+        schema:
+          title: Vendor Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorOrganizationResponse'
+      tags:
+      - Vendors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateVendorOrganizationRequest'
+        required: true
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    VendorOrganizationResponse:
+      properties:
+        vendor:
+          $ref: '#/components/schemas/VendorOrganizationExternalSchema'
+      required:
+      - vendor
+      title: VendorOrganizationResponse
+      type: object
+    VendorOrganizationExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email
+        reference_key:
+          description: Optional unique identifier for this vendor in your system.
+          title: Reference Key
+          type: string
+        is_enabled:
+          description: Whether this vendor is enabled.
+          title: Is Enabled
+          type: boolean
+        market_ids:
+          description: IDs of the markets this vendor serves. A vendor with no market associations serves all markets.
+          items:
+            type: string
+          title: Market Ids
+          type: array
+      required:
+      - id
+      - name
+      - email
+      - reference_key
+      - is_enabled
+      - market_ids
+      title: Vendor
+      type: object
+    UpdateVendorOrganizationRequest:
+      additionalProperties: false
+      description: 'Every field is omit-to-preserve: only fields present in the request body are applied.
+
+
+        All fields except email are non-nullable: their `default=None, validate_default=False` keeps them
+
+        optional without advertising `null` as an accepted value, matching UpdateMarketRequest.'
+      properties:
+        name:
+          description: Vendor name. Omit to leave unchanged.
+          maxLength: 255
+          title: Name
+          type: string
+        email:
+          anyOf:
+          - maxLength: 255
+            type: string
+          - type: 'null'
+          description: Vendor email. Omit to leave unchanged; pass null to clear it.
+          title: Email
+        reference_key:
+          description: Vendor reference key. Omit to leave unchanged.
+          maxLength: 255
+          title: Reference Key
+          type: string
+        is_enabled:
+          description: Whether this vendor is assignable to new work. Omit to leave unchanged.
+          title: Is Enabled
+          type: boolean
+        market_ids:
+          description: IDs of the markets this vendor serves. Omit to leave unchanged. A vendor with no market associations (empty list) serves all markets.
+          items:
+            type: string
+          maxItems: 100
+          title: Market Ids
+          type: array
+      required: []
+      title: UpdateVendorOrganizationRequest
+      type: object
+    CreateVendorOrganizationRequest:
+      additionalProperties: false
+      properties:
+        name:
+          maxLength: 255
+          title: Name
+          type: string
+        email:
+          anyOf:
+          - maxLength: 255
+            type: string
+          - type: 'null'
+          title: Email
+        reference_key:
+          maxLength: 255
+          title: Reference Key
+          type: string
+        market_ids:
+          description: IDs of the markets this vendor serves. A vendor with no market associations (empty list) serves all markets. May be omitted (defaults to empty list).
+          items:
+            type: string
+          maxItems: 100
+          title: Market Ids
+          type: array
+      required:
+      - name
+      - reference_key
+      title: CreateVendorOrganizationRequest
+      type: object
+    ListVendorOrganizationsResponse:
+      properties:
+        vendors:
+          items:
+            $ref: '#/components/schemas/VendorOrganizationExternalSchema'
+          title: Vendors
+          type: array
+        next_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Cursor
+      required:
+      - vendors
+      - next_cursor
+      title: ListVendorOrganizationsResponse
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: http
+      scheme: bearer

@@ -1,0 +1,112 @@
+openapi: 3.1.0
+info:
+  title: NavigateAI Access codes API
+  version: 1.0.0
+  description: The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.
+servers:
+- url: https://api.navigateai.co
+tags:
+- name: Access codes
+paths:
+  /v1/location/{location_id}/create_access_code:
+    post:
+      operationId: api_external_api_location_create_access_code
+      summary: Create an access code
+      parameters:
+      - in: path
+        name: location_id
+        schema:
+          title: Location Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAccessCodeResponse'
+      tags:
+      - Access codes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccessCodeRequest'
+        required: true
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    CreateAccessCodeRequest:
+      properties:
+        visit_type_slug:
+          title: Visit Type Slug
+          type: string
+        work_order_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Associate this access code with a work order. The work order must be in `open` status.
+          title: Work Order Id
+        metadata:
+          anyOf:
+          - $ref: '#/components/schemas/AccessCodeCustomerMetadataExternalSchema'
+          - type: 'null'
+        visit_metadata:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Visit Metadata
+        expires_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the access code stops working, as an ISO 8601 UTC timestamp (e.g. `2026-12-31T23:59:59Z`). Must be in the future and timezone-aware. Omit for a code that never expires.
+          title: Expires At
+      required:
+      - visit_type_slug
+      title: CreateAccessCodeRequest
+      type: object
+    CreateAccessCodeResponse:
+      properties:
+        access_code:
+          title: Access Code
+          type: string
+        deeplink_url:
+          title: Deeplink Url
+          type: string
+        expires_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Expires At
+      required:
+      - access_code
+      - deeplink_url
+      - expires_at
+      title: CreateAccessCodeResponse
+      type: object
+    AccessCodeCustomerMetadataExternalSchema:
+      additionalProperties: false
+      properties:
+        recipient:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Who the access code is intended for (e.g. a vendor name or email).
+          title: Recipient
+        redirect_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Optional URL that the recipient can open from the NavigateAI mobile app after using the access code (via long-press on the upload entry). Useful for sending the recipient back to a task or page in your own app once they've finished capturing.
+          title: Redirect Url
+      title: AccessCodeMetadata
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: http
+      scheme: bearer

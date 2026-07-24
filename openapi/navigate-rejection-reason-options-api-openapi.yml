@@ -1,0 +1,97 @@
+openapi: 3.1.0
+info:
+  title: NavigateAI Access codes Rejection reason options API
+  version: 1.0.0
+  description: The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.
+servers:
+- url: https://api.navigateai.co
+tags:
+- name: Rejection reason options
+paths:
+  /v1/rejection_reason_options:
+    get:
+      operationId: api_external_api_rejection_reason_option_list_rejection_reason_options
+      summary: List rejection reason options
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListRejectionReasonOptionsResponse'
+      description: List the live line item rejection reason options configured for the requesting organization.
+      tags:
+      - Rejection reason options
+      security:
+      - ApiKeyAuth: []
+  /v1/rejection_reason_options/{rejection_reason_option_id}:
+    get:
+      operationId: api_external_api_rejection_reason_option_get_rejection_reason_option
+      summary: Get a rejection reason option
+      parameters:
+      - in: path
+        name: rejection_reason_option_id
+        schema:
+          title: Rejection Reason Option Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RejectionReasonOptionResponse'
+      description: 'Fetch a single line item rejection reason option by id for the requesting organization.
+
+
+        Unlike the list endpoint, this point lookup returns soft-deleted options as well, so that
+
+        integrations can resolve historical `rejection_reason_option_id` values already stored on
+
+        line items even after the option has been deleted.'
+      tags:
+      - Rejection reason options
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    ListRejectionReasonOptionsResponse:
+      properties:
+        rejection_reason_options:
+          items:
+            $ref: '#/components/schemas/RejectionReasonOptionExternalSchema'
+          title: Rejection Reason Options
+          type: array
+      required:
+      - rejection_reason_options
+      title: ListRejectionReasonOptionsResponse
+      type: object
+    RejectionReasonOptionExternalSchema:
+      properties:
+        id:
+          description: Opaque identifier for this rejection reason option.
+          title: Id
+          type: string
+        label:
+          description: Display text for this reason.
+          title: Label
+          type: string
+      required:
+      - id
+      - label
+      title: RejectionReasonOption
+      type: object
+    RejectionReasonOptionResponse:
+      properties:
+        rejection_reason_option:
+          $ref: '#/components/schemas/RejectionReasonOptionExternalSchema'
+      required:
+      - rejection_reason_option
+      title: RejectionReasonOptionResponse
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: http
+      scheme: bearer

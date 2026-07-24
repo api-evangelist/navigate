@@ -1,0 +1,234 @@
+openapi: 3.1.0
+info:
+  title: NavigateAI Access codes Lennar API
+  version: 1.0.0
+  description: The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.
+servers:
+- url: https://api.navigateai.co
+tags:
+- name: Lennar
+paths:
+  /v1/lennar/messages/predict:
+    post:
+      operationId: api_external_api_lennar_messages_predict_messages
+      summary: Predict Messages
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PredictionResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PredictionRequest'
+        required: true
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Lennar
+components:
+  schemas:
+    AdditionalContext:
+      additionalProperties: true
+      properties:
+        images:
+          items:
+            $ref: '#/components/schemas/AdditionalContextImage'
+          title: Images
+          type: array
+      title: AdditionalContext
+      type: object
+    Prediction:
+      properties:
+        generated_messages:
+          items:
+            $ref: '#/components/schemas/PredictionGeneratedMessage'
+          title: Generated Messages
+          type: array
+        annotated_images:
+          items:
+            $ref: '#/components/schemas/PredictionAnnotatedImage'
+          title: Annotated Images
+          type: array
+      required:
+      - generated_messages
+      - annotated_images
+      title: Prediction
+      type: object
+    PredictionBoundingBox:
+      properties:
+        x1:
+          title: X1
+          type: number
+        y1:
+          title: Y1
+          type: number
+        x2:
+          title: X2
+          type: number
+        y2:
+          title: Y2
+          type: number
+      required:
+      - x1
+      - y1
+      - x2
+      - y2
+      title: PredictionBoundingBox
+      type: object
+    PredictionAnnotation:
+      properties:
+        title:
+          title: Title
+          type: string
+        description:
+          title: Description
+          type: string
+        confidence:
+          enum:
+          - high
+          - medium
+          - low
+          title: Confidence
+          type: string
+        bounding_box:
+          $ref: '#/components/schemas/PredictionBoundingBox'
+      required:
+      - title
+      - description
+      - confidence
+      - bounding_box
+      title: PredictionAnnotation
+      type: object
+    PredictionRequest:
+      properties:
+        messages:
+          items:
+            $ref: '#/components/schemas/Message'
+          minItems: 1
+          title: Messages
+          type: array
+        additional_context:
+          allOf:
+          - $ref: '#/components/schemas/AdditionalContext'
+      required:
+      - messages
+      title: PredictionRequest
+      type: object
+    AdditionalContextImage:
+      properties:
+        image_url:
+          title: Image Url
+          type: string
+        description:
+          default: ''
+          title: Description
+          type: string
+      required:
+      - image_url
+      title: AdditionalContextImage
+      type: object
+    PredictionResponse:
+      properties:
+        prediction:
+          $ref: '#/components/schemas/Prediction'
+      required:
+      - prediction
+      title: PredictionResponse
+      type: object
+    Message:
+      properties:
+        id:
+          title: Id
+          type: string
+        conversation_id:
+          title: Conversation Id
+          type: string
+        sender_id:
+          title: Sender Id
+          type: string
+        sender_role:
+          enum:
+          - ConstructionManager
+          - TradePartner
+          title: Sender Role
+          type: string
+        recipient_ids:
+          items:
+            type: string
+          title: Recipient Ids
+          type: array
+        trade_names:
+          items:
+            type: string
+          title: Trade Names
+          type: array
+        date:
+          format: date-time
+          title: Date
+          type: string
+        body:
+          title: Body
+          type: string
+        images:
+          items:
+            type: string
+          title: Images
+          type: array
+      required:
+      - id
+      - conversation_id
+      - sender_id
+      - sender_role
+      - recipient_ids
+      - date
+      - body
+      title: Message
+      type: object
+    PredictionGeneratedMessage:
+      properties:
+        reasoning:
+          title: Reasoning
+          type: string
+        short_reasoning:
+          title: Short Reasoning
+          type: string
+        text:
+          title: Text
+          type: string
+        confidence:
+          enum:
+          - high
+          - medium
+          - low
+          title: Confidence
+          type: string
+      required:
+      - reasoning
+      - short_reasoning
+      - text
+      - confidence
+      title: PredictionGeneratedMessage
+      type: object
+    PredictionAnnotatedImage:
+      properties:
+        image_url:
+          title: Image Url
+          type: string
+        annotations:
+          items:
+            $ref: '#/components/schemas/PredictionAnnotation'
+          title: Annotations
+          type: array
+      required:
+      - image_url
+      title: PredictionAnnotatedImage
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: http
+      scheme: bearer

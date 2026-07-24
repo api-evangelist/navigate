@@ -1,0 +1,63 @@
+openapi: 3.1.0
+info:
+  title: NavigateAI Access codes Room types API
+  version: 1.0.0
+  description: The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.
+servers:
+- url: https://api.navigateai.co
+tags:
+- name: Room types
+paths:
+  /v1/room_types:
+    get:
+      operationId: api_external_api_room_type_list_room_types
+      summary: List room types
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListRoomTypesResponse'
+      tags:
+      - Room types
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    RoomTypeExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Optional unique identifier for this room type in your system.
+          title: Reference Key
+      required:
+      - id
+      - name
+      - reference_key
+      title: RoomType
+      type: object
+    ListRoomTypesResponse:
+      properties:
+        room_types:
+          items:
+            $ref: '#/components/schemas/RoomTypeExternalSchema'
+          title: Room Types
+          type: array
+      required:
+      - room_types
+      title: ListRoomTypesResponse
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: http
+      scheme: bearer

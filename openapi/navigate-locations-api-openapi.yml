@@ -1,0 +1,312 @@
+openapi: 3.1.0
+info:
+  title: NavigateAI Access codes Locations API
+  version: 1.0.0
+  description: The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.
+servers:
+- url: https://api.navigateai.co
+tags:
+- name: Locations
+paths:
+  /v1/location:
+    get:
+      operationId: api_external_api_location_list_locations
+      summary: List locations
+      parameters:
+      - in: query
+        name: limit
+        schema:
+          default: 50
+          maximum: 1000
+          minimum: 1
+          title: Limit
+          type: integer
+        required: false
+      - in: query
+        name: cursor
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cursor
+        required: false
+      - in: query
+        name: reference_key
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reference Key
+        required: false
+      - in: query
+        name: market_id
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Market Id
+        required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListLocationsResponse'
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+    post:
+      operationId: api_external_api_location_create_location
+      summary: Create a location
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationResponse'
+      tags:
+      - Locations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateLocationRequest'
+        required: true
+      security:
+      - ApiKeyAuth: []
+  /v1/location/{location_id}:
+    post:
+      operationId: api_external_api_location_update_location
+      summary: Update a location
+      parameters:
+      - in: path
+        name: location_id
+        schema:
+          title: Location Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationResponse'
+      tags:
+      - Locations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLocationRequest'
+        required: true
+      security:
+      - ApiKeyAuth: []
+    get:
+      operationId: api_external_api_location_get_location
+      summary: Get a location
+      parameters:
+      - in: path
+        name: location_id
+        schema:
+          title: Location Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationResponse'
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    UpdateLocationRequest:
+      properties:
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          description: Partial update of custom fields. Only specified fields will be updated.
+          title: Custom Fields
+        reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reference Key
+        market_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: ID of the market this location belongs to. Must reference an existing market in your organization.
+          title: Market Id
+      title: UpdateLocationRequest
+      type: object
+    LocationExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        address_1:
+          title: Address 1
+          type: string
+        address_2:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address 2
+        city:
+          title: City
+          type: string
+        state:
+          title: State
+          type: string
+        zip_code:
+          title: Zip Code
+          type: string
+        lat:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lat
+        lon:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lon
+        reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Optional unique identifier for this location in your system.
+          title: Reference Key
+        market_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: ID of the market this location belongs to.
+          title: Market Id
+        market_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          deprecated: true
+          description: 'Deprecated: prefer market_id. Name of the geographic market this location belongs to.'
+          title: Market Name
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          description: Arbitrary key-value metadata. Supports partial updates.
+          title: Custom Fields
+      required:
+      - id
+      - address_1
+      - address_2
+      - city
+      - state
+      - zip_code
+      - lat
+      - lon
+      - reference_key
+      - market_id
+      - market_name
+      - custom_fields
+      title: Location
+      type: object
+    CreateLocationRequest:
+      properties:
+        address_1:
+          title: Address 1
+          type: string
+        address_2:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address 2
+        city:
+          title: City
+          type: string
+        state:
+          title: State
+          type: string
+        zip_code:
+          title: Zip Code
+          type: string
+        lat:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lat
+        lon:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lon
+        reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reference Key
+        market_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: ID of the market this location belongs to. Must reference an existing market in your organization. Cannot be combined with market_name.
+          title: Market Id
+        market_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          deprecated: true
+          description: 'Deprecated: prefer market_id. Looks up an existing market by name within your organization. Cannot be combined with market_id.'
+          title: Market Name
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Custom Fields
+      required:
+      - address_1
+      - city
+      - state
+      - zip_code
+      title: CreateLocationRequest
+      type: object
+    LocationResponse:
+      properties:
+        location:
+          $ref: '#/components/schemas/LocationExternalSchema'
+      required:
+      - location
+      title: LocationResponse
+      type: object
+    ListLocationsResponse:
+      properties:
+        locations:
+          items:
+            $ref: '#/components/schemas/LocationExternalSchema'
+          title: Locations
+          type: array
+        next_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Cursor
+      required:
+      - locations
+      - next_cursor
+      title: ListLocationsResponse
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: http
+      scheme: bearer

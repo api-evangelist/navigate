@@ -1,0 +1,51 @@
+openapi: 3.1.0
+info:
+  title: NavigateAI Access codes Assets API
+  version: 1.0.0
+  description: The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.
+servers:
+- url: https://api.navigateai.co
+tags:
+- name: Assets
+paths:
+  /v1/asset/image/{video_frame_id}:
+    get:
+      operationId: api_external_api_asset_get_image
+      summary: Get an image
+      parameters:
+      - in: path
+        name: video_frame_id
+        schema:
+          title: Video Frame Id
+          type: string
+        required: true
+      responses:
+        '307':
+          description: Temporary Redirect
+      tags:
+      - Assets
+      security:
+      - ApiKeyAuth: []
+  /v1/asset/video/{video_upload_id}:
+    get:
+      operationId: api_external_api_asset_get_video
+      summary: Get a video
+      parameters:
+      - in: path
+        name: video_upload_id
+        schema:
+          title: Video Upload Id
+          type: string
+        required: true
+      responses:
+        '307':
+          description: Temporary Redirect
+      tags:
+      - Assets
+      security:
+      - ApiKeyAuth: []
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: http
+      scheme: bearer

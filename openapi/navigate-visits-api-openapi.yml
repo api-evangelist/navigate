@@ -1,0 +1,596 @@
+openapi: 3.1.0
+info:
+  title: NavigateAI Access codes Visits API
+  version: 1.0.0
+  description: The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.
+servers:
+- url: https://api.navigateai.co
+tags:
+- name: Visits
+paths:
+  /v1/location/{location_id}/visits:
+    get:
+      operationId: api_external_api_location_get_all_visits_for_location
+      summary: List all visits for a location
+      parameters:
+      - in: path
+        name: location_id
+        schema:
+          title: Location Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllVisitsForLocationResponse'
+      tags:
+      - Visits
+      security:
+      - ApiKeyAuth: []
+  /v1/visits/{visit_id}:
+    get:
+      operationId: api_external_api_visit_get_visit
+      summary: Get a visit
+      parameters:
+      - in: path
+        name: visit_id
+        schema:
+          title: Visit Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VisitResponse'
+      tags:
+      - Visits
+      security:
+      - ApiKeyAuth: []
+  /v1/visits/{visit_id}/access_grants:
+    post:
+      operationId: api_external_api_visit_create_visit_access_grant_endpoint
+      summary: Create a visit access grant
+      parameters:
+      - in: path
+        name: visit_id
+        schema:
+          title: Visit Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VisitAccessGrantResponse'
+      tags:
+      - Visits
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateVisitAccessGrantRequest'
+        required: true
+      security:
+      - ApiKeyAuth: []
+  /v1/visits:
+    post:
+      operationId: api_external_api_visit_create_visit
+      summary: Create a new visit to accept video upload requests
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VisitResponse'
+      tags:
+      - Visits
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateVisitRequest'
+        required: true
+      security:
+      - ApiKeyAuth: []
+  /v1/visits/{visit_id}/process:
+    post:
+      operationId: api_external_api_visit_process_visit
+      summary: Start processing a visit
+      parameters:
+      - in: path
+        name: visit_id
+        schema:
+          title: Visit Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessVisitResponse'
+      tags:
+      - Visits
+      security:
+      - ApiKeyAuth: []
+  /v1/visits/{visit_id}/cancel:
+    post:
+      operationId: api_external_api_visit_cancel_visit
+      summary: Cancel a visit
+      parameters:
+      - in: path
+        name: visit_id
+        schema:
+          title: Visit Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelVisitResponse'
+      tags:
+      - Visits
+      security:
+      - ApiKeyAuth: []
+  /v1/visits/{visit_id}/findings:
+    get:
+      operationId: api_external_api_visit_list_findings
+      summary: List findings for a visit (Beta)
+      parameters:
+      - in: path
+        name: visit_id
+        schema:
+          title: Visit Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListFindingsResponse'
+      tags:
+      - Visits
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    ExternalVisitRequestStatus:
+      description: 'Customer facing visit statuses. Each VisitRequestStatus should map directly to a ExternalVisitRequestStatus.
+
+        But we don''t need ExternalVisitRequestStatus to directly map back to VisitRequestStatus.'
+      enum:
+      - visit_started
+      - uploading
+      - processing
+      - in_review
+      - completed
+      - cancelled
+      title: ExternalVisitRequestStatus
+      type: string
+    ListFindingsResponse:
+      properties:
+        findings:
+          items:
+            $ref: '#/components/schemas/FindingExternalSchema'
+          title: Findings
+          type: array
+      required:
+      - findings
+      title: ListFindingsResponse
+      type: object
+    AudioEvidenceExternalSchema:
+      properties:
+        type:
+          const: audio
+          default: audio
+          title: Type
+          type: string
+        start_ms:
+          description: Start timestamp in the source video, in milliseconds.
+          title: Start Ms
+          type: integer
+        end_ms:
+          description: End timestamp in the source video, in milliseconds.
+          title: End Ms
+          type: integer
+        text:
+          description: Transcribed text from this audio segment.
+          title: Text
+          type: string
+      required:
+      - start_ms
+      - end_ms
+      - text
+      title: AudioEvidence
+      type: object
+    VisitExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        type:
+          deprecated: true
+          description: 'Display name of the visit type. Deprecated: Prefer using visit_type instead.'
+          title: Type
+          type: string
+        visit_type:
+          $ref: '#/components/schemas/VisitTypeExternalSchema'
+          description: The visit type for this visit.
+        visit_request_status:
+          $ref: '#/components/schemas/ExternalVisitRequestStatus'
+        visited_at:
+          format: date-time
+          title: Visited At
+          type: string
+        visited_by:
+          $ref: '#/components/schemas/UserExternalSchema'
+        reviewed_by:
+          anyOf:
+          - $ref: '#/components/schemas/UserExternalSchema'
+          - type: 'null'
+          description: The user who reviewed and signed off on this visit, if any.
+        video:
+          anyOf:
+          - $ref: '#/components/schemas/VideoExternalSchema'
+          - type: 'null'
+          description: The video captured during this visit, if any.
+        product_url:
+          description: Link to the NavigateAI dashboard for reviewing this visit.
+          title: Product Url
+          type: string
+        product_pdf_url:
+          description: Link to download a PDF report for this visit.
+          title: Product Pdf Url
+          type: string
+        location_id:
+          title: Location Id
+          type: string
+        work_order_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The work order this visit is associated with, if any.
+          title: Work Order Id
+        access_code_metadata:
+          anyOf:
+          - type: object
+          - type: 'null'
+          description: Metadata from the access code that initiated this visit, if applicable.
+          title: Access Code Metadata
+        notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Summary notes generated for this visit.
+          title: Notes
+        metadata:
+          description: Additional structured data captured for this visit.
+          title: Metadata
+          type: object
+      required:
+      - id
+      - type
+      - visit_type
+      - visit_request_status
+      - visited_at
+      - visited_by
+      - video
+      - product_url
+      - product_pdf_url
+      - location_id
+      - work_order_id
+      - access_code_metadata
+      - notes
+      - metadata
+      title: Visit
+      type: object
+    TextEvidenceExternalSchema:
+      properties:
+        type:
+          const: text
+          default: text
+          title: Type
+          type: string
+        text:
+          title: Text
+          type: string
+      required:
+      - text
+      title: TextEvidence
+      type: object
+    CreateVisitRequest:
+      properties:
+        location_id:
+          title: Location Id
+          type: string
+        visit_type_slug:
+          title: Visit Type Slug
+          type: string
+        work_order_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Work Order Id
+      required:
+      - location_id
+      - visit_type_slug
+      title: CreateVisitRequest
+      type: object
+    FindingExternalSchema:
+      properties:
+        question_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The name of the question this finding answers.
+          title: Question Name
+        question_text:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The full text of the question this finding answers. Null for ad-hoc findings.
+          title: Question Text
+        description:
+          description: The reason or justification for this finding.
+          title: Description
+          type: string
+        result:
+          description: The result of the finding (e.g. "Poor", "Fair").
+          title: Result
+          type: string
+        severity:
+          anyOf:
+          - enum:
+            - major
+            - minor
+            type: string
+          - type: 'null'
+          description: 'Severity of the finding, if applicable: "major", "minor", or null.'
+          title: Severity
+        area_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The room or area this finding applies to.
+          title: Area Name
+        evidence:
+          description: Supporting evidence — images, audio segments, or text notes.
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/ImageEvidenceExternalSchema'
+            - $ref: '#/components/schemas/AudioEvidenceExternalSchema'
+            - $ref: '#/components/schemas/TextEvidenceExternalSchema'
+          title: Evidence
+          type: array
+      required:
+      - question_name
+      - question_text
+      - description
+      - result
+      - severity
+      - area_name
+      - evidence
+      title: Finding
+      type: object
+    AllVisitsForLocationResponse:
+      properties:
+        visits:
+          items:
+            $ref: '#/components/schemas/VisitExternalSchema'
+          title: Visits
+          type: array
+      required:
+      - visits
+      title: AllVisitsForLocationResponse
+      type: object
+    CreateVisitAccessGrantRequest:
+      properties:
+        recipient_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Display name shown as the guest's identity on the visit (e.g. the reviewer's name).
+          title: Recipient Name
+        recipient_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Contact email recorded for the guest. Not used for authentication.
+          title: Recipient Email
+        metadata:
+          anyOf:
+          - type: object
+          - type: 'null'
+          description: Arbitrary structured data to attach to this grant (e.g. your own user or task ids). Echoed back verbatim in the create response. Never interpreted by NavigateAI.
+          title: Metadata
+        expires_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the access link stops working, as an ISO 8601 UTC timestamp (e.g. `2026-12-31T23:59:59Z`). Must be in the future and timezone-aware. Omit for a link that never expires.
+          title: Expires At
+      title: CreateVisitAccessGrantRequest
+      type: object
+    ProcessVisitResponse:
+      properties:
+        visit:
+          $ref: '#/components/schemas/VisitExternalSchema'
+      required:
+      - visit
+      title: ProcessVisitResponse
+      type: object
+    VisitResponse:
+      properties:
+        visit:
+          $ref: '#/components/schemas/VisitExternalSchema'
+      required:
+      - visit
+      title: VisitResponse
+      type: object
+    UserExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        email:
+          title: Email
+          type: string
+        first_name:
+          title: First Name
+          type: string
+        last_name:
+          title: Last Name
+          type: string
+        reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: External identifier for this user.
+          title: Reference Key
+      required:
+      - id
+      - email
+      - first_name
+      - last_name
+      - reference_key
+      title: User
+      type: object
+    VisitTypeExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        display_name:
+          title: Display Name
+          type: string
+        slug:
+          description: URL-friendly identifier for this visit type.
+          title: Slug
+          type: string
+      required:
+      - id
+      - display_name
+      - slug
+      title: VisitType
+      type: object
+    ImageEvidenceExternalSchema:
+      properties:
+        type:
+          const: image
+          default: image
+          title: Type
+          type: string
+        image_id:
+          description: Use with the Get Image endpoint to retrieve the image file.
+          title: Image Id
+          type: string
+        reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reference Key
+        visit_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The visit this image was captured during.
+          title: Visit Id
+        is_selected:
+          default: false
+          description: Whether this image was explicitly selected as evidence.
+          title: Is Selected
+          type: boolean
+        is_starred:
+          default: false
+          description: Whether this image was starred as the primary evidence photo.
+          title: Is Starred
+          type: boolean
+      required:
+      - image_id
+      title: ImageEvidence
+      type: object
+    VisitAccessGrantResponse:
+      properties:
+        visit_access_grant_id:
+          title: Visit Access Grant Id
+          type: string
+        visit_id:
+          title: Visit Id
+          type: string
+        token:
+          title: Token
+          type: string
+        deeplink_url:
+          title: Deeplink Url
+          type: string
+        expires_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Expires At
+        metadata:
+          anyOf:
+          - type: object
+          - type: 'null'
+          description: The arbitrary structured data attached at creation, echoed back verbatim.
+          title: Metadata
+      required:
+      - visit_access_grant_id
+      - visit_id
+      - token
+      - deeplink_url
+      - expires_at
+      - metadata
+      title: VisitAccessGrantResponse
+      type: object
+    VideoExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        duration_ms:
+          title: Duration Ms
+          type: integer
+        height:
+          title: Height
+          type: integer
+        width:
+          title: Width
+          type: integer
+      required:
+      - id
+      - duration_ms
+      - height
+      - width
+      title: Video
+      type: object
+    CancelVisitResponse:
+      properties:
+        visit:
+          $ref: '#/components/schemas/VisitExternalSchema'
+      required:
+      - visit
+      title: CancelVisitResponse
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: http
+      scheme: bearer

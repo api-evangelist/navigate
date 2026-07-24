@@ -1,0 +1,286 @@
+openapi: 3.1.0
+info:
+  title: NavigateAI Access codes Video Upload Requests API
+  version: 1.0.0
+  description: The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.
+servers:
+- url: https://api.navigateai.co
+tags:
+- name: Video Upload Requests
+paths:
+  /v1/visits/{visit_id}/video_upload_requests:
+    get:
+      operationId: api_external_api_visit_list_video_upload_requests
+      summary: List video upload requests for a visit
+      parameters:
+      - in: path
+        name: visit_id
+        schema:
+          title: Visit Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListVideoUploadRequestsResponse'
+      tags:
+      - Video Upload Requests
+      security:
+      - ApiKeyAuth: []
+  /v1/video_upload_requests:
+    post:
+      operationId: api_external_api_video_upload_request_create_video_upload_request
+      summary: Start a new video upload
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateVideoUploadRequestResponse'
+      tags:
+      - Video Upload Requests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateVideoUploadRequestInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+  /v1/video_upload_requests/{upload_id}/confirm:
+    post:
+      operationId: api_external_api_video_upload_request_confirm_video_upload_request
+      summary: Mark a video upload request as complete
+      parameters:
+      - in: path
+        name: upload_id
+        schema:
+          title: Upload Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfirmVideoUploadRequestResponse'
+      tags:
+      - Video Upload Requests
+      security:
+      - ApiKeyAuth: []
+  /v1/video_upload_requests/{upload_id}:
+    get:
+      operationId: api_external_api_video_upload_request_get_video_upload_request
+      summary: Get a video upload request
+      parameters:
+      - in: path
+        name: upload_id
+        schema:
+          title: Upload Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVideoUploadRequestResponse'
+      tags:
+      - Video Upload Requests
+      security:
+      - ApiKeyAuth: []
+  /v1/video_upload_requests/{upload_id}/cancel:
+    post:
+      operationId: api_external_api_video_upload_request_cancel_video_upload_request
+      summary: Cancel a video upload request
+      parameters:
+      - in: path
+        name: upload_id
+        schema:
+          title: Upload Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelVideoUploadRequestResponse'
+      tags:
+      - Video Upload Requests
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    VideoUploadRequestWithUploadUrlExternalSchema:
+      description: 'Extended schema that includes a presigned upload URL.
+
+
+        Used for create and single-resource GET responses where the caller needs
+
+        the URL to upload to S3. The presigned URL must be passed explicitly —
+
+        it is never generated inside the schema.'
+      properties:
+        id:
+          title: Id
+          type: string
+        status:
+          $ref: '#/components/schemas/ExternalUploadRequestStatus'
+        file_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Original file name of the upload.
+          title: File Name
+        file_size_bytes:
+          description: Declared file size in bytes.
+          title: File Size Bytes
+          type: integer
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        completed_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the upload was marked as completed, if applicable.
+          title: Completed At
+        upload_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Presigned S3 PUT URL for uploading the file. Expires after 24 hours. Null for completed or cancelled upload requests.
+          title: Upload Url
+      required:
+      - id
+      - status
+      - file_name
+      - file_size_bytes
+      - created_at
+      - completed_at
+      - upload_url
+      title: VideoUploadRequestWithUploadUrl
+      type: object
+    CreateVideoUploadRequestInput:
+      properties:
+        visit_id:
+          title: Visit Id
+          type: string
+        file_name:
+          title: File Name
+          type: string
+        file_size_bytes:
+          title: File Size Bytes
+          type: integer
+      required:
+      - visit_id
+      - file_name
+      - file_size_bytes
+      title: CreateVideoUploadRequestInput
+      type: object
+    ConfirmVideoUploadRequestResponse:
+      properties:
+        video_upload_request:
+          $ref: '#/components/schemas/VideoUploadRequestExternalSchema'
+      required:
+      - video_upload_request
+      title: ConfirmVideoUploadRequestResponse
+      type: object
+    VideoUploadRequestExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        status:
+          $ref: '#/components/schemas/ExternalUploadRequestStatus'
+        file_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Original file name of the upload.
+          title: File Name
+        file_size_bytes:
+          description: Declared file size in bytes.
+          title: File Size Bytes
+          type: integer
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        completed_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the upload was marked as completed, if applicable.
+          title: Completed At
+      required:
+      - id
+      - status
+      - file_name
+      - file_size_bytes
+      - created_at
+      - completed_at
+      title: VideoUploadRequest
+      type: object
+    GetVideoUploadRequestResponse:
+      properties:
+        video_upload_request:
+          $ref: '#/components/schemas/VideoUploadRequestWithUploadUrlExternalSchema'
+      required:
+      - video_upload_request
+      title: GetVideoUploadRequestResponse
+      type: object
+    ListVideoUploadRequestsResponse:
+      properties:
+        video_upload_requests:
+          items:
+            $ref: '#/components/schemas/VideoUploadRequestExternalSchema'
+          title: Video Upload Requests
+          type: array
+      required:
+      - video_upload_requests
+      title: ListVideoUploadRequestsResponse
+      type: object
+    CancelVideoUploadRequestResponse:
+      properties:
+        video_upload_request:
+          $ref: '#/components/schemas/VideoUploadRequestExternalSchema'
+      required:
+      - video_upload_request
+      title: CancelVideoUploadRequestResponse
+      type: object
+    CreateVideoUploadRequestResponse:
+      properties:
+        video_upload_request:
+          $ref: '#/components/schemas/VideoUploadRequestWithUploadUrlExternalSchema'
+      required:
+      - video_upload_request
+      title: CreateVideoUploadRequestResponse
+      type: object
+    ExternalUploadRequestStatus:
+      description: Customer-facing upload request statuses, lowercase for external API consistency.
+      enum:
+      - pending
+      - started
+      - done
+      - failed
+      - ignored
+      - cancelled
+      title: ExternalUploadRequestStatus
+      type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: http
+      scheme: bearer
