@@ -1,0 +1,32 @@
+generated: '2026-07-20'
+method: derived
+source: derived from openapi/navigate-openapi.json + live host probes (2026-07-20)
+api: NavigateAI API
+versioning:
+  scheme: uri-path
+  current_version: v1
+  spec_info_version: 1.0.0
+  detail: Single major version pinned in the URI path (/v1). No dated or header-based versioning observed.
+deprecation:
+  policy_documented: false
+  deprecated_operations: []
+  sunset_headers_observed: false
+  detail: No operations are marked deprecated:true in the spec; no deprecation/Sunset (RFC 8594) policy was found.
+beta_surface:
+- operationId: api_external_api_visit_list_findings
+  path: /v1/visits/{visit_id}/findings
+  note: Summary marks this endpoint "(Beta)".
+status_page:
+  found: false
+  probed:
+  - url: https://status.navigate.ai/
+    status: 302
+  - url: https://status.navigateai.co/
+    status: 302
+  detail: No dedicated status page; both status.* hosts redirect (302) to the marketing site.
+sla:
+  documented: false
+notes:
+- Developer/docs subdomains (docs., developers., developer.) all 302-redirect to the
+  marketing site; the only machine-readable developer artifact is the OpenAPI at
+  https://api.navigateai.co/v1/openapi.json.

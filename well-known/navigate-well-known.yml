@@ -1,0 +1,22 @@
+generated: '2026-07-20'
+method: probed
+source: live probes of well-known paths (2026-07-20)
+summary: No .well-known documents are published. Every probed path returned 404; nothing saved.
+hosts:
+- host: www.navigate.ai
+  paths:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null

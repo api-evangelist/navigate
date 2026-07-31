@@ -1,0 +1,26 @@
+generated: '2026-07-20'
+method: derived
+source: derived from openapi/navigate-openapi.json components.securitySchemes
+api: NavigateAI API
+summary: >-
+  The NavigateAI external API authenticates every operation with a bearer token
+  (API key) supplied in the Authorization header. All 51 operations declare the
+  ApiKeyAuth requirement; there are no unauthenticated endpoints and no OAuth2,
+  OpenID Connect, or mutual-TLS schemes in the published specification.
+schemes:
+- name: ApiKeyAuth
+  type: http
+  scheme: bearer
+  in: header
+  header: Authorization
+  format: 'Authorization: Bearer <api_key>'
+  description: >-
+    HTTP bearer authentication. Present a NavigateAI API key as the bearer token.
+    Applied globally as the security requirement on every documented operation.
+coverage:
+  total_operations: 51
+  secured_operations: 51
+  unsecured_operations: 0
+notes:
+- The specification does not document a scopes/permissions model on the bearer scheme,
+  so no OAuthScopes artifact is derived (single API-key credential).

@@ -1,0 +1,87 @@
+generated: '2026-07-20'
+method: derived
+source: derived from openapi/navigate-openapi.json ($ref graph + id-reference request fields + path nesting)
+api: NavigateAI API
+summary: >-
+  Entity-relationship graph for the NavigateAI external API, covering the field
+  documentation and quality workflow: markets and locations, visits and their video
+  uploads, scopes and line items, work orders, vendors, and rooms.
+entities:
+- name: Market
+  operations: [api_external_api_market_list_markets, api_external_api_market_get_market, api_external_api_market_create_market, api_external_api_market_update_market]
+  relationships:
+  - has_many: Location
+    via: market_id
+- name: Location
+  operations: [api_external_api_location_list_locations, api_external_api_location_get_location, api_external_api_location_create_location, api_external_api_location_update_location]
+  relationships:
+  - belongs_to: Market
+    via: market_id
+  - has_many: Visit
+  - has_many: WorkOrder
+  - has_many: Room
+  - has_many: LineItemRow
+  - has_one: Scope
+- name: Visit
+  operations: [api_external_api_visit_get_visit, api_external_api_visit_create_visit, api_external_api_visit_process_visit, api_external_api_visit_cancel_visit]
+  relationships:
+  - belongs_to: Location
+    via: location_id
+  - belongs_to: VisitType
+    via: visit_type_slug
+  - references: WorkOrder
+    via: work_order_id
+  - has_many: VideoUploadRequest
+  - has_many: Finding
+  - has_many: VisitAccessGrant
+- name: VideoUploadRequest
+  operations: [api_external_api_video_upload_request_create_video_upload_request, api_external_api_video_upload_request_confirm_video_upload_request, api_external_api_video_upload_request_get_video_upload_request, api_external_api_video_upload_request_cancel_video_upload_request]
+  relationships:
+  - belongs_to: Visit
+    via: visit_id
+- name: WorkOrder
+  operations: [api_external_api_location_create_work_order, api_external_api_location_list_work_orders, api_external_api_location_get_work_order, api_external_api_location_complete_work_order]
+  relationships:
+  - belongs_to: Location
+    via: location_id
+  - has_one: Vendor
+    via: default_vendor_id
+  - has_many: LineItemRow
+    via: line_item_ids
+- name: LineItemRow
+  operations: [api_external_api_line_item_create_line_item_endpoint, api_external_api_line_item_update_line_item_row_endpoint, api_external_api_location_create_location_line_item]
+  relationships:
+  - belongs_to: Location
+  - belongs_to: Scope
+  - references: Room
+  - references: Vendor
+- name: Scope
+  operations: [api_external_api_scopes_create_scope_endpoint, api_external_api_scopes_list_scopes_endpoint, api_external_api_scopes_get_scope, api_external_api_scope_get_scope, api_external_api_scope_create_line_item_row]
+  relationships:
+  - belongs_to: Location
+    via: location_id
+  - has_many: LineItemRow
+- name: Room
+  operations: [api_external_api_room_list_rooms, api_external_api_room_get_room]
+  relationships:
+  - belongs_to: Location
+    via: location_id
+  - references: RoomType
+- name: Vendor
+  operations: [api_external_api_vendor_create_vendor_organization, api_external_api_vendor_list_vendor_organizations, api_external_api_vendor_get_vendor_organization, api_external_api_vendor_update_vendor_organization_endpoint]
+  relationships:
+  - has_many: WorkOrder
+- name: Finding
+  operations: [api_external_api_visit_list_findings]
+  relationships:
+  - belongs_to: Visit
+    via: visit_id
+reference_entities:
+- VisitType
+- RoomType
+- RejectionReasonOption
+notes:
+- Relationships were derived from create-request foreign-key fields (location_id,
+  market_id, visit_id, work_order_id, default_vendor_id, line_item_ids, visit_type_slug)
+  and from the nesting of resource paths; only relationships evidenced in the spec are asserted.
+- Most entities also carry a caller-owned reference_key (see conventions/navigate-conventions.yml).

@@ -1,0 +1,61 @@
+generated: '2026-07-20'
+method: derived
+source: derived from openapi/navigate-openapi.json (paths, parameters, schemas)
+api: NavigateAI API
+base_url: https://api.navigateai.co
+version_prefix: /v1
+authentication:
+  style: http-bearer
+  header: Authorization
+  detail: Bearer API key on every operation. See authentication/navigate-authentication.yml.
+pagination:
+  style: cursor
+  request_params:
+    limit: Maximum number of records to return (list endpoints).
+    cursor: Opaque forward cursor; pass the prior response next_cursor to page.
+  response_fields:
+    next_cursor: Opaque cursor for the next page; null when the last page is reached.
+  observed_on:
+  - GET /v1/location
+  - GET /v1/scopes
+  - GET /v1/vendors
+  notes: >-
+    Cursor pagination is used on the primary collection endpoints (limit + cursor
+    in, next_cursor out). Some smaller reference/list endpoints (markets, room_types,
+    visit_types, rejection_reason_options) return the full collection without a cursor.
+client_reference_key:
+  fields:
+  - reference_key
+  - price_reference_key
+  detail: >-
+    Most create/update requests accept a caller-owned reference_key (and line items a
+    price_reference_key) that is echoed back on the entity. It is an external
+    correlation / lookup key for tying Navigate records to the caller's own system of
+    record and is exposed as a filter on several list endpoints (e.g. reference_key on
+    GET /v1/location, GET /v1/markets, GET /v1/vendors). It is NOT a documented
+    request-idempotency header with retry-dedup/retention semantics, so this repo does
+    not assert canonical Idempotency for it.
+filtering:
+  detail: List endpoints expose typed query filters rather than a generic query language.
+  examples:
+    GET /v1/location: [limit, cursor, reference_key, market_id]
+    GET /v1/scopes: [limit, cursor, location_id]
+    GET /v1/markets: [reference_key, slug]
+error_envelope:
+  documented: false
+  detail: >-
+    The published OpenAPI does not declare 4xx/5xx response schemas for any operation,
+    so the error envelope is not documented. The service runs on FastAPI/uvicorn, whose
+    default validation errors are HTTP 422 with a {"detail": [...]} body, but this is
+    not asserted in the spec and is not captured here. See errors/ (none derived).
+versioning:
+  scheme: uri-path
+  current: v1
+  detail: Single major version pinned in the URI path (/v1). No version header observed.
+media_types:
+  request: application/json (multipart/form-data for photo/video upload endpoints)
+  response: application/json
+cross_links:
+  authentication: authentication/navigate-authentication.yml
+  data_model: data-model/navigate-data-model.yml
+  lifecycle: lifecycle/navigate-lifecycle.yml

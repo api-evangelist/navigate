@@ -1,0 +1,31 @@
+generated: '2026-07-20'
+method: derived
+source: derived from openapi/navigate-openapi.json (securitySchemes, responses, parameters)
+api: NavigateAI API
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: 'Specification self-declares openapi 3.1.0 and validates.'
+- id: oauth2
+  conforms: false
+  evidence: Only ApiKeyAuth (http bearer) is declared; no oauth2 securityScheme.
+- id: oidc
+  conforms: false
+  evidence: No openIdConnect securityScheme and no discovery document (/.well-known/openid-configuration returns 404).
+- id: rfc9457
+  conforms: false
+  evidence: No 4xx/5xx responses are documented and no application/problem+json media type appears in the spec.
+- id: json:api
+  conforms: false
+  evidence: Responses use plain resource envelopes (e.g. {locations, next_cursor}), not the JSON:API document structure.
+- id: cursor-pagination
+  conforms: true
+  evidence: List endpoints expose limit + cursor request params and return next_cursor (RFC-style opaque cursor paging).
+- id: idempotency
+  conforms: false
+  evidence: >-
+    A caller-owned reference_key exists on create/update bodies but no Idempotency-Key
+    header or documented retry-dedup semantics; not asserted as request idempotency.
+notes:
+- No formal compliance/certification claims (SOC 2, ISO 27001, PCI, HIPAA, FedRAMP) were
+  found on the public site or via security-program probes.

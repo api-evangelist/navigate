@@ -1,0 +1,75 @@
+generated: '2026-07-20'
+method: derived
+source: derived from openapi/navigate-openapi.json operations (no official MCP server found)
+status: candidate
+api: NavigateAI API
+server:
+  official: false
+  note: >-
+    No official hosted or remote NavigateAI MCP server was found (checked navigate.ai,
+    api.navigate.ai, and the docs/developer subdomains, which redirect to the marketing
+    site). The tools below are a CANDIDATE surface derived from the external API's
+    operationIds and would front https://api.navigateai.co with a bearer API key.
+auth:
+  type: http-bearer
+  header: Authorization
+tools:
+- name: list_locations
+  operationId: api_external_api_location_list_locations
+  method: GET
+  path: /v1/location
+- name: get_location
+  operationId: api_external_api_location_get_location
+  method: GET
+  path: /v1/location/{location_id}
+- name: create_location
+  operationId: api_external_api_location_create_location
+  method: POST
+  path: /v1/location
+- name: list_location_visits
+  operationId: api_external_api_location_get_all_visits_for_location
+  method: GET
+  path: /v1/location/{location_id}/visits
+- name: create_visit
+  operationId: api_external_api_visit_create_visit
+  method: POST
+  path: /v1/visits
+- name: process_visit
+  operationId: api_external_api_visit_process_visit
+  method: POST
+  path: /v1/visits/{visit_id}/process
+- name: list_visit_findings
+  operationId: api_external_api_visit_list_findings
+  method: GET
+  path: /v1/visits/{visit_id}/findings
+- name: create_video_upload_request
+  operationId: api_external_api_video_upload_request_create_video_upload_request
+  method: POST
+  path: /v1/video_upload_requests
+- name: confirm_video_upload_request
+  operationId: api_external_api_video_upload_request_confirm_video_upload_request
+  method: POST
+  path: /v1/video_upload_requests/{upload_id}/confirm
+- name: create_work_order
+  operationId: api_external_api_location_create_work_order
+  method: POST
+  path: /v1/location/{location_id}/work_order
+- name: complete_work_order
+  operationId: api_external_api_location_complete_work_order
+  method: POST
+  path: /v1/location/{location_id}/work_order/{work_order_id}/complete
+- name: get_scope
+  operationId: api_external_api_scopes_get_scope
+  method: GET
+  path: /v1/scopes/{scope_id}
+- name: list_vendors
+  operationId: api_external_api_vendor_list_vendor_organizations
+  method: GET
+  path: /v1/vendors
+- name: list_markets
+  operationId: api_external_api_market_list_markets
+  method: GET
+  path: /v1/markets
+notes:
+- Candidate only; not published by Navigate. Tool set is a representative subset of the
+  51 operations spanning the primary Locations/Visits/Work-orders/Scopes/Vendors surface.

@@ -1,0 +1,13 @@
+generated: '2026-07-20'
+method: generated
+source: authored from openapi/navigate-openapi.json operationIds (marquee flows)
+api: NavigateAI API
+base_url: https://api.navigateai.co
+auth: 'http-bearer (Authorization: Bearer <api_key>)'
+skills:
+- file: navigate-capture-to-findings.md
+  name: capture-to-findings
+  description: Create a visit, upload a field capture video, process it, and read the findings.
+- file: navigate-scope-to-work-order.md
+  name: scope-to-work-order
+  description: Build a scope of line items at a location and turn it into a completed work order.

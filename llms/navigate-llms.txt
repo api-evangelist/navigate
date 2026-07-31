@@ -1,0 +1,40 @@
+# Navigate (NavigateAI)
+
+> Navigate is a proptech company building an AI copilot for the physical world,
+> helping field teams across construction, commercial real estate, homebuilding,
+> data centers, and the trades document, scope, and complete projects. Its
+> external API programmatically manages locations, visits, video captures,
+> scopes, line items, work orders, and vendors.
+
+Navigate publishes a real external REST API at https://api.navigateai.co (versioned
+under /v1). Authentication is an HTTP bearer API key (Authorization: Bearer <api_key>)
+on every operation. List endpoints use cursor pagination (limit + cursor in,
+next_cursor out). The machine-readable specification is an OpenAPI 3.1 document.
+
+## API
+
+- [OpenAPI 3.1 specification](https://api.navigateai.co/v1/openapi.json): 51 operations across Locations, Visits, Video Upload Requests, Scopes, Line Items, Work Orders, Vendors, Rooms, Markets, Assets, and reference data.
+
+## Core resources
+
+- Locations: create, list (filter by market_id / reference_key), get, update; nested visits, work orders, rooms, line items, access codes.
+- Visits: create a visit to accept video uploads, process, cancel, list video upload requests, list findings (Beta), create access grants.
+- Video Upload Requests: start an upload, confirm completion, get, cancel.
+- Scopes: create and list scopes, get a scope, add line item rows.
+- Work Orders: create per location, list, get, start photo processing, start review, complete, assign line items, upload photos, vendor status override.
+- Vendors: create, list, get, update vendor organizations.
+- Markets: create, list, get, update.
+- Reference data: room types, visit types, rejection reason options.
+
+## Company
+
+- [Website](https://www.navigate.ai/)
+- [App / Login](https://app.navigate.ai)
+- [Contact / Support](https://www.navigate.ai/contact)
+- [Privacy Policy](https://www.navigate.ai/privacy)
+- [Terms of Service](https://www.navigate.ai/terms)
+
+## Notes
+
+- No dedicated developer/docs portal was found; docs., developers., and developer. subdomains redirect to the marketing site. The OpenAPI document at api.navigateai.co is the authoritative developer artifact.
+- No OAuth2/OIDC, no documented RFC 9457 problem+json error envelope, and no status page were found as of 2026-07-20.

@@ -1,0 +1,30 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay for the NavigateAI API
+  version: 1.0.0
+x-provenance:
+  generated: '2026-07-20'
+  method: generated
+  source: authored against openapi/navigate-openapi.json
+  extends: openapi/navigate-openapi.json
+actions:
+- target: $.info
+  description: Annotate API Evangelist enrichment provenance.
+  update:
+    x-apievangelist:
+      slug: navigate
+      base_url: https://api.navigateai.co
+      auth: http-bearer (ApiKeyAuth)
+      pagination: cursor (limit/cursor -> next_cursor)
+- target: $.info
+  description: Record the canonical discovery source for the specification.
+  update:
+    x-spec-source: https://api.navigateai.co/v1/openapi.json
+- target: $.components.securitySchemes.ApiKeyAuth
+  description: Clarify the bearer credential is a NavigateAI API key.
+  update:
+    x-credential: NavigateAI API key presented as an HTTP bearer token in Authorization.
+- target: $.paths['/v1/visits/{visit_id}/findings'].get
+  description: Flag the findings listing as a Beta operation per its summary.
+  update:
+    x-lifecycle: beta
