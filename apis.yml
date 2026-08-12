@@ -403,6 +403,12 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgentSkill
+  url: skills/navigate-capture-to-findings.md
+- type: MCPServer
+  url: mcp/navigate-mcp.yml
+- type: Overlay
+  url: overlays/navigate-openapi-overlay.yaml
 - type: DomainSecurity
   url: security/navigate-domain-security.yml
 - type: Conformance
