@@ -1,0 +1,117 @@
+{
+  "item": [
+    {
+      "id": "a69e00d6-2c2f-41a0-a84b-4357085baefc",
+      "name": "Visit types",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7feadbbc-21d5-4ad6-9015-330ef580eba9",
+          "name": "List visit types",
+          "request": {
+            "name": "List visit types",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "visit_types"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7cf51184-78c6-4cb0-8e8e-73520a3c5f85",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "visit_types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"visit_types\": [\n    {\n      \"id\": \"string\",\n      \"display_name\": \"string\",\n      \"slug\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"display_name\": \"string\",\n      \"slug\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.navigateai.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "06a6afd0-c2ce-4c81-bde3-612d49bd7890",
+    "name": "NavigateAI Access codes Visit types API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,264 @@
+{
+  "item": [
+    {
+      "id": "8c5de8f1-1ac9-4b42-8bc1-2e6c9653b9bf",
+      "name": "Rooms",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "98169ef5-fa71-4a65-8a62-874b9210e9aa",
+          "name": "List rooms for a location",
+          "request": {
+            "name": "List rooms for a location",
+            "description": {
+              "content": "Returns the rooms currently available for the specified location, including measurements and overview images. Depending on your integration and property setup, this endpoint may return no results. If you expect room data for your locations and are not seeing it, contact NavigateAI.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "location",
+                ":location_id",
+                "rooms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "location_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "127a43b9-fd2a-4e3b-8f6d-e648376c775b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "location",
+                    ":location_id",
+                    "rooms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "location_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rooms\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"room_type_id\": \"string\",\n      \"room_type_name\": \"string\",\n      \"reference_key\": \"string\",\n      \"measurements\": {\n        \"area_sq_in\": 3696.519336684677,\n        \"length_in\": 4506.642362984854,\n        \"width_in\": 7128.4475696505215\n      },\n      \"images\": [\n        {\n          \"image_id\": \"string\",\n          \"visit_id\": \"string\"\n        },\n        {\n          \"image_id\": \"string\",\n          \"visit_id\": \"string\"\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"room_type_id\": \"string\",\n      \"room_type_name\": \"string\",\n      \"reference_key\": \"string\",\n      \"measurements\": {\n        \"area_sq_in\": 6410.485249766641,\n        \"length_in\": 8150.742457302172,\n        \"width_in\": 7051.285351520602\n      },\n      \"images\": [\n        {\n          \"image_id\": \"string\",\n          \"visit_id\": \"string\"\n        },\n        {\n          \"image_id\": \"string\",\n          \"visit_id\": \"string\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6f6d5032-3e64-4258-b5a5-74c14dc94b59",
+          "name": "Get a room",
+          "request": {
+            "name": "Get a room",
+            "description": {
+              "content": "Returns a single room for the specified location, including measurements and overview images. Depending on your integration and property setup, room data may not yet be available for all locations. If you expect room data for your locations and are not seeing it, contact NavigateAI.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "location",
+                ":location_id",
+                "rooms",
+                ":room_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "location_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "room_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "97559d93-8a5a-46ef-85fc-b6c135a064fc",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "location",
+                    ":location_id",
+                    "rooms",
+                    ":room_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "location_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "room_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"room\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"room_type_id\": \"string\",\n    \"room_type_name\": \"string\",\n    \"reference_key\": \"string\",\n    \"measurements\": {\n      \"area_sq_in\": 4774.488462479008,\n      \"length_in\": 8729.410555041291,\n      \"width_in\": 8404.709968562858\n    },\n    \"images\": [\n      {\n        \"image_id\": \"string\",\n        \"visit_id\": \"string\"\n      },\n      {\n        \"image_id\": \"string\",\n        \"visit_id\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.navigateai.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "48e4c5d3-b8db-447e-815d-94cb3fb9cc4c",
+    "name": "NavigateAI Access codes Rooms API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.",
+      "type": "text/plain"
+    }
+  }
+}

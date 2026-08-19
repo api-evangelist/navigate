@@ -1,0 +1,787 @@
+{
+  "item": [
+    {
+      "id": "95d08a23-06b4-4519-8c91-51aa07d33d1c",
+      "name": "Visits",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "00ecb32a-e225-48c9-9ab7-153bcc328921",
+          "name": "List all visits for a location",
+          "request": {
+            "name": "List all visits for a location",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "location",
+                ":location_id",
+                "visits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "location_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "231e2978-6a9a-4cfa-a816-00929647663f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "location",
+                    ":location_id",
+                    "visits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "location_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"visits\": [\n    {\n      \"id\": \"string\",\n      \"type\": \"string\",\n      \"visit_type\": {\n        \"id\": \"string\",\n        \"display_name\": \"string\",\n        \"slug\": \"string\"\n      },\n      \"visit_request_status\": \"completed\",\n      \"visited_at\": \"1987-10-25T16:15:53.409Z\",\n      \"visited_by\": {\n        \"id\": \"string\",\n        \"email\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"reference_key\": \"string\"\n      },\n      \"video\": {\n        \"id\": \"string\",\n        \"duration_ms\": 2807,\n        \"height\": 9900,\n        \"width\": 8590\n      },\n      \"product_url\": \"string\",\n      \"product_pdf_url\": \"string\",\n      \"location_id\": \"string\",\n      \"work_order_id\": \"string\",\n      \"access_code_metadata\": {},\n      \"notes\": \"string\",\n      \"metadata\": {},\n      \"reviewed_by\": {\n        \"id\": \"string\",\n        \"email\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"reference_key\": \"string\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"type\": \"string\",\n      \"visit_type\": {\n        \"id\": \"string\",\n        \"display_name\": \"string\",\n        \"slug\": \"string\"\n      },\n      \"visit_request_status\": \"uploading\",\n      \"visited_at\": \"2021-07-17T09:53:56.622Z\",\n      \"visited_by\": {\n        \"id\": \"string\",\n        \"email\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"reference_key\": \"string\"\n      },\n      \"video\": {\n        \"id\": \"string\",\n        \"duration_ms\": 7575,\n        \"height\": 319,\n        \"width\": 7588\n      },\n      \"product_url\": \"string\",\n      \"product_pdf_url\": \"string\",\n      \"location_id\": \"string\",\n      \"work_order_id\": \"string\",\n      \"access_code_metadata\": {},\n      \"notes\": \"string\",\n      \"metadata\": {},\n      \"reviewed_by\": {\n        \"id\": \"string\",\n        \"email\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"reference_key\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cd7f2e0d-6bc8-4dc6-8dd7-8e9cee965324",
+          "name": "Get a visit",
+          "request": {
+            "name": "Get a visit",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "visits",
+                ":visit_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "visit_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f94663d0-646c-47ed-92f3-3ee9d6b1e65a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "visits",
+                    ":visit_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "visit_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"visit\": {\n    \"id\": \"string\",\n    \"type\": \"string\",\n    \"visit_type\": {\n      \"id\": \"string\",\n      \"display_name\": \"string\",\n      \"slug\": \"string\"\n    },\n    \"visit_request_status\": \"visit_started\",\n    \"visited_at\": \"1977-12-13T02:58:41.135Z\",\n    \"visited_by\": {\n      \"id\": \"string\",\n      \"email\": \"string\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"reference_key\": \"string\"\n    },\n    \"video\": {\n      \"id\": \"string\",\n      \"duration_ms\": 1600,\n      \"height\": 2231,\n      \"width\": 6513\n    },\n    \"product_url\": \"string\",\n    \"product_pdf_url\": \"string\",\n    \"location_id\": \"string\",\n    \"work_order_id\": \"string\",\n    \"access_code_metadata\": {},\n    \"notes\": \"string\",\n    \"metadata\": {},\n    \"reviewed_by\": {\n      \"id\": \"string\",\n      \"email\": \"string\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"reference_key\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "de4f3a59-c123-4b80-aec9-0e1115f3a6e3",
+          "name": "Create a visit access grant",
+          "request": {
+            "name": "Create a visit access grant",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "visits",
+                ":visit_id",
+                "access_grants"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "visit_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"recipient_name\": \"<string>\",\n  \"recipient_email\": \"<string>\",\n  \"metadata\": \"<object>\",\n  \"expires_at\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0b498c83-b118-4087-aac2-2a1e6b266bb2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "visits",
+                    ":visit_id",
+                    "access_grants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "visit_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"recipient_name\": \"<string>\",\n  \"recipient_email\": \"<string>\",\n  \"metadata\": \"<object>\",\n  \"expires_at\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"visit_access_grant_id\": \"string\",\n  \"visit_id\": \"string\",\n  \"token\": \"string\",\n  \"deeplink_url\": \"string\",\n  \"expires_at\": \"1997-08-25T12:09:20.123Z\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "541ba282-ee14-4598-863b-e5c94358d4c3",
+          "name": "Create a new visit to accept video upload requests",
+          "request": {
+            "name": "Create a new visit to accept video upload requests",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "visits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"location_id\": \"<string>\",\n  \"visit_type_slug\": \"<string>\",\n  \"work_order_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1a67529a-32d1-476c-8feb-1ad88af8d22f",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "visits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"location_id\": \"<string>\",\n  \"visit_type_slug\": \"<string>\",\n  \"work_order_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"visit\": {\n    \"id\": \"string\",\n    \"type\": \"string\",\n    \"visit_type\": {\n      \"id\": \"string\",\n      \"display_name\": \"string\",\n      \"slug\": \"string\"\n    },\n    \"visit_request_status\": \"visit_started\",\n    \"visited_at\": \"1977-12-13T02:58:41.135Z\",\n    \"visited_by\": {\n      \"id\": \"string\",\n      \"email\": \"string\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"reference_key\": \"string\"\n    },\n    \"video\": {\n      \"id\": \"string\",\n      \"duration_ms\": 1600,\n      \"height\": 2231,\n      \"width\": 6513\n    },\n    \"product_url\": \"string\",\n    \"product_pdf_url\": \"string\",\n    \"location_id\": \"string\",\n    \"work_order_id\": \"string\",\n    \"access_code_metadata\": {},\n    \"notes\": \"string\",\n    \"metadata\": {},\n    \"reviewed_by\": {\n      \"id\": \"string\",\n      \"email\": \"string\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"reference_key\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2371bc34-68a4-41e6-ae28-89b1ea194078",
+          "name": "Start processing a visit",
+          "request": {
+            "name": "Start processing a visit",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "visits",
+                ":visit_id",
+                "process"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "visit_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "aed87cc8-4aa3-404b-a473-fa30d75c04cf",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "visits",
+                    ":visit_id",
+                    "process"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "visit_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"visit\": {\n    \"id\": \"string\",\n    \"type\": \"string\",\n    \"visit_type\": {\n      \"id\": \"string\",\n      \"display_name\": \"string\",\n      \"slug\": \"string\"\n    },\n    \"visit_request_status\": \"processing\",\n    \"visited_at\": \"1984-07-18T12:59:15.874Z\",\n    \"visited_by\": {\n      \"id\": \"string\",\n      \"email\": \"string\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"reference_key\": \"string\"\n    },\n    \"video\": {\n      \"id\": \"string\",\n      \"duration_ms\": 6403,\n      \"height\": 3037,\n      \"width\": 8718\n    },\n    \"product_url\": \"string\",\n    \"product_pdf_url\": \"string\",\n    \"location_id\": \"string\",\n    \"work_order_id\": \"string\",\n    \"access_code_metadata\": {},\n    \"notes\": \"string\",\n    \"metadata\": {},\n    \"reviewed_by\": {\n      \"id\": \"string\",\n      \"email\": \"string\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"reference_key\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c28b96cc-92d4-45dd-a3b7-ee71cc5cf190",
+          "name": "Cancel a visit",
+          "request": {
+            "name": "Cancel a visit",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "visits",
+                ":visit_id",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "visit_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a42ecc46-f780-4b4e-822e-5bc979f9e797",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "visits",
+                    ":visit_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "visit_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"visit\": {\n    \"id\": \"string\",\n    \"type\": \"string\",\n    \"visit_type\": {\n      \"id\": \"string\",\n      \"display_name\": \"string\",\n      \"slug\": \"string\"\n    },\n    \"visit_request_status\": \"completed\",\n    \"visited_at\": \"1971-10-16T19:59:09.686Z\",\n    \"visited_by\": {\n      \"id\": \"string\",\n      \"email\": \"string\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"reference_key\": \"string\"\n    },\n    \"video\": {\n      \"id\": \"string\",\n      \"duration_ms\": 938,\n      \"height\": 9431,\n      \"width\": 7228\n    },\n    \"product_url\": \"string\",\n    \"product_pdf_url\": \"string\",\n    \"location_id\": \"string\",\n    \"work_order_id\": \"string\",\n    \"access_code_metadata\": {},\n    \"notes\": \"string\",\n    \"metadata\": {},\n    \"reviewed_by\": {\n      \"id\": \"string\",\n      \"email\": \"string\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"reference_key\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fa221d79-02a7-4b56-a40e-1599a1985fb4",
+          "name": "List findings for a visit (Beta)",
+          "request": {
+            "name": "List findings for a visit (Beta)",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "visits",
+                ":visit_id",
+                "findings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "visit_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8128ff75-97b1-49ae-91c9-ee02c93bf06f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "visits",
+                    ":visit_id",
+                    "findings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "visit_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"findings\": [\n    {\n      \"question_name\": \"string\",\n      \"question_text\": \"string\",\n      \"description\": \"string\",\n      \"result\": \"string\",\n      \"severity\": \"major\",\n      \"area_name\": \"string\",\n      \"evidence\": [\n        {\n          \"image_id\": \"string\",\n          \"type\": \"image\",\n          \"reference_key\": \"string\",\n          \"visit_id\": \"string\",\n          \"is_selected\": false,\n          \"is_starred\": false\n        },\n        {\n          \"image_id\": \"string\",\n          \"type\": \"image\",\n          \"reference_key\": \"string\",\n          \"visit_id\": \"string\",\n          \"is_selected\": false,\n          \"is_starred\": false\n        }\n      ]\n    },\n    {\n      \"question_name\": \"string\",\n      \"question_text\": \"string\",\n      \"description\": \"string\",\n      \"result\": \"string\",\n      \"severity\": \"minor\",\n      \"area_name\": \"string\",\n      \"evidence\": [\n        {\n          \"image_id\": \"string\",\n          \"type\": \"image\",\n          \"reference_key\": \"string\",\n          \"visit_id\": \"string\",\n          \"is_selected\": false,\n          \"is_starred\": false\n        },\n        {\n          \"image_id\": \"string\",\n          \"type\": \"image\",\n          \"reference_key\": \"string\",\n          \"visit_id\": \"string\",\n          \"is_selected\": false,\n          \"is_starred\": false\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.navigateai.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0e13f368-f4de-4b9f-80d7-3b7829798f01",
+    "name": "NavigateAI Access codes Visits API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.",
+      "type": "text/plain"
+    }
+  }
+}

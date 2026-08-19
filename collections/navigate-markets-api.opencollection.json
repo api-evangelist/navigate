@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NavigateAI Access codes Markets API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Markets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List markets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.navigateai.co/v1/markets",
+            "params": [
+              {
+                "name": "reference_key",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List markets"
+        },
+        {
+          "info": {
+            "name": "Create a market",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.navigateai.co/v1/markets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a market"
+        },
+        {
+          "info": {
+            "name": "Get a market",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.navigateai.co/v1/markets/:market_id",
+            "params": [
+              {
+                "name": "market_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a market"
+        },
+        {
+          "info": {
+            "name": "Update a market",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.navigateai.co/v1/markets/:market_id",
+            "params": [
+              {
+                "name": "market_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a market"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

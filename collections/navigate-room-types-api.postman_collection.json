@@ -1,0 +1,117 @@
+{
+  "item": [
+    {
+      "id": "09c58d5f-f1f8-44e3-b3c7-c86992c3fbd6",
+      "name": "Room types",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "38a0025f-0c54-4307-a75e-db58bf3de325",
+          "name": "List room types",
+          "request": {
+            "name": "List room types",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "room_types"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "624fe81f-e953-49c6-a71d-96ba141c6b6a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "room_types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"room_types\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"reference_key\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"reference_key\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.navigateai.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1928bea5-20f8-4e2c-b603-9d65d67e16a4",
+    "name": "NavigateAI Access codes Room types API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.",
+      "type": "text/plain"
+    }
+  }
+}

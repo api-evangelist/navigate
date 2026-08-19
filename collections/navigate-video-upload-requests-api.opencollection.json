@@ -1,0 +1,125 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NavigateAI Access codes Video Upload Requests API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Video Upload Requests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List video upload requests for a visit",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.navigateai.co/v1/visits/:visit_id/video_upload_requests",
+            "params": [
+              {
+                "name": "visit_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List video upload requests for a visit"
+        },
+        {
+          "info": {
+            "name": "Start a new video upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.navigateai.co/v1/video_upload_requests",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Start a new video upload"
+        },
+        {
+          "info": {
+            "name": "Mark a video upload request as complete",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.navigateai.co/v1/video_upload_requests/:upload_id/confirm",
+            "params": [
+              {
+                "name": "upload_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Mark a video upload request as complete"
+        },
+        {
+          "info": {
+            "name": "Get a video upload request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.navigateai.co/v1/video_upload_requests/:upload_id",
+            "params": [
+              {
+                "name": "upload_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a video upload request"
+        },
+        {
+          "info": {
+            "name": "Cancel a video upload request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.navigateai.co/v1/video_upload_requests/:upload_id/cancel",
+            "params": [
+              {
+                "name": "upload_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancel a video upload request"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

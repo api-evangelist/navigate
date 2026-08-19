@@ -1,0 +1,288 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NavigateAI Access codes Work orders API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Work orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.navigateai.co/v1/location/:location_id/work_order",
+            "params": [
+              {
+                "name": "location_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a work order"
+        },
+        {
+          "info": {
+            "name": "List work orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.navigateai.co/v1/location/:location_id/work_orders",
+            "params": [
+              {
+                "name": "location_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List work orders"
+        },
+        {
+          "info": {
+            "name": "Get a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.navigateai.co/v1/location/:location_id/work_order/:work_order_id",
+            "params": [
+              {
+                "name": "location_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "work_order_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a work order"
+        },
+        {
+          "info": {
+            "name": "Start photo processing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.navigateai.co/v1/location/:location_id/work_order/:work_order_id/process_photos",
+            "params": [
+              {
+                "name": "location_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "work_order_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Start photo processing"
+        },
+        {
+          "info": {
+            "name": "Start work order review",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.navigateai.co/v1/location/:location_id/work_order/:work_order_id/start_review",
+            "params": [
+              {
+                "name": "location_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "work_order_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Start work order review"
+        },
+        {
+          "info": {
+            "name": "Complete a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.navigateai.co/v1/location/:location_id/work_order/:work_order_id/complete",
+            "params": [
+              {
+                "name": "location_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "work_order_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Complete a work order"
+        },
+        {
+          "info": {
+            "name": "Assign a line item to a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.navigateai.co/v1/location/:location_id/line_item/:line_item_id/work_order",
+            "params": [
+              {
+                "name": "location_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "line_item_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Assign a line item to a work order"
+        },
+        {
+          "info": {
+            "name": "Upload photos for a work order line item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.navigateai.co/v1/location/:location_id/work_order/:work_order_id/line_item/:line_item_id/photos",
+            "params": [
+              {
+                "name": "location_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "work_order_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "line_item_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "photos",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "reference_key",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Upload photos for a work order line item"
+        },
+        {
+          "info": {
+            "name": "Override a line item status as vendor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.navigateai.co/v1/location/:location_id/work_order/:work_order_id/line_item_proposal/:line_item_row_proposal_id/vendor_override",
+            "params": [
+              {
+                "name": "location_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "work_order_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "line_item_row_proposal_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Override a line item status as vendor"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

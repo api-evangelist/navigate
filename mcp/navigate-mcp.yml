@@ -5,11 +5,10 @@ status: candidate
 api: NavigateAI API
 server:
   official: false
-  note: >-
-    No official hosted or remote NavigateAI MCP server was found (checked navigate.ai,
-    api.navigate.ai, and the docs/developer subdomains, which redirect to the marketing
-    site). The tools below are a CANDIDATE surface derived from the external API's
-    operationIds and would front https://api.navigateai.co with a bearer API key.
+  note: No official hosted or remote NavigateAI MCP server was found (checked navigate.ai, api.navigate.ai,
+    and the docs/developer subdomains, which redirect to the marketing site). The tools below are a CANDIDATE
+    surface derived from the external API's operationIds and would front https://api.navigateai.co with
+    a bearer API key.
 auth:
   type: http-bearer
   header: Authorization
@@ -71,5 +70,11 @@ tools:
   method: GET
   path: /v1/markets
 notes:
-- Candidate only; not published by Navigate. Tool set is a representative subset of the
-  51 operations spanning the primary Locations/Visits/Work-orders/Scopes/Vendors surface.
+- Candidate only; not published by Navigate. Tool set is a representative subset of the 51 operations
+  spanning the primary Locations/Visits/Work-orders/Scopes/Vendors surface.
+deployment:
+  mode: none
+  verified: derived
+  tools: 14
+  checked: '2026-08-12'
+  source: catalog MCP census

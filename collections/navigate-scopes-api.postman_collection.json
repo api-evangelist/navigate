@@ -1,0 +1,355 @@
+{
+  "item": [
+    {
+      "id": "1920bb00-76f8-4579-88fd-fd46454fb68f",
+      "name": "Scopes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1e26b575-2e47-49e4-b856-a40df54011f1",
+          "name": "Create a scope",
+          "request": {
+            "name": "Create a scope",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "scopes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"location_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a93d1fc5-fee0-4b85-a4d9-73d62b42308f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "scopes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"location_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"scope\": {\n    \"id\": \"string\",\n    \"created_at\": \"2017-11-29T13:32:32.311Z\",\n    \"location\": {\n      \"id\": \"string\",\n      \"address_1\": \"string\",\n      \"address_2\": \"string\",\n      \"city\": \"string\",\n      \"state\": \"string\",\n      \"zip_code\": \"string\",\n      \"lat\": 628.0589922575986,\n      \"lon\": 9953.002884435196,\n      \"reference_key\": \"string\",\n      \"market_id\": \"string\",\n      \"market_name\": \"string\",\n      \"custom_fields\": {}\n    },\n    \"initial_visit\": {\n      \"id\": \"string\",\n      \"type\": \"string\",\n      \"visit_type\": {\n        \"id\": \"string\",\n        \"display_name\": \"string\",\n        \"slug\": \"string\"\n      },\n      \"visit_request_status\": \"cancelled\",\n      \"visited_at\": \"1993-05-14T22:15:32.106Z\",\n      \"visited_by\": {\n        \"id\": \"string\",\n        \"email\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"reference_key\": \"string\"\n      },\n      \"video\": {\n        \"id\": \"string\",\n        \"duration_ms\": 9540,\n        \"height\": 7150,\n        \"width\": 124\n      },\n      \"product_url\": \"string\",\n      \"product_pdf_url\": \"string\",\n      \"location_id\": \"string\",\n      \"work_order_id\": \"string\",\n      \"access_code_metadata\": {},\n      \"notes\": \"string\",\n      \"metadata\": {},\n      \"reviewed_by\": {\n        \"id\": \"string\",\n        \"email\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"reference_key\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"line_item_rows\": [\n      {\n        \"id\": \"string\",\n        \"line_item_row_id\": \"string\",\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"status\": \"not_complete\",\n        \"quantity\": 2667,\n        \"unit_type\": \"string\",\n        \"unit_cost_cents\": 885,\n        \"cost_components\": [\n          {\n            \"kind\": \"total\",\n            \"quantity\": \"string\",\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"unit_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"unit_cost_in_cents\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"kind\": \"total\",\n            \"quantity\": \"string\",\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"unit_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"unit_cost_in_cents\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"price_reference_key\": \"string\",\n        \"notes\": \"string\",\n        \"custom_fields\": {},\n        \"evidence\": [\n          {\n            \"image_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reference_key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"visit_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"is_selected\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"is_starred\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"image_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reference_key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"visit_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"is_selected\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"is_starred\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"area_name\": \"string\",\n        \"room\": {\n          \"name\": \"string\",\n          \"room_type_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"price_override_reason\": \"string\",\n        \"rejection_reason_option_id\": \"string\",\n        \"rejection_reason_text\": \"string\",\n        \"vendor\": {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"email\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"reference_key\": \"string\",\n          \"is_enabled\": false,\n          \"market_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      {\n        \"id\": \"string\",\n        \"line_item_row_id\": \"string\",\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"status\": \"rejected\",\n        \"quantity\": 7015,\n        \"unit_type\": \"string\",\n        \"unit_cost_cents\": 6825,\n        \"cost_components\": [\n          {\n            \"kind\": \"total\",\n            \"quantity\": \"string\",\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"unit_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"unit_cost_in_cents\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"kind\": \"material\",\n            \"quantity\": \"string\",\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"unit_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"unit_cost_in_cents\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"price_reference_key\": \"string\",\n        \"notes\": \"string\",\n        \"custom_fields\": {},\n        \"evidence\": [\n          {\n            \"image_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reference_key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"visit_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"is_selected\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"is_starred\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"image_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reference_key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"visit_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"is_selected\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"is_starred\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"area_name\": \"string\",\n        \"room\": {\n          \"name\": \"string\",\n          \"room_type_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"price_override_reason\": \"string\",\n        \"rejection_reason_option_id\": \"string\",\n        \"rejection_reason_text\": \"string\",\n        \"vendor\": {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"email\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"reference_key\": \"string\",\n          \"is_enabled\": false,\n          \"market_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "25d77e58-4500-4a77-b23f-b6e187e759e3",
+          "name": "List scopes",
+          "request": {
+            "name": "List scopes",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "scopes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "location_id",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ae1df4f0-1961-4e7f-bfe4-df98c1544ddb",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "scopes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "location_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"scopes\": [\n    {\n      \"id\": \"string\",\n      \"created_at\": \"2006-05-15T15:12:01.736Z\",\n      \"location_id\": \"string\",\n      \"initial_visit_id\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"created_at\": \"1966-05-08T11:04:27.879Z\",\n      \"location_id\": \"string\",\n      \"initial_visit_id\": \"string\"\n    }\n  ],\n  \"next_cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f2013e9b-a3f1-498b-8561-991e9c0e2677",
+          "name": "Get a scope",
+          "request": {
+            "name": "Get a scope",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "scopes",
+                ":scope_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scope_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "097e4ff8-27ab-4b88-bdef-b5d5e83b6a4f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "scopes",
+                    ":scope_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scope_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"scope\": {\n    \"id\": \"string\",\n    \"created_at\": \"2017-11-29T13:32:32.311Z\",\n    \"location\": {\n      \"id\": \"string\",\n      \"address_1\": \"string\",\n      \"address_2\": \"string\",\n      \"city\": \"string\",\n      \"state\": \"string\",\n      \"zip_code\": \"string\",\n      \"lat\": 628.0589922575986,\n      \"lon\": 9953.002884435196,\n      \"reference_key\": \"string\",\n      \"market_id\": \"string\",\n      \"market_name\": \"string\",\n      \"custom_fields\": {}\n    },\n    \"initial_visit\": {\n      \"id\": \"string\",\n      \"type\": \"string\",\n      \"visit_type\": {\n        \"id\": \"string\",\n        \"display_name\": \"string\",\n        \"slug\": \"string\"\n      },\n      \"visit_request_status\": \"cancelled\",\n      \"visited_at\": \"1993-05-14T22:15:32.106Z\",\n      \"visited_by\": {\n        \"id\": \"string\",\n        \"email\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"reference_key\": \"string\"\n      },\n      \"video\": {\n        \"id\": \"string\",\n        \"duration_ms\": 9540,\n        \"height\": 7150,\n        \"width\": 124\n      },\n      \"product_url\": \"string\",\n      \"product_pdf_url\": \"string\",\n      \"location_id\": \"string\",\n      \"work_order_id\": \"string\",\n      \"access_code_metadata\": {},\n      \"notes\": \"string\",\n      \"metadata\": {},\n      \"reviewed_by\": {\n        \"id\": \"string\",\n        \"email\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"reference_key\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"line_item_rows\": [\n      {\n        \"id\": \"string\",\n        \"line_item_row_id\": \"string\",\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"status\": \"not_complete\",\n        \"quantity\": 2667,\n        \"unit_type\": \"string\",\n        \"unit_cost_cents\": 885,\n        \"cost_components\": [\n          {\n            \"kind\": \"total\",\n            \"quantity\": \"string\",\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"unit_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"unit_cost_in_cents\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"kind\": \"total\",\n            \"quantity\": \"string\",\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"unit_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"unit_cost_in_cents\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"price_reference_key\": \"string\",\n        \"notes\": \"string\",\n        \"custom_fields\": {},\n        \"evidence\": [\n          {\n            \"image_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reference_key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"visit_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"is_selected\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"is_starred\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"image_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reference_key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"visit_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"is_selected\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"is_starred\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"area_name\": \"string\",\n        \"room\": {\n          \"name\": \"string\",\n          \"room_type_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"price_override_reason\": \"string\",\n        \"rejection_reason_option_id\": \"string\",\n        \"rejection_reason_text\": \"string\",\n        \"vendor\": {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"email\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"reference_key\": \"string\",\n          \"is_enabled\": false,\n          \"market_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      {\n        \"id\": \"string\",\n        \"line_item_row_id\": \"string\",\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"status\": \"rejected\",\n        \"quantity\": 7015,\n        \"unit_type\": \"string\",\n        \"unit_cost_cents\": 6825,\n        \"cost_components\": [\n          {\n            \"kind\": \"total\",\n            \"quantity\": \"string\",\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"unit_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"unit_cost_in_cents\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"kind\": \"material\",\n            \"quantity\": \"string\",\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"unit_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"unit_cost_in_cents\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"price_reference_key\": \"string\",\n        \"notes\": \"string\",\n        \"custom_fields\": {},\n        \"evidence\": [\n          {\n            \"image_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reference_key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"visit_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"is_selected\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"is_starred\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"image_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reference_key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"visit_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"is_selected\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"is_starred\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"area_name\": \"string\",\n        \"room\": {\n          \"name\": \"string\",\n          \"room_type_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"price_override_reason\": \"string\",\n        \"rejection_reason_option_id\": \"string\",\n        \"rejection_reason_text\": \"string\",\n        \"vendor\": {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"email\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"reference_key\": \"string\",\n          \"is_enabled\": false,\n          \"market_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.navigateai.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e3e52de7-984c-46ae-9691-7faaedb0eb04",
+    "name": "NavigateAI Access codes Scopes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.",
+      "type": "text/plain"
+    }
+  }
+}

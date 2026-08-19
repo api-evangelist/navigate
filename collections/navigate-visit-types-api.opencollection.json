@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NavigateAI Access codes Visit types API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Visit types",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List visit types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.navigateai.co/v1/visit_types",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List visit types"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

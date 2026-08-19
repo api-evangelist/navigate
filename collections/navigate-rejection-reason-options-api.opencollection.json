@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NavigateAI Access codes Rejection reason options API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Rejection reason options",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List rejection reason options",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.navigateai.co/v1/rejection_reason_options",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List the live line item rejection reason options configured for the requesting organization."
+        },
+        {
+          "info": {
+            "name": "Get a rejection reason option",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.navigateai.co/v1/rejection_reason_options/:rejection_reason_option_id",
+            "params": [
+              {
+                "name": "rejection_reason_option_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch a single line item rejection reason option by id for the requesting organization.\n\nUnlike the list endpoint, this point lookup returns soft-deleted options as well, so that\nintegrations can resolve historical `rejection_reason_option_id` values already stored on\nline items even after the option has been deleted."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

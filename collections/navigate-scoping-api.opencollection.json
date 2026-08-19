@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NavigateAI Access codes Scoping API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Scoping",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add a line item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.navigateai.co/v1/location/:location_id/line_item",
+            "params": [
+              {
+                "name": "location_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Add a line item"
+        },
+        {
+          "info": {
+            "name": "Get a scope",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.navigateai.co/v1/scope/:location_id",
+            "params": [
+              {
+                "name": "location_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a scope"
+        },
+        {
+          "info": {
+            "name": "Create a line item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.navigateai.co/v1/scope/:location_id/line_item_row",
+            "params": [
+              {
+                "name": "location_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a line item"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
