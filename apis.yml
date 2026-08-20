@@ -36,6 +36,14 @@ created: '2026-07-17'
 modified: '2026-07-20'
 tags:
 - Company
+- PropTech
+- Construction
+- Real-Estate
+- Artificial Intelligence
+- Field Service
+- Construction Technology
+tags_raw:
+- Company
 - Proptech
 - Construction
 - Real Estate
@@ -50,6 +58,8 @@ apis:
   humanURL: https://www.navigate.ai/
   baseURL: https://api.navigateai.co
   tags:
+  - Access Codes
+  tags_raw:
   - Access codes
   properties:
   - type: OpenAPI
@@ -116,6 +126,8 @@ apis:
   humanURL: https://www.navigate.ai/
   baseURL: https://api.navigateai.co
   tags:
+  - Line Items
+  tags_raw:
   - Line items
   properties:
   - type: OpenAPI
@@ -205,6 +217,8 @@ apis:
   humanURL: https://www.navigate.ai/
   baseURL: https://api.navigateai.co
   tags:
+  - Room Types
+  tags_raw:
   - Room types
   properties:
   - type: OpenAPI
@@ -337,6 +351,8 @@ apis:
   humanURL: https://www.navigate.ai/
   baseURL: https://api.navigateai.co
   tags:
+  - Visit Types
+  tags_raw:
   - Visit types
   properties:
   - type: OpenAPI
@@ -381,6 +397,8 @@ apis:
   humanURL: https://www.navigate.ai/
   baseURL: https://api.navigateai.co
   tags:
+  - Work Orders
+  tags_raw:
   - Work orders
   properties:
   - type: OpenAPI
