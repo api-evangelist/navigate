@@ -1,0 +1,27 @@
+slug: navigate
+provider: Navigate
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Real Estate
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Work orders
+  spec_file: navigate-work-orders-api-openapi.yml
+  capability_id: BC-4940.20
+  capability_id_l1: BC-4940
+  capability_name: Property Maintenance & Work Order Management
+  confidence: 0.75
+  evidence: Create a work order ... Complete a work order ... Assign a line item to a work order ... Override
+    a line item status as vendor
+  reason: Full work-order lifecycle (create, review, complete) scoped to a location, with line items assigned
+    to vendors and photo evidence of completed work — property work-order management for a proptech serving
+    commercial real estate and the trades. Some residual chance the intended frame is construction rather
+    than landlord maintenance.
