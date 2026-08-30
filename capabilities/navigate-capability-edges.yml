@@ -3,7 +3,7 @@ provider: Navigate
 generated_by: planning/capability-mapping/scripts/classify_capabilities.py
 model: claude-opus-5
 frame:
-- Real Estate
+- Infrastructure
 min_confidence: 0.7
 capability_model:
   source: https://github.com/vincentmakes/turbo-ea-capabilities
@@ -13,15 +13,15 @@ capability_model:
   notice: NOTICE
 edge_count: 1
 edges:
-- tag: Work orders
-  spec_file: navigate-work-orders-api-openapi.yml
-  capability_id: BC-4940.20
-  capability_id_l1: BC-4940
-  capability_name: Property Maintenance & Work Order Management
-  confidence: 0.75
-  evidence: Create a work order ... Complete a work order ... Assign a line item to a work order ... Override
-    a line item status as vendor
-  reason: Full work-order lifecycle (create, review, complete) scoped to a location, with line items assigned
-    to vendors and photo evidence of completed work — property work-order management for a proptech serving
-    commercial real estate and the trades. Some residual chance the intended frame is construction rather
-    than landlord maintenance.
+- tag: Vendors
+  spec_file: navigate-vendors-api-openapi.yml
+  capability_id: BC-510
+  capability_id_l1: BC-510
+  capability_name: Supplier Management
+  confidence: 0.7
+  evidence: POST /v1/vendors  Create a vendor; GET /v1/vendors  List vendors; CreateVendorOrganizationRequest,
+    VendorOrganizationExternalSchema
+  reason: Full CRUD over vendor organisations that are then referenced by scopes and line items — maintenance
+    of the supplier/trade-contractor records used to assign work. L1 supplier management is well grounded;
+    L2 left null because the operations are plain record management and do not evidence onboarding due
+    diligence, performance or risk specifically.
