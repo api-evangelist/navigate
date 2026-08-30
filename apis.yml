@@ -70,7 +70,7 @@ apis:
   humanURL: https://www.navigate.ai/
   baseURL: https://api.navigateai.co
   tags:
-  - Access Codes
+  - Access codes
   tags_raw:
   - Access codes
   properties:
@@ -138,7 +138,7 @@ apis:
   humanURL: https://www.navigate.ai/
   baseURL: https://api.navigateai.co
   tags:
-  - Line Items
+  - Line items
   tags_raw:
   - Line items
   properties:
@@ -229,7 +229,7 @@ apis:
   humanURL: https://www.navigate.ai/
   baseURL: https://api.navigateai.co
   tags:
-  - Room Types
+  - Room types
   tags_raw:
   - Room types
   properties:
@@ -363,7 +363,7 @@ apis:
   humanURL: https://www.navigate.ai/
   baseURL: https://api.navigateai.co
   tags:
-  - Visit Types
+  - Visit types
   tags_raw:
   - Visit types
   properties:
@@ -409,7 +409,7 @@ apis:
   humanURL: https://www.navigate.ai/
   baseURL: https://api.navigateai.co
   tags:
-  - Work Orders
+  - Work orders
   tags_raw:
   - Work orders
   properties:
