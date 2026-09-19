@@ -163,6 +163,8 @@ apis:
   humanURL: https://www.navigate.ai/
   baseURL: https://api.navigateai.co
   tags:
+  - Location
+  tags_raw:
   - Locations
   properties:
   - type: OpenAPI
