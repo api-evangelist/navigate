@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: NavigateAI Access codes Video Upload Requests API
+  title: NavigateAI Video Upload Requests API
   version: 1.0.0
   description: The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.
 servers:
@@ -120,6 +120,39 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
+    GetVideoUploadRequestResponse:
+      properties:
+        video_upload_request:
+          $ref: '#/components/schemas/VideoUploadRequestWithUploadUrlExternalSchema'
+      required:
+      - video_upload_request
+      title: GetVideoUploadRequestResponse
+      type: object
+    CreateVideoUploadRequestResponse:
+      properties:
+        video_upload_request:
+          $ref: '#/components/schemas/VideoUploadRequestWithUploadUrlExternalSchema'
+      required:
+      - video_upload_request
+      title: CreateVideoUploadRequestResponse
+      type: object
+    CreateVideoUploadRequestInput:
+      properties:
+        visit_id:
+          title: Visit Id
+          type: string
+        file_name:
+          title: File Name
+          type: string
+        file_size_bytes:
+          title: File Size Bytes
+          type: integer
+      required:
+      - visit_id
+      - file_name
+      - file_size_bytes
+      title: CreateVideoUploadRequestInput
+      type: object
     VideoUploadRequestWithUploadUrlExternalSchema:
       description: 'Extended schema that includes a presigned upload URL.
 
@@ -172,22 +205,24 @@ components:
       - upload_url
       title: VideoUploadRequestWithUploadUrl
       type: object
-    CreateVideoUploadRequestInput:
+    ListVideoUploadRequestsResponse:
       properties:
-        visit_id:
-          title: Visit Id
-          type: string
-        file_name:
-          title: File Name
-          type: string
-        file_size_bytes:
-          title: File Size Bytes
-          type: integer
+        video_upload_requests:
+          items:
+            $ref: '#/components/schemas/VideoUploadRequestExternalSchema'
+          title: Video Upload Requests
+          type: array
       required:
-      - visit_id
-      - file_name
-      - file_size_bytes
-      title: CreateVideoUploadRequestInput
+      - video_upload_requests
+      title: ListVideoUploadRequestsResponse
+      type: object
+    CancelVideoUploadRequestResponse:
+      properties:
+        video_upload_request:
+          $ref: '#/components/schemas/VideoUploadRequestExternalSchema'
+      required:
+      - video_upload_request
+      title: CancelVideoUploadRequestResponse
       type: object
     ConfirmVideoUploadRequestResponse:
       properties:
@@ -233,41 +268,6 @@ components:
       - created_at
       - completed_at
       title: VideoUploadRequest
-      type: object
-    GetVideoUploadRequestResponse:
-      properties:
-        video_upload_request:
-          $ref: '#/components/schemas/VideoUploadRequestWithUploadUrlExternalSchema'
-      required:
-      - video_upload_request
-      title: GetVideoUploadRequestResponse
-      type: object
-    ListVideoUploadRequestsResponse:
-      properties:
-        video_upload_requests:
-          items:
-            $ref: '#/components/schemas/VideoUploadRequestExternalSchema'
-          title: Video Upload Requests
-          type: array
-      required:
-      - video_upload_requests
-      title: ListVideoUploadRequestsResponse
-      type: object
-    CancelVideoUploadRequestResponse:
-      properties:
-        video_upload_request:
-          $ref: '#/components/schemas/VideoUploadRequestExternalSchema'
-      required:
-      - video_upload_request
-      title: CancelVideoUploadRequestResponse
-      type: object
-    CreateVideoUploadRequestResponse:
-      properties:
-        video_upload_request:
-          $ref: '#/components/schemas/VideoUploadRequestWithUploadUrlExternalSchema'
-      required:
-      - video_upload_request
-      title: CreateVideoUploadRequestResponse
       type: object
     ExternalUploadRequestStatus:
       description: Customer-facing upload request statuses, lowercase for external API consistency.

@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: NavigateAI Access codes Lennar API
+  title: NavigateAI Lennar API
   version: 1.0.0
   description: The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.
 servers:
@@ -32,16 +32,6 @@ paths:
       - Lennar
 components:
   schemas:
-    AdditionalContext:
-      additionalProperties: true
-      properties:
-        images:
-          items:
-            $ref: '#/components/schemas/AdditionalContextImage'
-          title: Images
-          type: array
-      title: AdditionalContext
-      type: object
     Prediction:
       properties:
         generated_messages:
@@ -59,26 +49,27 @@ components:
       - annotated_images
       title: Prediction
       type: object
-    PredictionBoundingBox:
+    PredictionAnnotatedImage:
       properties:
-        x1:
-          title: X1
-          type: number
-        y1:
-          title: Y1
-          type: number
-        x2:
-          title: X2
-          type: number
-        y2:
-          title: Y2
-          type: number
+        image_url:
+          title: Image Url
+          type: string
+        annotations:
+          items:
+            $ref: '#/components/schemas/PredictionAnnotation'
+          title: Annotations
+          type: array
       required:
-      - x1
-      - y1
-      - x2
-      - y2
-      title: PredictionBoundingBox
+      - image_url
+      title: PredictionAnnotatedImage
+      type: object
+    PredictionResponse:
+      properties:
+        prediction:
+          $ref: '#/components/schemas/Prediction'
+      required:
+      - prediction
+      title: PredictionResponse
       type: object
     PredictionAnnotation:
       properties:
@@ -118,27 +109,6 @@ components:
       required:
       - messages
       title: PredictionRequest
-      type: object
-    AdditionalContextImage:
-      properties:
-        image_url:
-          title: Image Url
-          type: string
-        description:
-          default: ''
-          title: Description
-          type: string
-      required:
-      - image_url
-      title: AdditionalContextImage
-      type: object
-    PredictionResponse:
-      properties:
-        prediction:
-          $ref: '#/components/schemas/Prediction'
-      required:
-      - prediction
-      title: PredictionResponse
       type: object
     Message:
       properties:
@@ -189,6 +159,37 @@ components:
       - body
       title: Message
       type: object
+    AdditionalContext:
+      additionalProperties: true
+      properties:
+        images:
+          items:
+            $ref: '#/components/schemas/AdditionalContextImage'
+          title: Images
+          type: array
+      title: AdditionalContext
+      type: object
+    PredictionBoundingBox:
+      properties:
+        x1:
+          title: X1
+          type: number
+        y1:
+          title: Y1
+          type: number
+        x2:
+          title: X2
+          type: number
+        y2:
+          title: Y2
+          type: number
+      required:
+      - x1
+      - y1
+      - x2
+      - y2
+      title: PredictionBoundingBox
+      type: object
     PredictionGeneratedMessage:
       properties:
         reasoning:
@@ -214,19 +215,18 @@ components:
       - confidence
       title: PredictionGeneratedMessage
       type: object
-    PredictionAnnotatedImage:
+    AdditionalContextImage:
       properties:
         image_url:
           title: Image Url
           type: string
-        annotations:
-          items:
-            $ref: '#/components/schemas/PredictionAnnotation'
-          title: Annotations
-          type: array
+        description:
+          default: ''
+          title: Description
+          type: string
       required:
       - image_url
-      title: PredictionAnnotatedImage
+      title: AdditionalContextImage
       type: object
   securitySchemes:
     ApiKeyAuth:

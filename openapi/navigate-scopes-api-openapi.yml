@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: NavigateAI Access codes Scopes API
+  title: NavigateAI Scopes API
   version: 1.0.0
   description: The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.
 servers:
@@ -98,44 +98,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    ExternalVisitRequestStatus:
-      description: 'Customer facing visit statuses. Each VisitRequestStatus should map directly to a ExternalVisitRequestStatus.
-
-        But we don''t need ExternalVisitRequestStatus to directly map back to VisitRequestStatus.'
-      enum:
-      - visit_started
-      - uploading
-      - processing
-      - in_review
-      - completed
-      - cancelled
-      title: ExternalVisitRequestStatus
-      type: string
-    AudioEvidenceExternalSchema:
-      properties:
-        type:
-          const: audio
-          default: audio
-          title: Type
-          type: string
-        start_ms:
-          description: Start timestamp in the source video, in milliseconds.
-          title: Start Ms
-          type: integer
-        end_ms:
-          description: End timestamp in the source video, in milliseconds.
-          title: End Ms
-          type: integer
-        text:
-          description: Transcribed text from this audio segment.
-          title: Text
-          type: string
-      required:
-      - start_ms
-      - end_ms
-      - text
-      title: AudioEvidence
-      type: object
     VisitExternalSchema:
       properties:
         id:
@@ -217,67 +179,63 @@ components:
       - metadata
       title: Visit
       type: object
-    CostComponentExternalSchema:
-      description: A cost component representing a portion of a line item's pricing (e.g. labor, material).
+    ExternalVisitRequestStatus:
+      description: 'Customer facing visit statuses. Each VisitRequestStatus should map directly to a ExternalVisitRequestStatus.
+
+        But we don''t need ExternalVisitRequestStatus to directly map back to VisitRequestStatus.'
+      enum:
+      - visit_started
+      - uploading
+      - processing
+      - in_review
+      - completed
+      - cancelled
+      title: ExternalVisitRequestStatus
+      type: string
+    UserExternalSchema:
       properties:
-        kind:
-          description: 'The type of cost component: "total", "labor", or "material".'
-          enum:
-          - total
-          - labor
-          - material
-          title: Kind
+        id:
+          title: Id
           type: string
-        label:
+        email:
+          title: Email
+          type: string
+        first_name:
+          title: First Name
+          type: string
+        last_name:
+          title: Last Name
+          type: string
+        reference_key:
           anyOf:
           - type: string
           - type: 'null'
-          description: Optional display label for this component.
-          title: Label
-        unit_type:
+          description: External identifier for this user.
+          title: Reference Key
+      required:
+      - id
+      - email
+      - first_name
+      - last_name
+      - reference_key
+      title: User
+      type: object
+    LineItemRoomExternalSchema:
+      description: The room or area a line item applies to.
+      properties:
+        name:
+          description: Display name of the room or area (e.g. 'Bedroom 2', 'Kitchen'). Not guaranteed to be stable over time.
+          title: Name
+          type: string
+        room_type_id:
           anyOf:
           - type: string
           - type: 'null'
-          description: Unit of measurement (e.g. "each", "sqft"). Defaults to "each" if omitted.
-          title: Unit Type
-        unit_cost_in_cents:
-          anyOf:
-          - minimum: 0
-            type: integer
-          - type: 'null'
-          description: Cost per unit in cents.
-          title: Unit Cost In Cents
-        quantity:
-          description: Number of units as a decimal string (e.g. "1", "2.5").
-          title: Quantity
-          type: string
+          description: The [room type](/api-reference/room-types/room-type-object) ID.
+          title: Room Type Id
       required:
-      - kind
-      - quantity
-      title: CostComponent
-      type: object
-    TextEvidenceExternalSchema:
-      properties:
-        type:
-          const: text
-          default: text
-          title: Type
-          type: string
-        text:
-          title: Text
-          type: string
-      required:
-      - text
-      title: TextEvidence
-      type: object
-    CreateScopeRequest:
-      properties:
-        location_id:
-          title: Location Id
-          type: string
-      required:
-      - location_id
-      title: CreateScopeRequest
+      - name
+      title: LineItemRoom
       type: object
     LineItemRowExternalSchema:
       properties:
@@ -400,22 +358,80 @@ components:
       - room
       title: LineItemRow
       type: object
-    LineItemRoomExternalSchema:
-      description: The room or area a line item applies to.
+    TextEvidenceExternalSchema:
       properties:
-        name:
-          description: Display name of the room or area (e.g. 'Bedroom 2', 'Kitchen'). Not guaranteed to be stable over time.
-          title: Name
+        type:
+          const: text
+          default: text
+          title: Type
           type: string
-        room_type_id:
+        text:
+          title: Text
+          type: string
+      required:
+      - text
+      title: TextEvidence
+      type: object
+    ImageEvidenceExternalSchema:
+      properties:
+        type:
+          const: image
+          default: image
+          title: Type
+          type: string
+        image_id:
+          description: Use with the Get Image endpoint to retrieve the image file.
+          title: Image Id
+          type: string
+        reference_key:
           anyOf:
           - type: string
           - type: 'null'
-          description: The [room type](/api-reference/room-types/room-type-object) ID.
-          title: Room Type Id
+          title: Reference Key
+        visit_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The visit this image was captured during.
+          title: Visit Id
+        is_selected:
+          default: false
+          description: Whether this image was explicitly selected as evidence.
+          title: Is Selected
+          type: boolean
+        is_starred:
+          default: false
+          description: Whether this image was starred as the primary evidence photo.
+          title: Is Starred
+          type: boolean
       required:
-      - name
-      title: LineItemRoom
+      - image_id
+      title: ImageEvidence
+      type: object
+    ScopeResponse:
+      properties:
+        scope:
+          $ref: '#/components/schemas/ScopeDetailExternalSchema'
+      required:
+      - scope
+      title: ScopeResponse
+      type: object
+    ListScopesResponse:
+      properties:
+        scopes:
+          items:
+            $ref: '#/components/schemas/ScopeThinExternalSchema'
+          title: Scopes
+          type: array
+        next_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Cursor
+      required:
+      - scopes
+      - next_cursor
+      title: ListScopesResponse
       type: object
     LocationExternalSchema:
       properties:
@@ -489,6 +505,63 @@ components:
       - custom_fields
       title: Location
       type: object
+    CostComponentExternalSchema:
+      description: A cost component representing a portion of a line item's pricing (e.g. labor, material).
+      properties:
+        kind:
+          description: 'The type of cost component: "total", "labor", or "material".'
+          enum:
+          - total
+          - labor
+          - material
+          title: Kind
+          type: string
+        label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Optional display label for this component.
+          title: Label
+        unit_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Unit of measurement (e.g. "each", "sqft"). Defaults to "each" if omitted.
+          title: Unit Type
+        unit_cost_in_cents:
+          anyOf:
+          - minimum: 0
+            type: integer
+          - type: 'null'
+          description: Cost per unit in cents.
+          title: Unit Cost In Cents
+        quantity:
+          description: Number of units as a decimal string (e.g. "1", "2.5").
+          title: Quantity
+          type: string
+      required:
+      - kind
+      - quantity
+      title: CostComponent
+      type: object
+    VisitTypeExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        display_name:
+          title: Display Name
+          type: string
+        slug:
+          description: URL-friendly identifier for this visit type.
+          title: Slug
+          type: string
+      required:
+      - id
+      - display_name
+      - slug
+      title: VisitType
+      type: object
     ScopeThinExternalSchema:
       description: 'Lightweight scope schema for list endpoints.
 
@@ -529,70 +602,6 @@ components:
       - initial_visit_id
       title: ScopeSummary
       type: object
-    VendorOrganizationExternalSchema:
-      properties:
-        id:
-          title: Id
-          type: string
-        name:
-          title: Name
-          type: string
-        email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Email
-        reference_key:
-          description: Optional unique identifier for this vendor in your system.
-          title: Reference Key
-          type: string
-        is_enabled:
-          description: Whether this vendor is enabled.
-          title: Is Enabled
-          type: boolean
-        market_ids:
-          description: IDs of the markets this vendor serves. A vendor with no market associations serves all markets.
-          items:
-            type: string
-          title: Market Ids
-          type: array
-      required:
-      - id
-      - name
-      - email
-      - reference_key
-      - is_enabled
-      - market_ids
-      title: Vendor
-      type: object
-    UserExternalSchema:
-      properties:
-        id:
-          title: Id
-          type: string
-        email:
-          title: Email
-          type: string
-        first_name:
-          title: First Name
-          type: string
-        last_name:
-          title: Last Name
-          type: string
-        reference_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: External identifier for this user.
-          title: Reference Key
-      required:
-      - id
-      - email
-      - first_name
-      - last_name
-      - reference_key
-      title: User
-      type: object
     ScopeDetailExternalSchema:
       description: 'The full scope resource including line items, keyed by Scope.Id.
 
@@ -631,76 +640,66 @@ components:
       - line_item_rows
       title: Scope
       type: object
-    VisitTypeExternalSchema:
+    AudioEvidenceExternalSchema:
+      properties:
+        type:
+          const: audio
+          default: audio
+          title: Type
+          type: string
+        start_ms:
+          description: Start timestamp in the source video, in milliseconds.
+          title: Start Ms
+          type: integer
+        end_ms:
+          description: End timestamp in the source video, in milliseconds.
+          title: End Ms
+          type: integer
+        text:
+          description: Transcribed text from this audio segment.
+          title: Text
+          type: string
+      required:
+      - start_ms
+      - end_ms
+      - text
+      title: AudioEvidence
+      type: object
+    VendorOrganizationExternalSchema:
       properties:
         id:
           title: Id
           type: string
-        display_name:
-          title: Display Name
+        name:
+          title: Name
           type: string
-        slug:
-          description: URL-friendly identifier for this visit type.
-          title: Slug
+        email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email
+        reference_key:
+          description: Optional unique identifier for this vendor in your system.
+          title: Reference Key
           type: string
+        is_enabled:
+          description: Whether this vendor is enabled.
+          title: Is Enabled
+          type: boolean
+        market_ids:
+          description: IDs of the markets this vendor serves. A vendor with no market associations serves all markets.
+          items:
+            type: string
+          title: Market Ids
+          type: array
       required:
       - id
-      - display_name
-      - slug
-      title: VisitType
-      type: object
-    ListScopesResponse:
-      properties:
-        scopes:
-          items:
-            $ref: '#/components/schemas/ScopeThinExternalSchema'
-          title: Scopes
-          type: array
-        next_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Next Cursor
-      required:
-      - scopes
-      - next_cursor
-      title: ListScopesResponse
-      type: object
-    ImageEvidenceExternalSchema:
-      properties:
-        type:
-          const: image
-          default: image
-          title: Type
-          type: string
-        image_id:
-          description: Use with the Get Image endpoint to retrieve the image file.
-          title: Image Id
-          type: string
-        reference_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Reference Key
-        visit_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The visit this image was captured during.
-          title: Visit Id
-        is_selected:
-          default: false
-          description: Whether this image was explicitly selected as evidence.
-          title: Is Selected
-          type: boolean
-        is_starred:
-          default: false
-          description: Whether this image was starred as the primary evidence photo.
-          title: Is Starred
-          type: boolean
-      required:
-      - image_id
-      title: ImageEvidence
+      - name
+      - email
+      - reference_key
+      - is_enabled
+      - market_ids
+      title: Vendor
       type: object
     VideoExternalSchema:
       properties:
@@ -723,13 +722,14 @@ components:
       - width
       title: Video
       type: object
-    ScopeResponse:
+    CreateScopeRequest:
       properties:
-        scope:
-          $ref: '#/components/schemas/ScopeDetailExternalSchema'
+        location_id:
+          title: Location Id
+          type: string
       required:
-      - scope
-      title: ScopeResponse
+      - location_id
+      title: CreateScopeRequest
       type: object
   securitySchemes:
     ApiKeyAuth:

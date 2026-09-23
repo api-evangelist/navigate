@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: NavigateAI Access codes Rejection reason options API
+  title: NavigateAI Rejection reason options API
   version: 1.0.0
   description: The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.
 servers:
@@ -57,16 +57,13 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    ListRejectionReasonOptionsResponse:
+    RejectionReasonOptionResponse:
       properties:
-        rejection_reason_options:
-          items:
-            $ref: '#/components/schemas/RejectionReasonOptionExternalSchema'
-          title: Rejection Reason Options
-          type: array
+        rejection_reason_option:
+          $ref: '#/components/schemas/RejectionReasonOptionExternalSchema'
       required:
-      - rejection_reason_options
-      title: ListRejectionReasonOptionsResponse
+      - rejection_reason_option
+      title: RejectionReasonOptionResponse
       type: object
     RejectionReasonOptionExternalSchema:
       properties:
@@ -83,13 +80,16 @@ components:
       - label
       title: RejectionReasonOption
       type: object
-    RejectionReasonOptionResponse:
+    ListRejectionReasonOptionsResponse:
       properties:
-        rejection_reason_option:
-          $ref: '#/components/schemas/RejectionReasonOptionExternalSchema'
+        rejection_reason_options:
+          items:
+            $ref: '#/components/schemas/RejectionReasonOptionExternalSchema'
+          title: Rejection Reason Options
+          type: array
       required:
-      - rejection_reason_option
-      title: RejectionReasonOptionResponse
+      - rejection_reason_options
+      title: ListRejectionReasonOptionsResponse
       type: object
   securitySchemes:
     ApiKeyAuth:

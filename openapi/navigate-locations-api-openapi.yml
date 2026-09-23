@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: NavigateAI Access codes Locations API
+  title: NavigateAI Locations API
   version: 1.0.0
   description: The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.
 servers:
@@ -129,14 +129,35 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    UpdateLocationRequest:
+    CreateLocationRequest:
       properties:
-        custom_fields:
+        address_1:
+          title: Address 1
+          type: string
+        address_2:
           anyOf:
-          - type: object
+          - type: string
           - type: 'null'
-          description: Partial update of custom fields. Only specified fields will be updated.
-          title: Custom Fields
+          title: Address 2
+        city:
+          title: City
+          type: string
+        state:
+          title: State
+          type: string
+        zip_code:
+          title: Zip Code
+          type: string
+        lat:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lat
+        lon:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lon
         reference_key:
           anyOf:
           - type: string
@@ -146,9 +167,34 @@ components:
           anyOf:
           - type: string
           - type: 'null'
-          description: ID of the market this location belongs to. Must reference an existing market in your organization.
+          description: ID of the market this location belongs to. Must reference an existing market in your organization. Cannot be combined with market_name.
           title: Market Id
-      title: UpdateLocationRequest
+        market_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          deprecated: true
+          description: 'Deprecated: prefer market_id. Looks up an existing market by name within your organization. Cannot be combined with market_id.'
+          title: Market Name
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Custom Fields
+      required:
+      - address_1
+      - city
+      - state
+      - zip_code
+      title: CreateLocationRequest
+      type: object
+    LocationResponse:
+      properties:
+        location:
+          $ref: '#/components/schemas/LocationExternalSchema'
+      required:
+      - location
+      title: LocationResponse
       type: object
     LocationExternalSchema:
       properties:
@@ -222,35 +268,14 @@ components:
       - custom_fields
       title: Location
       type: object
-    CreateLocationRequest:
+    UpdateLocationRequest:
       properties:
-        address_1:
-          title: Address 1
-          type: string
-        address_2:
+        custom_fields:
           anyOf:
-          - type: string
+          - type: object
           - type: 'null'
-          title: Address 2
-        city:
-          title: City
-          type: string
-        state:
-          title: State
-          type: string
-        zip_code:
-          title: Zip Code
-          type: string
-        lat:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Lat
-        lon:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Lon
+          description: Partial update of custom fields. Only specified fields will be updated.
+          title: Custom Fields
         reference_key:
           anyOf:
           - type: string
@@ -260,34 +285,9 @@ components:
           anyOf:
           - type: string
           - type: 'null'
-          description: ID of the market this location belongs to. Must reference an existing market in your organization. Cannot be combined with market_name.
+          description: ID of the market this location belongs to. Must reference an existing market in your organization.
           title: Market Id
-        market_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          deprecated: true
-          description: 'Deprecated: prefer market_id. Looks up an existing market by name within your organization. Cannot be combined with market_id.'
-          title: Market Name
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Custom Fields
-      required:
-      - address_1
-      - city
-      - state
-      - zip_code
-      title: CreateLocationRequest
-      type: object
-    LocationResponse:
-      properties:
-        location:
-          $ref: '#/components/schemas/LocationExternalSchema'
-      required:
-      - location
-      title: LocationResponse
+      title: UpdateLocationRequest
       type: object
     ListLocationsResponse:
       properties:

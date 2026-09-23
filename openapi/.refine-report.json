@@ -1,22 +1,7 @@
 {
   "provider": "navigate",
   "sources": [
-    "navigate-access-codes-api-openapi.yml",
-    "navigate-assets-api-openapi.yml",
-    "navigate-lennar-api-openapi.yml",
-    "navigate-line-items-api-openapi.yml",
-    "navigate-locations-api-openapi.yml",
-    "navigate-markets-api-openapi.yml",
-    "navigate-rejection-reason-options-api-openapi.yml",
-    "navigate-room-types-api-openapi.yml",
-    "navigate-rooms-api-openapi.yml",
-    "navigate-scopes-api-openapi.yml",
-    "navigate-scoping-api-openapi.yml",
-    "navigate-vendors-api-openapi.yml",
-    "navigate-video-upload-requests-api-openapi.yml",
-    "navigate-visit-types-api-openapi.yml",
-    "navigate-visits-api-openapi.yml",
-    "navigate-work-orders-api-openapi.yml"
+    "_original/navigate-openapi.json"
   ],
   "outputs": [
     "navigate-access-codes-api-openapi.yml",
@@ -39,6 +24,44 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "navigate-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "navigate-openapi.json: tagged paths POST /v1/lennar/messages/predict -> Lennar",
+    "navigate-openapi.json: declared missing tag: Access codes",
+    "navigate-openapi.json: declared missing tag: Assets",
+    "navigate-openapi.json: declared missing tag: Lennar",
+    "navigate-openapi.json: declared missing tag: Line items",
+    "navigate-openapi.json: declared missing tag: Locations",
+    "navigate-openapi.json: declared missing tag: Markets",
+    "navigate-openapi.json: declared missing tag: Rejection reason options",
+    "navigate-openapi.json: declared missing tag: Room types",
+    "navigate-openapi.json: declared missing tag: Rooms",
+    "navigate-openapi.json: declared missing tag: Scopes",
+    "navigate-openapi.json: declared missing tag: Scoping",
+    "navigate-openapi.json: declared missing tag: Vendors",
+    "navigate-openapi.json: declared missing tag: Video Upload Requests",
+    "navigate-openapi.json: declared missing tag: Visit types",
+    "navigate-openapi.json: declared missing tag: Visits",
+    "navigate-openapi.json: declared missing tag: Work orders",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "navigate-access-codes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "navigate-assets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "navigate-lennar-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "navigate-line-items-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "navigate-locations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "navigate-markets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "navigate-rejection-reason-options-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "navigate-room-types-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "navigate-rooms-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "navigate-scopes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "navigate-scoping-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "navigate-vendors-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "navigate-video-upload-requests-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "navigate-visit-types-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "navigate-visits-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "navigate-work-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

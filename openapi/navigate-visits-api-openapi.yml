@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: NavigateAI Access codes Visits API
+  title: NavigateAI Visits API
   version: 1.0.0
   description: The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.
 servers:
@@ -170,55 +170,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    ExternalVisitRequestStatus:
-      description: 'Customer facing visit statuses. Each VisitRequestStatus should map directly to a ExternalVisitRequestStatus.
-
-        But we don''t need ExternalVisitRequestStatus to directly map back to VisitRequestStatus.'
-      enum:
-      - visit_started
-      - uploading
-      - processing
-      - in_review
-      - completed
-      - cancelled
-      title: ExternalVisitRequestStatus
-      type: string
-    ListFindingsResponse:
-      properties:
-        findings:
-          items:
-            $ref: '#/components/schemas/FindingExternalSchema'
-          title: Findings
-          type: array
-      required:
-      - findings
-      title: ListFindingsResponse
-      type: object
-    AudioEvidenceExternalSchema:
-      properties:
-        type:
-          const: audio
-          default: audio
-          title: Type
-          type: string
-        start_ms:
-          description: Start timestamp in the source video, in milliseconds.
-          title: Start Ms
-          type: integer
-        end_ms:
-          description: End timestamp in the source video, in milliseconds.
-          title: End Ms
-          type: integer
-        text:
-          description: Transcribed text from this audio segment.
-          title: Text
-          type: string
-      required:
-      - start_ms
-      - end_ms
-      - text
-      title: AudioEvidence
-      type: object
     VisitExternalSchema:
       properties:
         id:
@@ -300,19 +251,48 @@ components:
       - metadata
       title: Visit
       type: object
-    TextEvidenceExternalSchema:
+    ExternalVisitRequestStatus:
+      description: 'Customer facing visit statuses. Each VisitRequestStatus should map directly to a ExternalVisitRequestStatus.
+
+        But we don''t need ExternalVisitRequestStatus to directly map back to VisitRequestStatus.'
+      enum:
+      - visit_started
+      - uploading
+      - processing
+      - in_review
+      - completed
+      - cancelled
+      title: ExternalVisitRequestStatus
+      type: string
+    AllVisitsForLocationResponse:
       properties:
-        type:
-          const: text
-          default: text
-          title: Type
-          type: string
-        text:
-          title: Text
-          type: string
+        visits:
+          items:
+            $ref: '#/components/schemas/VisitExternalSchema'
+          title: Visits
+          type: array
       required:
-      - text
-      title: TextEvidence
+      - visits
+      title: AllVisitsForLocationResponse
+      type: object
+    ListFindingsResponse:
+      properties:
+        findings:
+          items:
+            $ref: '#/components/schemas/FindingExternalSchema'
+          title: Findings
+          type: array
+      required:
+      - findings
+      title: ListFindingsResponse
+      type: object
+    VisitResponse:
+      properties:
+        visit:
+          $ref: '#/components/schemas/VisitExternalSchema'
+      required:
+      - visit
+      title: VisitResponse
       type: object
     CreateVisitRequest:
       properties:
@@ -331,6 +311,164 @@ components:
       - location_id
       - visit_type_slug
       title: CreateVisitRequest
+      type: object
+    UserExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        email:
+          title: Email
+          type: string
+        first_name:
+          title: First Name
+          type: string
+        last_name:
+          title: Last Name
+          type: string
+        reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: External identifier for this user.
+          title: Reference Key
+      required:
+      - id
+      - email
+      - first_name
+      - last_name
+      - reference_key
+      title: User
+      type: object
+    TextEvidenceExternalSchema:
+      properties:
+        type:
+          const: text
+          default: text
+          title: Type
+          type: string
+        text:
+          title: Text
+          type: string
+      required:
+      - text
+      title: TextEvidence
+      type: object
+    ImageEvidenceExternalSchema:
+      properties:
+        type:
+          const: image
+          default: image
+          title: Type
+          type: string
+        image_id:
+          description: Use with the Get Image endpoint to retrieve the image file.
+          title: Image Id
+          type: string
+        reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reference Key
+        visit_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The visit this image was captured during.
+          title: Visit Id
+        is_selected:
+          default: false
+          description: Whether this image was explicitly selected as evidence.
+          title: Is Selected
+          type: boolean
+        is_starred:
+          default: false
+          description: Whether this image was starred as the primary evidence photo.
+          title: Is Starred
+          type: boolean
+      required:
+      - image_id
+      title: ImageEvidence
+      type: object
+    VisitTypeExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        display_name:
+          title: Display Name
+          type: string
+        slug:
+          description: URL-friendly identifier for this visit type.
+          title: Slug
+          type: string
+      required:
+      - id
+      - display_name
+      - slug
+      title: VisitType
+      type: object
+    ProcessVisitResponse:
+      properties:
+        visit:
+          $ref: '#/components/schemas/VisitExternalSchema'
+      required:
+      - visit
+      title: ProcessVisitResponse
+      type: object
+    AudioEvidenceExternalSchema:
+      properties:
+        type:
+          const: audio
+          default: audio
+          title: Type
+          type: string
+        start_ms:
+          description: Start timestamp in the source video, in milliseconds.
+          title: Start Ms
+          type: integer
+        end_ms:
+          description: End timestamp in the source video, in milliseconds.
+          title: End Ms
+          type: integer
+        text:
+          description: Transcribed text from this audio segment.
+          title: Text
+          type: string
+      required:
+      - start_ms
+      - end_ms
+      - text
+      title: AudioEvidence
+      type: object
+    CreateVisitAccessGrantRequest:
+      properties:
+        recipient_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Display name shown as the guest's identity on the visit (e.g. the reviewer's name).
+          title: Recipient Name
+        recipient_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Contact email recorded for the guest. Not used for authentication.
+          title: Recipient Email
+        metadata:
+          anyOf:
+          - type: object
+          - type: 'null'
+          description: Arbitrary structured data to attach to this grant (e.g. your own user or task ids). Echoed back verbatim in the create response. Never interpreted by NavigateAI.
+          title: Metadata
+        expires_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the access link stops working, as an ISO 8601 UTC timestamp (e.g. `2026-12-31T23:59:59Z`). Must be in the future and timezone-aware. Omit for a link that never expires.
+          title: Expires At
+      title: CreateVisitAccessGrantRequest
       type: object
     FindingExternalSchema:
       properties:
@@ -388,143 +526,26 @@ components:
       - evidence
       title: Finding
       type: object
-    AllVisitsForLocationResponse:
-      properties:
-        visits:
-          items:
-            $ref: '#/components/schemas/VisitExternalSchema'
-          title: Visits
-          type: array
-      required:
-      - visits
-      title: AllVisitsForLocationResponse
-      type: object
-    CreateVisitAccessGrantRequest:
-      properties:
-        recipient_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Display name shown as the guest's identity on the visit (e.g. the reviewer's name).
-          title: Recipient Name
-        recipient_email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Contact email recorded for the guest. Not used for authentication.
-          title: Recipient Email
-        metadata:
-          anyOf:
-          - type: object
-          - type: 'null'
-          description: Arbitrary structured data to attach to this grant (e.g. your own user or task ids). Echoed back verbatim in the create response. Never interpreted by NavigateAI.
-          title: Metadata
-        expires_at:
-          anyOf:
-          - format: date-time
-            type: string
-          - type: 'null'
-          description: When the access link stops working, as an ISO 8601 UTC timestamp (e.g. `2026-12-31T23:59:59Z`). Must be in the future and timezone-aware. Omit for a link that never expires.
-          title: Expires At
-      title: CreateVisitAccessGrantRequest
-      type: object
-    ProcessVisitResponse:
-      properties:
-        visit:
-          $ref: '#/components/schemas/VisitExternalSchema'
-      required:
-      - visit
-      title: ProcessVisitResponse
-      type: object
-    VisitResponse:
-      properties:
-        visit:
-          $ref: '#/components/schemas/VisitExternalSchema'
-      required:
-      - visit
-      title: VisitResponse
-      type: object
-    UserExternalSchema:
+    VideoExternalSchema:
       properties:
         id:
           title: Id
           type: string
-        email:
-          title: Email
-          type: string
-        first_name:
-          title: First Name
-          type: string
-        last_name:
-          title: Last Name
-          type: string
-        reference_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: External identifier for this user.
-          title: Reference Key
+        duration_ms:
+          title: Duration Ms
+          type: integer
+        height:
+          title: Height
+          type: integer
+        width:
+          title: Width
+          type: integer
       required:
       - id
-      - email
-      - first_name
-      - last_name
-      - reference_key
-      title: User
-      type: object
-    VisitTypeExternalSchema:
-      properties:
-        id:
-          title: Id
-          type: string
-        display_name:
-          title: Display Name
-          type: string
-        slug:
-          description: URL-friendly identifier for this visit type.
-          title: Slug
-          type: string
-      required:
-      - id
-      - display_name
-      - slug
-      title: VisitType
-      type: object
-    ImageEvidenceExternalSchema:
-      properties:
-        type:
-          const: image
-          default: image
-          title: Type
-          type: string
-        image_id:
-          description: Use with the Get Image endpoint to retrieve the image file.
-          title: Image Id
-          type: string
-        reference_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Reference Key
-        visit_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The visit this image was captured during.
-          title: Visit Id
-        is_selected:
-          default: false
-          description: Whether this image was explicitly selected as evidence.
-          title: Is Selected
-          type: boolean
-        is_starred:
-          default: false
-          description: Whether this image was starred as the primary evidence photo.
-          title: Is Starred
-          type: boolean
-      required:
-      - image_id
-      title: ImageEvidence
+      - duration_ms
+      - height
+      - width
+      title: Video
       type: object
     VisitAccessGrantResponse:
       properties:
@@ -560,27 +581,6 @@ components:
       - expires_at
       - metadata
       title: VisitAccessGrantResponse
-      type: object
-    VideoExternalSchema:
-      properties:
-        id:
-          title: Id
-          type: string
-        duration_ms:
-          title: Duration Ms
-          type: integer
-        height:
-          title: Height
-          type: integer
-        width:
-          title: Width
-          type: integer
-      required:
-      - id
-      - duration_ms
-      - height
-      - width
-      title: Video
       type: object
     CancelVisitResponse:
       properties:

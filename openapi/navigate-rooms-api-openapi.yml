@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: NavigateAI Access codes Rooms API
+  title: NavigateAI Rooms API
   version: 1.0.0
   description: The NavigateAI external API allows you to programmatically manage locations, scoping, work orders, and more.
 servers:
@@ -62,33 +62,28 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    ListRoomsResponse:
+    RoomMeasurementsExternalSchema:
+      description: Physical measurements of the room. Always present; individual fields are null when unknown.
       properties:
-        rooms:
-          items:
-            $ref: '#/components/schemas/RoomExternalSchema'
-          title: Rooms
-          type: array
-      required:
-      - rooms
-      title: ListRoomsResponse
-      type: object
-    RoomImageExternalSchema:
-      description: An image of a room, captured during a visit.
-      properties:
-        image_id:
-          description: The [ID](/api-reference/assets/get-image) of the image.
-          title: Image Id
-          type: string
-        visit_id:
+        area_sq_in:
           anyOf:
-          - type: string
+          - type: number
           - type: 'null'
-          description: The visit this image was captured during.
-          title: Visit Id
-      required:
-      - image_id
-      title: RoomImage
+          description: Room area in square inches.
+          title: Area Sq In
+        length_in:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: A horizontal dimension in inches.
+          title: Length In
+        width_in:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: A horizontal dimension in inches.
+          title: Width In
+      title: RoomMeasurements
       type: object
     RoomExternalSchema:
       description: A room at a location.
@@ -133,6 +128,23 @@ components:
       - name
       title: Room
       type: object
+    RoomImageExternalSchema:
+      description: An image of a room, captured during a visit.
+      properties:
+        image_id:
+          description: The [ID](/api-reference/assets/get-image) of the image.
+          title: Image Id
+          type: string
+        visit_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The visit this image was captured during.
+          title: Visit Id
+      required:
+      - image_id
+      title: RoomImage
+      type: object
     RoomResponse:
       properties:
         room:
@@ -141,28 +153,16 @@ components:
       - room
       title: RoomResponse
       type: object
-    RoomMeasurementsExternalSchema:
-      description: Physical measurements of the room. Always present; individual fields are null when unknown.
+    ListRoomsResponse:
       properties:
-        area_sq_in:
-          anyOf:
-          - type: number
-          - type: 'null'
-          description: Room area in square inches.
-          title: Area Sq In
-        length_in:
-          anyOf:
-          - type: number
-          - type: 'null'
-          description: A horizontal dimension in inches.
-          title: Length In
-        width_in:
-          anyOf:
-          - type: number
-          - type: 'null'
-          description: A horizontal dimension in inches.
-          title: Width In
-      title: RoomMeasurements
+        rooms:
+          items:
+            $ref: '#/components/schemas/RoomExternalSchema'
+          title: Rooms
+          type: array
+      required:
+      - rooms
+      title: ListRoomsResponse
       type: object
   securitySchemes:
     ApiKeyAuth:
