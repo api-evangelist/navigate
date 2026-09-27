@@ -57,14 +57,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    RejectionReasonOptionResponse:
-      properties:
-        rejection_reason_option:
-          $ref: '#/components/schemas/RejectionReasonOptionExternalSchema'
-      required:
-      - rejection_reason_option
-      title: RejectionReasonOptionResponse
-      type: object
     RejectionReasonOptionExternalSchema:
       properties:
         id:
@@ -79,6 +71,14 @@ components:
       - id
       - label
       title: RejectionReasonOption
+      type: object
+    RejectionReasonOptionResponse:
+      properties:
+        rejection_reason_option:
+          $ref: '#/components/schemas/RejectionReasonOptionExternalSchema'
+      required:
+      - rejection_reason_option
+      title: RejectionReasonOptionResponse
       type: object
     ListRejectionReasonOptionsResponse:
       properties:

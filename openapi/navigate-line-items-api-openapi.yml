@@ -60,56 +60,105 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    UpdateLineItemRowRequest:
-      description: 'Request schema for updating a line item row.
-
-
-        All fields are optional. Omitting a field leaves it unchanged.
-
-        Some fields may be explicitly set to null to clear the value.'
+    VendorOrganizationExternalSchema:
       properties:
-        title:
-          description: Updated line item title. Omit to leave unchanged.
-          title: Title
+        id:
+          title: Id
           type: string
-        description:
-          description: Updated line item description. Omit to leave unchanged.
-          title: Description
+        name:
+          title: Name
           type: string
-        price_reference_key:
+        email:
           anyOf:
           - type: string
           - type: 'null'
-          description: Pricing item reference key. Set to null to clear. Omit to leave unchanged.
-          title: Price Reference Key
-        notes:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Line item notes. Set to null to clear. Omit to leave unchanged.
-          title: Notes
-        status:
-          description: Updated line item status. Omit to leave unchanged.
+          title: Email
+        reference_key:
+          description: Optional unique identifier for this vendor in your system.
+          title: Reference Key
+          type: string
+        is_enabled:
+          description: Whether this vendor is enabled.
+          title: Is Enabled
+          type: boolean
+        market_ids:
+          description: IDs of the markets this vendor serves. A vendor with no market associations serves all markets.
+          items:
+            type: string
+          title: Market Ids
+          type: array
+      required:
+      - id
+      - name
+      - email
+      - reference_key
+      - is_enabled
+      - market_ids
+      title: Vendor
+      type: object
+    CostComponentExternalSchema:
+      description: A cost component representing a portion of a line item's pricing (e.g. labor, material).
+      properties:
+        kind:
+          description: 'The type of cost component: "total", "labor", or "material".'
           enum:
-          - not_complete
-          - complete
-          - rejected
-          title: Status
+          - total
+          - labor
+          - material
+          title: Kind
           type: string
-        rejection_reason_option_id:
+        label:
           anyOf:
           - type: string
           - type: 'null'
-          description: ID of the selected [rejection reason option](/api-reference/rejection-reason-options/rejection-reason-option-object). May only be set when the resulting line item status is `rejected`. Will be cleared otherwise. Omit to leave unchanged.
-          title: Rejection Reason Option Id
-        rejection_reason_text:
+          description: Optional display label for this component.
+          title: Label
+        unit_type:
           anyOf:
           - type: string
           - type: 'null'
-          description: Free text rejection reason for additional context. May only be set when the resulting line item status is `rejected`. Will be cleared otherwise. Omit to leave unchanged.
-          title: Rejection Reason Text
-      required: []
-      title: UpdateLineItemRowRequest
+          description: Unit of measurement (e.g. "each", "sqft"). Defaults to "each" if omitted.
+          title: Unit Type
+        unit_cost_in_cents:
+          anyOf:
+          - minimum: 0
+            type: integer
+          - type: 'null'
+          description: Cost per unit in cents.
+          title: Unit Cost In Cents
+        quantity:
+          description: Number of units as a decimal string (e.g. "1", "2.5").
+          title: Quantity
+          type: string
+      required:
+      - kind
+      - quantity
+      title: CostComponent
+      type: object
+    AudioEvidenceExternalSchema:
+      properties:
+        type:
+          const: audio
+          default: audio
+          title: Type
+          type: string
+        start_ms:
+          description: Start timestamp in the source video, in milliseconds.
+          title: Start Ms
+          type: integer
+        end_ms:
+          description: End timestamp in the source video, in milliseconds.
+          title: End Ms
+          type: integer
+        text:
+          description: Transcribed text from this audio segment.
+          title: Text
+          type: string
+      required:
+      - start_ms
+      - end_ms
+      - text
+      title: AudioEvidence
       type: object
     LineItemRowExternalSchema:
       properties:
@@ -246,6 +295,90 @@ components:
       - text
       title: TextEvidence
       type: object
+    UpdateLineItemRowRequest:
+      description: 'Request schema for updating a line item row.
+
+
+        All fields are optional. Omitting a field leaves it unchanged.
+
+        Some fields may be explicitly set to null to clear the value.'
+      properties:
+        title:
+          description: Updated line item title. Omit to leave unchanged.
+          title: Title
+          type: string
+        description:
+          description: Updated line item description. Omit to leave unchanged.
+          title: Description
+          type: string
+        price_reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Pricing item reference key. Set to null to clear. Omit to leave unchanged.
+          title: Price Reference Key
+        notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Line item notes. Set to null to clear. Omit to leave unchanged.
+          title: Notes
+        status:
+          description: Updated line item status. Omit to leave unchanged.
+          enum:
+          - not_complete
+          - complete
+          - rejected
+          title: Status
+          type: string
+        rejection_reason_option_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: ID of the selected [rejection reason option](/api-reference/rejection-reason-options/rejection-reason-option-object). May only be set when the resulting line item status is `rejected`. Will be cleared otherwise. Omit to leave unchanged.
+          title: Rejection Reason Option Id
+        rejection_reason_text:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Free text rejection reason for additional context. May only be set when the resulting line item status is `rejected`. Will be cleared otherwise. Omit to leave unchanged.
+          title: Rejection Reason Text
+      required: []
+      title: UpdateLineItemRowRequest
+      type: object
+    CreateLineItemRequest:
+      properties:
+        scope_id:
+          title: Scope Id
+          type: string
+        title:
+          title: Title
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        price_reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Price Reference Key
+        notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Notes
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Custom Fields
+      required:
+      - scope_id
+      - title
+      title: CreateLineItemRequest
+      type: object
     ImageEvidenceExternalSchema:
       properties:
         type:
@@ -282,45 +415,6 @@ components:
       - image_id
       title: ImageEvidence
       type: object
-    CostComponentExternalSchema:
-      description: A cost component representing a portion of a line item's pricing (e.g. labor, material).
-      properties:
-        kind:
-          description: 'The type of cost component: "total", "labor", or "material".'
-          enum:
-          - total
-          - labor
-          - material
-          title: Kind
-          type: string
-        label:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Optional display label for this component.
-          title: Label
-        unit_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Unit of measurement (e.g. "each", "sqft"). Defaults to "each" if omitted.
-          title: Unit Type
-        unit_cost_in_cents:
-          anyOf:
-          - minimum: 0
-            type: integer
-          - type: 'null'
-          description: Cost per unit in cents.
-          title: Unit Cost In Cents
-        quantity:
-          description: Number of units as a decimal string (e.g. "1", "2.5").
-          title: Quantity
-          type: string
-      required:
-      - kind
-      - quantity
-      title: CostComponent
-      type: object
     LineItemRoomExternalSchema:
       description: The room or area a line item applies to.
       properties:
@@ -337,100 +431,6 @@ components:
       required:
       - name
       title: LineItemRoom
-      type: object
-    AudioEvidenceExternalSchema:
-      properties:
-        type:
-          const: audio
-          default: audio
-          title: Type
-          type: string
-        start_ms:
-          description: Start timestamp in the source video, in milliseconds.
-          title: Start Ms
-          type: integer
-        end_ms:
-          description: End timestamp in the source video, in milliseconds.
-          title: End Ms
-          type: integer
-        text:
-          description: Transcribed text from this audio segment.
-          title: Text
-          type: string
-      required:
-      - start_ms
-      - end_ms
-      - text
-      title: AudioEvidence
-      type: object
-    VendorOrganizationExternalSchema:
-      properties:
-        id:
-          title: Id
-          type: string
-        name:
-          title: Name
-          type: string
-        email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Email
-        reference_key:
-          description: Optional unique identifier for this vendor in your system.
-          title: Reference Key
-          type: string
-        is_enabled:
-          description: Whether this vendor is enabled.
-          title: Is Enabled
-          type: boolean
-        market_ids:
-          description: IDs of the markets this vendor serves. A vendor with no market associations serves all markets.
-          items:
-            type: string
-          title: Market Ids
-          type: array
-      required:
-      - id
-      - name
-      - email
-      - reference_key
-      - is_enabled
-      - market_ids
-      title: Vendor
-      type: object
-    CreateLineItemRequest:
-      properties:
-        scope_id:
-          title: Scope Id
-          type: string
-        title:
-          title: Title
-          type: string
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        price_reference_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Price Reference Key
-        notes:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Notes
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Custom Fields
-      required:
-      - scope_id
-      - title
-      title: CreateLineItemRequest
       type: object
     LineItemRowApiResponse:
       properties:

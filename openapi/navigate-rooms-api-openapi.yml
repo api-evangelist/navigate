@@ -62,29 +62,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    RoomMeasurementsExternalSchema:
-      description: Physical measurements of the room. Always present; individual fields are null when unknown.
-      properties:
-        area_sq_in:
-          anyOf:
-          - type: number
-          - type: 'null'
-          description: Room area in square inches.
-          title: Area Sq In
-        length_in:
-          anyOf:
-          - type: number
-          - type: 'null'
-          description: A horizontal dimension in inches.
-          title: Length In
-        width_in:
-          anyOf:
-          - type: number
-          - type: 'null'
-          description: A horizontal dimension in inches.
-          title: Width In
-      title: RoomMeasurements
-      type: object
     RoomExternalSchema:
       description: A room at a location.
       properties:
@@ -128,6 +105,14 @@ components:
       - name
       title: Room
       type: object
+    RoomResponse:
+      properties:
+        room:
+          $ref: '#/components/schemas/RoomExternalSchema'
+      required:
+      - room
+      title: RoomResponse
+      type: object
     RoomImageExternalSchema:
       description: An image of a room, captured during a visit.
       properties:
@@ -145,13 +130,28 @@ components:
       - image_id
       title: RoomImage
       type: object
-    RoomResponse:
+    RoomMeasurementsExternalSchema:
+      description: Physical measurements of the room. Always present; individual fields are null when unknown.
       properties:
-        room:
-          $ref: '#/components/schemas/RoomExternalSchema'
-      required:
-      - room
-      title: RoomResponse
+        area_sq_in:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: Room area in square inches.
+          title: Area Sq In
+        length_in:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: A horizontal dimension in inches.
+          title: Length In
+        width_in:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: A horizontal dimension in inches.
+          title: Width In
+      title: RoomMeasurements
       type: object
     ListRoomsResponse:
       properties:

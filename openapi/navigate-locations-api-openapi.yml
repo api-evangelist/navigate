@@ -129,6 +129,14 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
+    LocationResponse:
+      properties:
+        location:
+          $ref: '#/components/schemas/LocationExternalSchema'
+      required:
+      - location
+      title: LocationResponse
+      type: object
     CreateLocationRequest:
       properties:
         address_1:
@@ -188,13 +196,22 @@ components:
       - zip_code
       title: CreateLocationRequest
       type: object
-    LocationResponse:
+    ListLocationsResponse:
       properties:
-        location:
-          $ref: '#/components/schemas/LocationExternalSchema'
+        locations:
+          items:
+            $ref: '#/components/schemas/LocationExternalSchema'
+          title: Locations
+          type: array
+        next_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Cursor
       required:
-      - location
-      title: LocationResponse
+      - locations
+      - next_cursor
+      title: ListLocationsResponse
       type: object
     LocationExternalSchema:
       properties:
@@ -288,23 +305,6 @@ components:
           description: ID of the market this location belongs to. Must reference an existing market in your organization.
           title: Market Id
       title: UpdateLocationRequest
-      type: object
-    ListLocationsResponse:
-      properties:
-        locations:
-          items:
-            $ref: '#/components/schemas/LocationExternalSchema'
-          title: Locations
-          type: array
-        next_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Next Cursor
-      required:
-      - locations
-      - next_cursor
-      title: ListLocationsResponse
       type: object
   securitySchemes:
     ApiKeyAuth:

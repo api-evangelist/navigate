@@ -38,6 +38,23 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
+    AccessCodeCustomerMetadataExternalSchema:
+      additionalProperties: false
+      properties:
+        recipient:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Who the access code is intended for (e.g. a vendor name or email).
+          title: Recipient
+        redirect_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Optional URL that the recipient can open from the NavigateAI mobile app after using the access code (via long-press on the upload entry). Useful for sending the recipient back to a task or page in your own app once they've finished capturing.
+          title: Redirect Url
+      title: AccessCodeMetadata
+      type: object
     CreateAccessCodeRequest:
       properties:
         visit_type_slug:
@@ -88,23 +105,6 @@ components:
       - deeplink_url
       - expires_at
       title: CreateAccessCodeResponse
-      type: object
-    AccessCodeCustomerMetadataExternalSchema:
-      additionalProperties: false
-      properties:
-        recipient:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Who the access code is intended for (e.g. a vendor name or email).
-          title: Recipient
-        redirect_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Optional URL that the recipient can open from the NavigateAI mobile app after using the access code (via long-press on the upload entry). Useful for sending the recipient back to a task or page in your own app once they've finished capturing.
-          title: Redirect Url
-      title: AccessCodeMetadata
       type: object
   securitySchemes:
     ApiKeyAuth:

@@ -112,13 +112,16 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    MarketResponse:
+    ListMarketsResponse:
       properties:
-        market:
-          $ref: '#/components/schemas/MarketExternalSchema'
+        markets:
+          items:
+            $ref: '#/components/schemas/MarketExternalSchema'
+          title: Markets
+          type: array
       required:
-      - market
-      title: MarketResponse
+      - markets
+      title: ListMarketsResponse
       type: object
     MarketExternalSchema:
       properties:
@@ -146,24 +149,6 @@ components:
       - reference_key
       title: Market
       type: object
-    CreateMarketRequest:
-      additionalProperties: false
-      properties:
-        name:
-          description: Display name for the market.
-          minLength: 1
-          title: Name
-          type: string
-        slug:
-          description: URL-friendly identifier for the market. Must be unique within your organization. Only lowercase letters and underscores are allowed.
-          pattern: ^[a-z_]+$
-          title: Slug
-          type: string
-      required:
-      - name
-      - slug
-      title: CreateMarketRequest
-      type: object
     UpdateMarketRequest:
       additionalProperties: false
       description: 'Request schema for updating a market.
@@ -184,16 +169,31 @@ components:
       required: []
       title: UpdateMarketRequest
       type: object
-    ListMarketsResponse:
+    CreateMarketRequest:
+      additionalProperties: false
       properties:
-        markets:
-          items:
-            $ref: '#/components/schemas/MarketExternalSchema'
-          title: Markets
-          type: array
+        name:
+          description: Display name for the market.
+          minLength: 1
+          title: Name
+          type: string
+        slug:
+          description: URL-friendly identifier for the market. Must be unique within your organization. Only lowercase letters and underscores are allowed.
+          pattern: ^[a-z_]+$
+          title: Slug
+          type: string
       required:
-      - markets
-      title: ListMarketsResponse
+      - name
+      - slug
+      title: CreateMarketRequest
+      type: object
+    MarketResponse:
+      properties:
+        market:
+          $ref: '#/components/schemas/MarketExternalSchema'
+      required:
+      - market
+      title: MarketResponse
       type: object
   securitySchemes:
     ApiKeyAuth:

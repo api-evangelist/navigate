@@ -51,7 +51,7 @@ tags:
 - Company
 - PropTech
 - Construction
-- Real-Estate
+- Real Estate
 - Artificial Intelligence
 - Field Service
 - Construction Technology
@@ -64,6 +64,7 @@ tags_raw:
 - Field Service
 - Construction Technology
 - API
+- Real-Estate
 apis:
 - aid: navigate:navigate-access-codes-api
   name: Navigate Access codes API

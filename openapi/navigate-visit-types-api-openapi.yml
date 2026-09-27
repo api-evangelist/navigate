@@ -26,17 +26,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    ListVisitTypesResponse:
-      properties:
-        visit_types:
-          items:
-            $ref: '#/components/schemas/VisitTypeExternalSchema'
-          title: Visit Types
-          type: array
-      required:
-      - visit_types
-      title: ListVisitTypesResponse
-      type: object
     VisitTypeExternalSchema:
       properties:
         id:
@@ -54,6 +43,17 @@ components:
       - display_name
       - slug
       title: VisitType
+      type: object
+    ListVisitTypesResponse:
+      properties:
+        visit_types:
+          items:
+            $ref: '#/components/schemas/VisitTypeExternalSchema'
+          title: Visit Types
+          type: array
+      required:
+      - visit_types
+      title: ListVisitTypesResponse
       type: object
   securitySchemes:
     ApiKeyAuth:
