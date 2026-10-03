@@ -26,17 +26,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    ListRoomTypesResponse:
-      properties:
-        room_types:
-          items:
-            $ref: '#/components/schemas/RoomTypeExternalSchema'
-          title: Room Types
-          type: array
-      required:
-      - room_types
-      title: ListRoomTypesResponse
-      type: object
     RoomTypeExternalSchema:
       properties:
         id:
@@ -56,6 +45,17 @@ components:
       - name
       - reference_key
       title: RoomType
+      type: object
+    ListRoomTypesResponse:
+      properties:
+        room_types:
+          items:
+            $ref: '#/components/schemas/RoomTypeExternalSchema'
+          title: Room Types
+          type: array
+      required:
+      - room_types
+      title: ListRoomTypesResponse
       type: object
   securitySchemes:
     ApiKeyAuth:

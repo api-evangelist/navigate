@@ -38,22 +38,25 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    AccessCodeCustomerMetadataExternalSchema:
-      additionalProperties: false
+    CreateAccessCodeResponse:
       properties:
-        recipient:
+        access_code:
+          title: Access Code
+          type: string
+        deeplink_url:
+          title: Deeplink Url
+          type: string
+        expires_at:
           anyOf:
-          - type: string
+          - format: date-time
+            type: string
           - type: 'null'
-          description: Who the access code is intended for (e.g. a vendor name or email).
-          title: Recipient
-        redirect_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Optional URL that the recipient can open from the NavigateAI mobile app after using the access code (via long-press on the upload entry). Useful for sending the recipient back to a task or page in your own app once they've finished capturing.
-          title: Redirect Url
-      title: AccessCodeMetadata
+          title: Expires At
+      required:
+      - access_code
+      - deeplink_url
+      - expires_at
+      title: CreateAccessCodeResponse
       type: object
     CreateAccessCodeRequest:
       properties:
@@ -86,25 +89,22 @@ components:
       - visit_type_slug
       title: CreateAccessCodeRequest
       type: object
-    CreateAccessCodeResponse:
+    AccessCodeCustomerMetadataExternalSchema:
+      additionalProperties: false
       properties:
-        access_code:
-          title: Access Code
-          type: string
-        deeplink_url:
-          title: Deeplink Url
-          type: string
-        expires_at:
+        recipient:
           anyOf:
-          - format: date-time
-            type: string
+          - type: string
           - type: 'null'
-          title: Expires At
-      required:
-      - access_code
-      - deeplink_url
-      - expires_at
-      title: CreateAccessCodeResponse
+          description: Who the access code is intended for (e.g. a vendor name or email).
+          title: Recipient
+        redirect_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Optional URL that the recipient can open from the NavigateAI mobile app after using the access code (via long-press on the upload entry). Useful for sending the recipient back to a task or page in your own app once they've finished capturing.
+          title: Redirect Url
+      title: AccessCodeMetadata
       type: object
   securitySchemes:
     ApiKeyAuth:

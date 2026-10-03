@@ -302,14 +302,19 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    WorkOrderProcessPhotosResponse:
+    TextEvidenceExternalSchema:
       properties:
-        visit_id:
-          title: Visit Id
+        type:
+          const: text
+          default: text
+          title: Type
+          type: string
+        text:
+          title: Text
           type: string
       required:
-      - visit_id
-      title: WorkOrderProcessPhotosResponse
+      - text
+      title: TextEvidence
       type: object
     ImageEvidenceExternalSchema:
       properties:
@@ -347,80 +352,67 @@ components:
       - image_id
       title: ImageEvidence
       type: object
-    LineItemRoomExternalSchema:
-      description: The room or area a line item applies to.
+    VendorOverrideLineItemRowStatusRequest:
       properties:
+        status:
+          enum:
+          - complete
+          - not_complete
+          title: Status
+          type: string
+        edit_justification:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Edit Justification
+      required:
+      - status
+      title: VendorOverrideLineItemRowStatusRequest
+      type: object
+    VendorOrganizationExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
         name:
-          description: Display name of the room or area (e.g. 'Bedroom 2', 'Kitchen'). Not guaranteed to be stable over time.
           title: Name
           type: string
-        room_type_id:
+        email:
           anyOf:
           - type: string
           - type: 'null'
-          description: The [room type](/api-reference/room-types/room-type-object) ID.
-          title: Room Type Id
-      required:
-      - name
-      title: LineItemRoom
-      type: object
-    CreateWorkOrderRequest:
-      properties:
+          title: Email
         reference_key:
-          minLength: 1
+          description: Optional unique identifier for this vendor in your system.
           title: Reference Key
           type: string
-        default_vendor_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: ID of the vendor to assign as the default for this work order.
-          title: Default Vendor Id
-        line_item_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          description: Line item IDs to attach. Must belong to a completed scope and not already be assigned to a different work order.
-          title: Line Item Ids
+        is_enabled:
+          description: Whether this vendor is enabled.
+          title: Is Enabled
+          type: boolean
+        market_ids:
+          description: IDs of the markets this vendor serves. A vendor with no market associations serves all markets.
+          items:
+            type: string
+          title: Market Ids
+          type: array
       required:
+      - id
+      - name
+      - email
       - reference_key
-      title: CreateWorkOrderRequest
+      - is_enabled
+      - market_ids
+      title: Vendor
       type: object
-    SetLineItemWorkOrderRequest:
+    WorkOrderProcessPhotosResponse:
       properties:
-        work_order_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Work Order Id
-      title: SetLineItemWorkOrderRequest
-      type: object
-    AudioEvidenceExternalSchema:
-      properties:
-        type:
-          const: audio
-          default: audio
-          title: Type
-          type: string
-        start_ms:
-          description: Start timestamp in the source video, in milliseconds.
-          title: Start Ms
-          type: integer
-        end_ms:
-          description: End timestamp in the source video, in milliseconds.
-          title: End Ms
-          type: integer
-        text:
-          description: Transcribed text from this audio segment.
-          title: Text
+        visit_id:
+          title: Visit Id
           type: string
       required:
-      - start_ms
-      - end_ms
-      - text
-      title: AudioEvidence
+      - visit_id
+      title: WorkOrderProcessPhotosResponse
       type: object
     LineItemRowProposalExternalSchema:
       description: 'Schema for WorkOrder latest_line_item_row_proposals.
@@ -556,10 +548,6 @@ components:
       - vendor_status_override
       title: LineItemRowProposal
       type: object
-    SetLineItemWorkOrderResponse:
-      properties: {}
-      title: SetLineItemWorkOrderResponse
-      type: object
     UploadPhotosResponse:
       properties:
         images:
@@ -570,6 +558,89 @@ components:
       required:
       - images
       title: UploadPhotosResponse
+      type: object
+    SetLineItemWorkOrderResponse:
+      properties: {}
+      title: SetLineItemWorkOrderResponse
+      type: object
+    WorkOrderExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        status:
+          enum:
+          - open
+          - processing
+          - in_review
+          - reviewed
+          - completed
+          title: Status
+          type: string
+        reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Optional unique identifier for this work order in your system.
+          title: Reference Key
+        location_id:
+          title: Location Id
+          type: string
+        review_url:
+          description: Link to the NavigateAI dashboard for reviewing this work order.
+          title: Review Url
+          type: string
+        default_vendor:
+          anyOf:
+          - $ref: '#/components/schemas/VendorOrganizationExternalSchema'
+          - type: 'null'
+          description: The default vendor applied to each line item in the work order.
+        line_items:
+          description: Location-level line items attached to this work order.
+          items:
+            $ref: '#/components/schemas/LineItemRowExternalSchema'
+          title: Line Items
+          type: array
+        latest_line_item_row_proposals:
+          description: The most recent visit-level observations for each line item.
+          items:
+            $ref: '#/components/schemas/LineItemRowProposalExternalSchema'
+          title: Latest Line Item Row Proposals
+          type: array
+      required:
+      - id
+      - status
+      - reference_key
+      - location_id
+      - review_url
+      - default_vendor
+      - line_items
+      - latest_line_item_row_proposals
+      title: WorkOrder
+      type: object
+    CreateWorkOrderRequest:
+      properties:
+        reference_key:
+          minLength: 1
+          title: Reference Key
+          type: string
+        default_vendor_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: ID of the vendor to assign as the default for this work order.
+          title: Default Vendor Id
+        line_item_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          description: Line item IDs to attach. Must belong to a completed scope and not already be assigned to a different work order.
+          title: Line Item Ids
+      required:
+      - reference_key
+      title: CreateWorkOrderRequest
       type: object
     ListWorkOrdersResponse:
       properties:
@@ -582,45 +653,68 @@ components:
       - work_orders
       title: ListWorkOrdersResponse
       type: object
-    VendorOrganizationExternalSchema:
+    LineItemEditVendorStatusOverrideExternalSchema:
+      properties:
+        status:
+          anyOf:
+          - enum:
+            - suggested
+            - not_complete
+            - complete
+            - canceled
+            - deleted
+            - ignored
+            - not_started
+            - in_progress
+            type: string
+          - type: 'null'
+          description: The vendor's claimed status for this line item.
+          title: Status
+        edit_justification:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The vendor's reason for the status override.
+          title: Edit Justification
+      required:
+      - status
+      - edit_justification
+      title: LineItemEditVendorStatusOverride
+      type: object
+    WorkOrderThinExternalSchema:
+      description: Lightweight work order schema without line items for list endpoints.
       properties:
         id:
           title: Id
           type: string
-        name:
-          title: Name
+        status:
+          enum:
+          - open
+          - processing
+          - in_review
+          - reviewed
+          - completed
+          title: Status
           type: string
-        email:
+        reference_key:
           anyOf:
           - type: string
           - type: 'null'
-          title: Email
-        reference_key:
-          description: Optional unique identifier for this vendor in your system.
           title: Reference Key
+        location_id:
+          title: Location Id
           type: string
-        is_enabled:
-          description: Whether this vendor is enabled.
-          title: Is Enabled
-          type: boolean
-        market_ids:
-          description: IDs of the markets this vendor serves. A vendor with no market associations serves all markets.
-          items:
-            type: string
-          title: Market Ids
-          type: array
+        default_vendor:
+          anyOf:
+          - $ref: '#/components/schemas/VendorOrganizationExternalSchema'
+          - type: 'null'
       required:
       - id
-      - name
-      - email
+      - status
       - reference_key
-      - is_enabled
-      - market_ids
-      title: Vendor
-      type: object
-    WorkOrderStartProcessingResponse:
-      properties: {}
-      title: WorkOrderStartProcessingResponse
+      - location_id
+      - default_vendor
+      title: WorkOrderSummary
       type: object
     OperationSuccessSchema:
       properties:
@@ -630,6 +724,65 @@ components:
           title: Success
           type: boolean
       title: OperationSuccessSchema
+      type: object
+    WorkOrderResponse:
+      properties:
+        work_order:
+          $ref: '#/components/schemas/WorkOrderExternalSchema'
+      required:
+      - work_order
+      title: WorkOrderResponse
+      type: object
+    LineItemRoomExternalSchema:
+      description: The room or area a line item applies to.
+      properties:
+        name:
+          description: Display name of the room or area (e.g. 'Bedroom 2', 'Kitchen'). Not guaranteed to be stable over time.
+          title: Name
+          type: string
+        room_type_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The [room type](/api-reference/room-types/room-type-object) ID.
+          title: Room Type Id
+      required:
+      - name
+      title: LineItemRoom
+      type: object
+    AudioEvidenceExternalSchema:
+      properties:
+        type:
+          const: audio
+          default: audio
+          title: Type
+          type: string
+        start_ms:
+          description: Start timestamp in the source video, in milliseconds.
+          title: Start Ms
+          type: integer
+        end_ms:
+          description: End timestamp in the source video, in milliseconds.
+          title: End Ms
+          type: integer
+        text:
+          description: Transcribed text from this audio segment.
+          title: Text
+          type: string
+      required:
+      - start_ms
+      - end_ms
+      - text
+      title: AudioEvidence
+      type: object
+    SetLineItemWorkOrderRequest:
+      properties:
+        work_order_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Work Order Id
+      title: SetLineItemWorkOrderRequest
       type: object
     LineItemRowExternalSchema:
       properties:
@@ -752,127 +905,9 @@ components:
       - room
       title: LineItemRow
       type: object
-    WorkOrderResponse:
-      properties:
-        work_order:
-          $ref: '#/components/schemas/WorkOrderExternalSchema'
-      required:
-      - work_order
-      title: WorkOrderResponse
-      type: object
-    TextEvidenceExternalSchema:
-      properties:
-        type:
-          const: text
-          default: text
-          title: Type
-          type: string
-        text:
-          title: Text
-          type: string
-      required:
-      - text
-      title: TextEvidence
-      type: object
-    LineItemEditVendorStatusOverrideExternalSchema:
-      properties:
-        status:
-          anyOf:
-          - enum:
-            - suggested
-            - not_complete
-            - complete
-            - canceled
-            - deleted
-            - ignored
-            - not_started
-            - in_progress
-            type: string
-          - type: 'null'
-          description: The vendor's claimed status for this line item.
-          title: Status
-        edit_justification:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The vendor's reason for the status override.
-          title: Edit Justification
-      required:
-      - status
-      - edit_justification
-      title: LineItemEditVendorStatusOverride
-      type: object
-    VendorOverrideLineItemRowStatusRequest:
-      properties:
-        status:
-          enum:
-          - complete
-          - not_complete
-          title: Status
-          type: string
-        edit_justification:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Edit Justification
-      required:
-      - status
-      title: VendorOverrideLineItemRowStatusRequest
-      type: object
-    WorkOrderExternalSchema:
-      properties:
-        id:
-          title: Id
-          type: string
-        status:
-          enum:
-          - open
-          - processing
-          - in_review
-          - reviewed
-          - completed
-          title: Status
-          type: string
-        reference_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Optional unique identifier for this work order in your system.
-          title: Reference Key
-        location_id:
-          title: Location Id
-          type: string
-        review_url:
-          description: Link to the NavigateAI dashboard for reviewing this work order.
-          title: Review Url
-          type: string
-        default_vendor:
-          anyOf:
-          - $ref: '#/components/schemas/VendorOrganizationExternalSchema'
-          - type: 'null'
-          description: The default vendor applied to each line item in the work order.
-        line_items:
-          description: Location-level line items attached to this work order.
-          items:
-            $ref: '#/components/schemas/LineItemRowExternalSchema'
-          title: Line Items
-          type: array
-        latest_line_item_row_proposals:
-          description: The most recent visit-level observations for each line item.
-          items:
-            $ref: '#/components/schemas/LineItemRowProposalExternalSchema'
-          title: Latest Line Item Row Proposals
-          type: array
-      required:
-      - id
-      - status
-      - reference_key
-      - location_id
-      - review_url
-      - default_vendor
-      - line_items
-      - latest_line_item_row_proposals
-      title: WorkOrder
+    WorkOrderStartProcessingResponse:
+      properties: {}
+      title: WorkOrderStartProcessingResponse
       type: object
     CostComponentExternalSchema:
       description: A cost component representing a portion of a line item's pricing (e.g. labor, material).
@@ -912,41 +947,6 @@ components:
       - kind
       - quantity
       title: CostComponent
-      type: object
-    WorkOrderThinExternalSchema:
-      description: Lightweight work order schema without line items for list endpoints.
-      properties:
-        id:
-          title: Id
-          type: string
-        status:
-          enum:
-          - open
-          - processing
-          - in_review
-          - reviewed
-          - completed
-          title: Status
-          type: string
-        reference_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Reference Key
-        location_id:
-          title: Location Id
-          type: string
-        default_vendor:
-          anyOf:
-          - $ref: '#/components/schemas/VendorOrganizationExternalSchema'
-          - type: 'null'
-      required:
-      - id
-      - status
-      - reference_key
-      - location_id
-      - default_vendor
-      title: WorkOrderSummary
       type: object
   securitySchemes:
     ApiKeyAuth:

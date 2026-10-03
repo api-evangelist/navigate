@@ -196,6 +196,27 @@ components:
       - zip_code
       title: CreateLocationRequest
       type: object
+    UpdateLocationRequest:
+      properties:
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          description: Partial update of custom fields. Only specified fields will be updated.
+          title: Custom Fields
+        reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reference Key
+        market_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: ID of the market this location belongs to. Must reference an existing market in your organization.
+          title: Market Id
+      title: UpdateLocationRequest
+      type: object
     ListLocationsResponse:
       properties:
         locations:
@@ -284,27 +305,6 @@ components:
       - market_name
       - custom_fields
       title: Location
-      type: object
-    UpdateLocationRequest:
-      properties:
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          description: Partial update of custom fields. Only specified fields will be updated.
-          title: Custom Fields
-        reference_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Reference Key
-        market_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: ID of the market this location belongs to. Must reference an existing market in your organization.
-          title: Market Id
-      title: UpdateLocationRequest
       type: object
   securitySchemes:
     ApiKeyAuth:

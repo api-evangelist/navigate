@@ -120,6 +120,14 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
+    ConfirmVideoUploadRequestResponse:
+      properties:
+        video_upload_request:
+          $ref: '#/components/schemas/VideoUploadRequestExternalSchema'
+      required:
+      - video_upload_request
+      title: ConfirmVideoUploadRequestResponse
+      type: object
     CreateVideoUploadRequestResponse:
       properties:
         video_upload_request:
@@ -127,53 +135,6 @@ components:
       required:
       - video_upload_request
       title: CreateVideoUploadRequestResponse
-      type: object
-    ListVideoUploadRequestsResponse:
-      properties:
-        video_upload_requests:
-          items:
-            $ref: '#/components/schemas/VideoUploadRequestExternalSchema'
-          title: Video Upload Requests
-          type: array
-      required:
-      - video_upload_requests
-      title: ListVideoUploadRequestsResponse
-      type: object
-    CreateVideoUploadRequestInput:
-      properties:
-        visit_id:
-          title: Visit Id
-          type: string
-        file_name:
-          title: File Name
-          type: string
-        file_size_bytes:
-          title: File Size Bytes
-          type: integer
-      required:
-      - visit_id
-      - file_name
-      - file_size_bytes
-      title: CreateVideoUploadRequestInput
-      type: object
-    ExternalUploadRequestStatus:
-      description: Customer-facing upload request statuses, lowercase for external API consistency.
-      enum:
-      - pending
-      - started
-      - done
-      - failed
-      - ignored
-      - cancelled
-      title: ExternalUploadRequestStatus
-      type: string
-    GetVideoUploadRequestResponse:
-      properties:
-        video_upload_request:
-          $ref: '#/components/schemas/VideoUploadRequestWithUploadUrlExternalSchema'
-      required:
-      - video_upload_request
-      title: GetVideoUploadRequestResponse
       type: object
     VideoUploadRequestWithUploadUrlExternalSchema:
       description: 'Extended schema that includes a presigned upload URL.
@@ -227,6 +188,25 @@ components:
       - upload_url
       title: VideoUploadRequestWithUploadUrl
       type: object
+    ListVideoUploadRequestsResponse:
+      properties:
+        video_upload_requests:
+          items:
+            $ref: '#/components/schemas/VideoUploadRequestExternalSchema'
+          title: Video Upload Requests
+          type: array
+      required:
+      - video_upload_requests
+      title: ListVideoUploadRequestsResponse
+      type: object
+    GetVideoUploadRequestResponse:
+      properties:
+        video_upload_request:
+          $ref: '#/components/schemas/VideoUploadRequestWithUploadUrlExternalSchema'
+      required:
+      - video_upload_request
+      title: GetVideoUploadRequestResponse
+      type: object
     CancelVideoUploadRequestResponse:
       properties:
         video_upload_request:
@@ -235,13 +215,22 @@ components:
       - video_upload_request
       title: CancelVideoUploadRequestResponse
       type: object
-    ConfirmVideoUploadRequestResponse:
+    CreateVideoUploadRequestInput:
       properties:
-        video_upload_request:
-          $ref: '#/components/schemas/VideoUploadRequestExternalSchema'
+        visit_id:
+          title: Visit Id
+          type: string
+        file_name:
+          title: File Name
+          type: string
+        file_size_bytes:
+          title: File Size Bytes
+          type: integer
       required:
-      - video_upload_request
-      title: ConfirmVideoUploadRequestResponse
+      - visit_id
+      - file_name
+      - file_size_bytes
+      title: CreateVideoUploadRequestInput
       type: object
     VideoUploadRequestExternalSchema:
       properties:
@@ -280,6 +269,17 @@ components:
       - completed_at
       title: VideoUploadRequest
       type: object
+    ExternalUploadRequestStatus:
+      description: Customer-facing upload request statuses, lowercase for external API consistency.
+      enum:
+      - pending
+      - started
+      - done
+      - failed
+      - ignored
+      - cancelled
+      title: ExternalUploadRequestStatus
+      type: string
   securitySchemes:
     ApiKeyAuth:
       type: http

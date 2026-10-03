@@ -32,6 +32,54 @@ paths:
       - Lennar
 components:
   schemas:
+    AdditionalContext:
+      additionalProperties: true
+      properties:
+        images:
+          items:
+            $ref: '#/components/schemas/AdditionalContextImage'
+          title: Images
+          type: array
+      title: AdditionalContext
+      type: object
+    AdditionalContextImage:
+      properties:
+        image_url:
+          title: Image Url
+          type: string
+        description:
+          default: ''
+          title: Description
+          type: string
+      required:
+      - image_url
+      title: AdditionalContextImage
+      type: object
+    PredictionGeneratedMessage:
+      properties:
+        reasoning:
+          title: Reasoning
+          type: string
+        short_reasoning:
+          title: Short Reasoning
+          type: string
+        text:
+          title: Text
+          type: string
+        confidence:
+          enum:
+          - high
+          - medium
+          - low
+          title: Confidence
+          type: string
+      required:
+      - reasoning
+      - short_reasoning
+      - text
+      - confidence
+      title: PredictionGeneratedMessage
+      type: object
     PredictionBoundingBox:
       properties:
         x1:
@@ -52,28 +100,6 @@ components:
       - x2
       - y2
       title: PredictionBoundingBox
-      type: object
-    PredictionResponse:
-      properties:
-        prediction:
-          $ref: '#/components/schemas/Prediction'
-      required:
-      - prediction
-      title: PredictionResponse
-      type: object
-    PredictionAnnotatedImage:
-      properties:
-        image_url:
-          title: Image Url
-          type: string
-        annotations:
-          items:
-            $ref: '#/components/schemas/PredictionAnnotation'
-          title: Annotations
-          type: array
-      required:
-      - image_url
-      title: PredictionAnnotatedImage
       type: object
     PredictionAnnotation:
       properties:
@@ -98,46 +124,6 @@ components:
       - confidence
       - bounding_box
       title: PredictionAnnotation
-      type: object
-    Prediction:
-      properties:
-        generated_messages:
-          items:
-            $ref: '#/components/schemas/PredictionGeneratedMessage'
-          title: Generated Messages
-          type: array
-        annotated_images:
-          items:
-            $ref: '#/components/schemas/PredictionAnnotatedImage'
-          title: Annotated Images
-          type: array
-      required:
-      - generated_messages
-      - annotated_images
-      title: Prediction
-      type: object
-    AdditionalContextImage:
-      properties:
-        image_url:
-          title: Image Url
-          type: string
-        description:
-          default: ''
-          title: Description
-          type: string
-      required:
-      - image_url
-      title: AdditionalContextImage
-      type: object
-    AdditionalContext:
-      additionalProperties: true
-      properties:
-        images:
-          items:
-            $ref: '#/components/schemas/AdditionalContextImage'
-          title: Images
-          type: array
-      title: AdditionalContext
       type: object
     Message:
       properties:
@@ -188,31 +174,6 @@ components:
       - body
       title: Message
       type: object
-    PredictionGeneratedMessage:
-      properties:
-        reasoning:
-          title: Reasoning
-          type: string
-        short_reasoning:
-          title: Short Reasoning
-          type: string
-        text:
-          title: Text
-          type: string
-        confidence:
-          enum:
-          - high
-          - medium
-          - low
-          title: Confidence
-          type: string
-      required:
-      - reasoning
-      - short_reasoning
-      - text
-      - confidence
-      title: PredictionGeneratedMessage
-      type: object
     PredictionRequest:
       properties:
         messages:
@@ -227,6 +188,45 @@ components:
       required:
       - messages
       title: PredictionRequest
+      type: object
+    Prediction:
+      properties:
+        generated_messages:
+          items:
+            $ref: '#/components/schemas/PredictionGeneratedMessage'
+          title: Generated Messages
+          type: array
+        annotated_images:
+          items:
+            $ref: '#/components/schemas/PredictionAnnotatedImage'
+          title: Annotated Images
+          type: array
+      required:
+      - generated_messages
+      - annotated_images
+      title: Prediction
+      type: object
+    PredictionResponse:
+      properties:
+        prediction:
+          $ref: '#/components/schemas/Prediction'
+      required:
+      - prediction
+      title: PredictionResponse
+      type: object
+    PredictionAnnotatedImage:
+      properties:
+        image_url:
+          title: Image Url
+          type: string
+        annotations:
+          items:
+            $ref: '#/components/schemas/PredictionAnnotation'
+          title: Annotations
+          type: array
+      required:
+      - image_url
+      title: PredictionAnnotatedImage
       type: object
   securitySchemes:
     ApiKeyAuth:

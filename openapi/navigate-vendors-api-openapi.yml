@@ -132,41 +132,42 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    VendorOrganizationExternalSchema:
+    VendorOrganizationResponse:
       properties:
-        id:
-          title: Id
-          type: string
+        vendor:
+          $ref: '#/components/schemas/VendorOrganizationExternalSchema'
+      required:
+      - vendor
+      title: VendorOrganizationResponse
+      type: object
+    CreateVendorOrganizationRequest:
+      additionalProperties: false
+      properties:
         name:
+          maxLength: 255
           title: Name
           type: string
         email:
           anyOf:
-          - type: string
+          - maxLength: 255
+            type: string
           - type: 'null'
           title: Email
         reference_key:
-          description: Optional unique identifier for this vendor in your system.
+          maxLength: 255
           title: Reference Key
           type: string
-        is_enabled:
-          description: Whether this vendor is enabled.
-          title: Is Enabled
-          type: boolean
         market_ids:
-          description: IDs of the markets this vendor serves. A vendor with no market associations serves all markets.
+          description: IDs of the markets this vendor serves. A vendor with no market associations (empty list) serves all markets. May be omitted (defaults to empty list).
           items:
             type: string
+          maxItems: 100
           title: Market Ids
           type: array
       required:
-      - id
       - name
-      - email
       - reference_key
-      - is_enabled
-      - market_ids
-      title: Vendor
+      title: CreateVendorOrganizationRequest
       type: object
     UpdateVendorOrganizationRequest:
       additionalProperties: false
@@ -225,42 +226,41 @@ components:
       - next_cursor
       title: ListVendorOrganizationsResponse
       type: object
-    CreateVendorOrganizationRequest:
-      additionalProperties: false
+    VendorOrganizationExternalSchema:
       properties:
+        id:
+          title: Id
+          type: string
         name:
-          maxLength: 255
           title: Name
           type: string
         email:
           anyOf:
-          - maxLength: 255
-            type: string
+          - type: string
           - type: 'null'
           title: Email
         reference_key:
-          maxLength: 255
+          description: Optional unique identifier for this vendor in your system.
           title: Reference Key
           type: string
+        is_enabled:
+          description: Whether this vendor is enabled.
+          title: Is Enabled
+          type: boolean
         market_ids:
-          description: IDs of the markets this vendor serves. A vendor with no market associations (empty list) serves all markets. May be omitted (defaults to empty list).
+          description: IDs of the markets this vendor serves. A vendor with no market associations serves all markets.
           items:
             type: string
-          maxItems: 100
           title: Market Ids
           type: array
       required:
+      - id
       - name
+      - email
       - reference_key
-      title: CreateVendorOrganizationRequest
-      type: object
-    VendorOrganizationResponse:
-      properties:
-        vendor:
-          $ref: '#/components/schemas/VendorOrganizationExternalSchema'
-      required:
-      - vendor
-      title: VendorOrganizationResponse
+      - is_enabled
+      - market_ids
+      title: Vendor
       type: object
   securitySchemes:
     ApiKeyAuth:
