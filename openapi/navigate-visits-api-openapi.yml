@@ -191,6 +191,227 @@ components:
       - width
       title: Video
       type: object
+    ListFindingsResponse:
+      properties:
+        findings:
+          items:
+            $ref: '#/components/schemas/FindingExternalSchema'
+          title: Findings
+          type: array
+      required:
+      - findings
+      title: ListFindingsResponse
+      type: object
+    ProcessVisitResponse:
+      properties:
+        visit:
+          $ref: '#/components/schemas/VisitExternalSchema'
+      required:
+      - visit
+      title: ProcessVisitResponse
+      type: object
+    UserExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        email:
+          title: Email
+          type: string
+        first_name:
+          title: First Name
+          type: string
+        last_name:
+          title: Last Name
+          type: string
+        reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: External identifier for this user.
+          title: Reference Key
+      required:
+      - id
+      - email
+      - first_name
+      - last_name
+      - reference_key
+      title: User
+      type: object
+    VisitAccessGrantResponse:
+      properties:
+        visit_access_grant_id:
+          title: Visit Access Grant Id
+          type: string
+        visit_id:
+          title: Visit Id
+          type: string
+        token:
+          title: Token
+          type: string
+        deeplink_url:
+          title: Deeplink Url
+          type: string
+        expires_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Expires At
+        metadata:
+          anyOf:
+          - type: object
+          - type: 'null'
+          description: The arbitrary structured data attached at creation, echoed back verbatim.
+          title: Metadata
+      required:
+      - visit_access_grant_id
+      - visit_id
+      - token
+      - deeplink_url
+      - expires_at
+      - metadata
+      title: VisitAccessGrantResponse
+      type: object
+    ImageEvidenceExternalSchema:
+      properties:
+        type:
+          const: image
+          default: image
+          title: Type
+          type: string
+        image_id:
+          description: Use with the Get Image endpoint to retrieve the image file.
+          title: Image Id
+          type: string
+        reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reference Key
+        visit_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The visit this image was captured during.
+          title: Visit Id
+        is_selected:
+          default: false
+          description: Whether this image was explicitly selected as evidence.
+          title: Is Selected
+          type: boolean
+        is_starred:
+          default: false
+          description: Whether this image was starred as the primary evidence photo.
+          title: Is Starred
+          type: boolean
+      required:
+      - image_id
+      title: ImageEvidence
+      type: object
+    FindingExternalSchema:
+      properties:
+        question_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The name of the question this finding answers.
+          title: Question Name
+        question_text:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The full text of the question this finding answers. Null for ad-hoc findings.
+          title: Question Text
+        description:
+          description: The reason or justification for this finding.
+          title: Description
+          type: string
+        result:
+          description: The result of the finding (e.g. "Poor", "Fair").
+          title: Result
+          type: string
+        severity:
+          anyOf:
+          - enum:
+            - major
+            - minor
+            type: string
+          - type: 'null'
+          description: 'Severity of the finding, if applicable: "major", "minor", or null.'
+          title: Severity
+        area_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The room or area this finding applies to.
+          title: Area Name
+        evidence:
+          description: Supporting evidence — images, audio segments, or text notes.
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/ImageEvidenceExternalSchema'
+            - $ref: '#/components/schemas/AudioEvidenceExternalSchema'
+            - $ref: '#/components/schemas/TextEvidenceExternalSchema'
+          title: Evidence
+          type: array
+      required:
+      - question_name
+      - question_text
+      - description
+      - result
+      - severity
+      - area_name
+      - evidence
+      title: Finding
+      type: object
+    AllVisitsForLocationResponse:
+      properties:
+        visits:
+          items:
+            $ref: '#/components/schemas/VisitExternalSchema'
+          title: Visits
+          type: array
+      required:
+      - visits
+      title: AllVisitsForLocationResponse
+      type: object
+    VisitTypeExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        display_name:
+          title: Display Name
+          type: string
+        slug:
+          description: URL-friendly identifier for this visit type.
+          title: Slug
+          type: string
+      required:
+      - id
+      - display_name
+      - slug
+      title: VisitType
+      type: object
+    CreateVisitRequest:
+      properties:
+        location_id:
+          title: Location Id
+          type: string
+        visit_type_slug:
+          title: Visit Type Slug
+          type: string
+        work_order_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Work Order Id
+      required:
+      - location_id
+      - visit_type_slug
+      title: CreateVisitRequest
+      type: object
     TextEvidenceExternalSchema:
       properties:
         type:
@@ -204,6 +425,22 @@ components:
       required:
       - text
       title: TextEvidence
+      type: object
+    CancelVisitResponse:
+      properties:
+        visit:
+          $ref: '#/components/schemas/VisitExternalSchema'
+      required:
+      - visit
+      title: CancelVisitResponse
+      type: object
+    VisitResponse:
+      properties:
+        visit:
+          $ref: '#/components/schemas/VisitExternalSchema'
+      required:
+      - visit
+      title: VisitResponse
       type: object
     VisitExternalSchema:
       properties:
@@ -286,70 +523,19 @@ components:
       - metadata
       title: Visit
       type: object
-    ImageEvidenceExternalSchema:
-      properties:
-        type:
-          const: image
-          default: image
-          title: Type
-          type: string
-        image_id:
-          description: Use with the Get Image endpoint to retrieve the image file.
-          title: Image Id
-          type: string
-        reference_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Reference Key
-        visit_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The visit this image was captured during.
-          title: Visit Id
-        is_selected:
-          default: false
-          description: Whether this image was explicitly selected as evidence.
-          title: Is Selected
-          type: boolean
-        is_starred:
-          default: false
-          description: Whether this image was starred as the primary evidence photo.
-          title: Is Starred
-          type: boolean
-      required:
-      - image_id
-      title: ImageEvidence
-      type: object
-    UserExternalSchema:
-      properties:
-        id:
-          title: Id
-          type: string
-        email:
-          title: Email
-          type: string
-        first_name:
-          title: First Name
-          type: string
-        last_name:
-          title: Last Name
-          type: string
-        reference_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: External identifier for this user.
-          title: Reference Key
-      required:
-      - id
-      - email
-      - first_name
-      - last_name
-      - reference_key
-      title: User
-      type: object
+    ExternalVisitRequestStatus:
+      description: 'Customer facing visit statuses. Each VisitRequestStatus should map directly to a ExternalVisitRequestStatus.
+
+        But we don''t need ExternalVisitRequestStatus to directly map back to VisitRequestStatus.'
+      enum:
+      - visit_started
+      - uploading
+      - processing
+      - in_review
+      - completed
+      - cancelled
+      title: ExternalVisitRequestStatus
+      type: string
     AudioEvidenceExternalSchema:
       properties:
         type:
@@ -374,88 +560,6 @@ components:
       - end_ms
       - text
       title: AudioEvidence
-      type: object
-    AllVisitsForLocationResponse:
-      properties:
-        visits:
-          items:
-            $ref: '#/components/schemas/VisitExternalSchema'
-          title: Visits
-          type: array
-      required:
-      - visits
-      title: AllVisitsForLocationResponse
-      type: object
-    ListFindingsResponse:
-      properties:
-        findings:
-          items:
-            $ref: '#/components/schemas/FindingExternalSchema'
-          title: Findings
-          type: array
-      required:
-      - findings
-      title: ListFindingsResponse
-      type: object
-    ProcessVisitResponse:
-      properties:
-        visit:
-          $ref: '#/components/schemas/VisitExternalSchema'
-      required:
-      - visit
-      title: ProcessVisitResponse
-      type: object
-    VisitTypeExternalSchema:
-      properties:
-        id:
-          title: Id
-          type: string
-        display_name:
-          title: Display Name
-          type: string
-        slug:
-          description: URL-friendly identifier for this visit type.
-          title: Slug
-          type: string
-      required:
-      - id
-      - display_name
-      - slug
-      title: VisitType
-      type: object
-    CancelVisitResponse:
-      properties:
-        visit:
-          $ref: '#/components/schemas/VisitExternalSchema'
-      required:
-      - visit
-      title: CancelVisitResponse
-      type: object
-    CreateVisitRequest:
-      properties:
-        location_id:
-          title: Location Id
-          type: string
-        visit_type_slug:
-          title: Visit Type Slug
-          type: string
-        work_order_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Work Order Id
-      required:
-      - location_id
-      - visit_type_slug
-      title: CreateVisitRequest
-      type: object
-    VisitResponse:
-      properties:
-        visit:
-          $ref: '#/components/schemas/VisitExternalSchema'
-      required:
-      - visit
-      title: VisitResponse
       type: object
     CreateVisitAccessGrantRequest:
       properties:
@@ -485,110 +589,6 @@ components:
           description: When the access link stops working, as an ISO 8601 UTC timestamp (e.g. `2026-12-31T23:59:59Z`). Must be in the future and timezone-aware. Omit for a link that never expires.
           title: Expires At
       title: CreateVisitAccessGrantRequest
-      type: object
-    VisitAccessGrantResponse:
-      properties:
-        visit_access_grant_id:
-          title: Visit Access Grant Id
-          type: string
-        visit_id:
-          title: Visit Id
-          type: string
-        token:
-          title: Token
-          type: string
-        deeplink_url:
-          title: Deeplink Url
-          type: string
-        expires_at:
-          anyOf:
-          - format: date-time
-            type: string
-          - type: 'null'
-          title: Expires At
-        metadata:
-          anyOf:
-          - type: object
-          - type: 'null'
-          description: The arbitrary structured data attached at creation, echoed back verbatim.
-          title: Metadata
-      required:
-      - visit_access_grant_id
-      - visit_id
-      - token
-      - deeplink_url
-      - expires_at
-      - metadata
-      title: VisitAccessGrantResponse
-      type: object
-    ExternalVisitRequestStatus:
-      description: 'Customer facing visit statuses. Each VisitRequestStatus should map directly to a ExternalVisitRequestStatus.
-
-        But we don''t need ExternalVisitRequestStatus to directly map back to VisitRequestStatus.'
-      enum:
-      - visit_started
-      - uploading
-      - processing
-      - in_review
-      - completed
-      - cancelled
-      title: ExternalVisitRequestStatus
-      type: string
-    FindingExternalSchema:
-      properties:
-        question_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The name of the question this finding answers.
-          title: Question Name
-        question_text:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The full text of the question this finding answers. Null for ad-hoc findings.
-          title: Question Text
-        description:
-          description: The reason or justification for this finding.
-          title: Description
-          type: string
-        result:
-          description: The result of the finding (e.g. "Poor", "Fair").
-          title: Result
-          type: string
-        severity:
-          anyOf:
-          - enum:
-            - major
-            - minor
-            type: string
-          - type: 'null'
-          description: 'Severity of the finding, if applicable: "major", "minor", or null.'
-          title: Severity
-        area_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The room or area this finding applies to.
-          title: Area Name
-        evidence:
-          description: Supporting evidence — images, audio segments, or text notes.
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/ImageEvidenceExternalSchema'
-            - $ref: '#/components/schemas/AudioEvidenceExternalSchema'
-            - $ref: '#/components/schemas/TextEvidenceExternalSchema'
-          title: Evidence
-          type: array
-      required:
-      - question_name
-      - question_text
-      - description
-      - result
-      - severity
-      - area_name
-      - evidence
-      title: Finding
       type: object
   securitySchemes:
     ApiKeyAuth:

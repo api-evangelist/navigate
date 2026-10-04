@@ -90,199 +90,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    TextEvidenceExternalSchema:
-      properties:
-        type:
-          const: text
-          default: text
-          title: Type
-          type: string
-        text:
-          title: Text
-          type: string
-      required:
-      - text
-      title: TextEvidence
-      type: object
-    AnswerExternalSchema:
-      properties:
-        id:
-          title: Id
-          type: string
-        title:
-          description: The checklist question text.
-          title: Title
-          type: string
-        value:
-          description: The answer (e.g. "Good", "Poor", "Yes", "No").
-          title: Value
-          type: string
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Additional notes or justification for this answer.
-          title: Description
-        evidence:
-          description: Images and audio segments supporting this answer.
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/ImageEvidenceExternalSchema'
-            - $ref: '#/components/schemas/AudioEvidenceExternalSchema'
-          title: Evidence
-          type: array
-        area_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The room or area this answer applies to.
-          title: Area Name
-      required:
-      - id
-      - title
-      - value
-      - description
-      - evidence
-      - area_name
-      title: Answer
-      type: object
-    ImageEvidenceExternalSchema:
-      properties:
-        type:
-          const: image
-          default: image
-          title: Type
-          type: string
-        image_id:
-          description: Use with the Get Image endpoint to retrieve the image file.
-          title: Image Id
-          type: string
-        reference_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Reference Key
-        visit_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The visit this image was captured during.
-          title: Visit Id
-        is_selected:
-          default: false
-          description: Whether this image was explicitly selected as evidence.
-          title: Is Selected
-          type: boolean
-        is_starred:
-          default: false
-          description: Whether this image was starred as the primary evidence photo.
-          title: Is Starred
-          type: boolean
-      required:
-      - image_id
-      title: ImageEvidence
-      type: object
-    LineItemRowApiResponse:
-      properties:
-        line_item_row:
-          $ref: '#/components/schemas/LineItemRowExternalSchema'
-      required:
-      - line_item_row
-      title: LineItemRowApiResponse
-      type: object
-    LocationExternalSchema:
-      properties:
-        id:
-          title: Id
-          type: string
-        address_1:
-          title: Address 1
-          type: string
-        address_2:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Address 2
-        city:
-          title: City
-          type: string
-        state:
-          title: State
-          type: string
-        zip_code:
-          title: Zip Code
-          type: string
-        lat:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Lat
-        lon:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Lon
-        reference_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Optional unique identifier for this location in your system.
-          title: Reference Key
-        market_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: ID of the market this location belongs to.
-          title: Market Id
-        market_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          deprecated: true
-          description: 'Deprecated: prefer market_id. Name of the geographic market this location belongs to.'
-          title: Market Name
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          description: Arbitrary key-value metadata. Supports partial updates.
-          title: Custom Fields
-      required:
-      - id
-      - address_1
-      - address_2
-      - city
-      - state
-      - zip_code
-      - lat
-      - lon
-      - reference_key
-      - market_id
-      - market_name
-      - custom_fields
-      title: Location
-      type: object
-    VideoExternalSchema:
-      properties:
-        id:
-          title: Id
-          type: string
-        duration_ms:
-          title: Duration Ms
-          type: integer
-        height:
-          title: Height
-          type: integer
-        width:
-          title: Width
-          type: integer
-      required:
-      - id
-      - duration_ms
-      - height
-      - width
-      title: Video
-      type: object
     VendorOrganizationExternalSchema:
       properties:
         id:
@@ -319,278 +126,19 @@ components:
       - market_ids
       title: Vendor
       type: object
-    LegacyScopeExternalSchema:
+    TextEvidenceExternalSchema:
       properties:
-        status:
-          enum:
-          - not_complete
-          - complete
-          title: Status
-          type: string
-        created_at:
-          format: date-time
-          title: Created At
-          type: string
-        completed_at:
-          anyOf:
-          - format: date-time
-            type: string
-          - type: 'null'
-          description: When the scope was finalized.
-          title: Completed At
-        completed_by:
-          anyOf:
-          - $ref: '#/components/schemas/UserExternalSchema'
-          - type: 'null'
-          description: The user who finalized the scope.
-        location:
-          $ref: '#/components/schemas/LocationExternalSchema'
-        latest_visit:
-          $ref: '#/components/schemas/VisitExternalSchema'
-          description: The visit that produced this scope.
-        checklist_answers:
-          description: Inspection findings from the visit.
-          items:
-            $ref: '#/components/schemas/AnswerExternalSchema'
-          title: Checklist Answers
-          type: array
-        line_item_rows:
-          description: Line items identified during the scope.
-          items:
-            $ref: '#/components/schemas/LineItemRowExternalSchema'
-          title: Line Item Rows
-          type: array
-      required:
-      - status
-      - created_at
-      - completed_at
-      - completed_by
-      - location
-      - latest_visit
-      - checklist_answers
-      - line_item_rows
-      title: LegacyScope
-      type: object
-    UserExternalSchema:
-      properties:
-        id:
-          title: Id
-          type: string
-        email:
-          title: Email
-          type: string
-        first_name:
-          title: First Name
-          type: string
-        last_name:
-          title: Last Name
-          type: string
-        reference_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: External identifier for this user.
-          title: Reference Key
-      required:
-      - id
-      - email
-      - first_name
-      - last_name
-      - reference_key
-      title: User
-      type: object
-    VisitTypeExternalSchema:
-      properties:
-        id:
-          title: Id
-          type: string
-        display_name:
-          title: Display Name
-          type: string
-        slug:
-          description: URL-friendly identifier for this visit type.
-          title: Slug
-          type: string
-      required:
-      - id
-      - display_name
-      - slug
-      title: VisitType
-      type: object
-    ExternalVisitRequestStatus:
-      description: 'Customer facing visit statuses. Each VisitRequestStatus should map directly to a ExternalVisitRequestStatus.
-
-        But we don''t need ExternalVisitRequestStatus to directly map back to VisitRequestStatus.'
-      enum:
-      - visit_started
-      - uploading
-      - processing
-      - in_review
-      - completed
-      - cancelled
-      title: ExternalVisitRequestStatus
-      type: string
-    CreateLineItemRowRequest:
-      properties:
-        title:
-          title: Title
-          type: string
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        quantity:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          deprecated: true
-          description: 'Deprecated: Use cost_components instead.'
-          title: Quantity
-        unit_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          deprecated: true
-          description: 'Deprecated: Use cost_components instead.'
-          title: Unit Type
-        unit_cost_cents:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          deprecated: true
-          description: 'Deprecated: Use cost_components instead.'
-          title: Unit Cost Cents
-        cost_components:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/CostComponentExternalSchema'
-            minItems: 1
-            type: array
-          - type: 'null'
-          description: Granular cost breakdown. When provided, overrides legacy quantity/unit_type/unit_cost_cents fields.
-          title: Cost Components
-        price_reference_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Price Reference Key
-        notes:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Notes
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Custom Fields
-        area_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Area Name
-      required:
-      - title
-      title: CreateLineItemRowRequest
-      type: object
-    VisitExternalSchema:
-      properties:
-        id:
-          title: Id
-          type: string
         type:
-          deprecated: true
-          description: 'Display name of the visit type. Deprecated: Prefer using visit_type instead.'
+          const: text
+          default: text
           title: Type
           type: string
-        visit_type:
-          $ref: '#/components/schemas/VisitTypeExternalSchema'
-          description: The visit type for this visit.
-        visit_request_status:
-          $ref: '#/components/schemas/ExternalVisitRequestStatus'
-        visited_at:
-          format: date-time
-          title: Visited At
+        text:
+          title: Text
           type: string
-        visited_by:
-          $ref: '#/components/schemas/UserExternalSchema'
-        reviewed_by:
-          anyOf:
-          - $ref: '#/components/schemas/UserExternalSchema'
-          - type: 'null'
-          description: The user who reviewed and signed off on this visit, if any.
-        video:
-          anyOf:
-          - $ref: '#/components/schemas/VideoExternalSchema'
-          - type: 'null'
-          description: The video captured during this visit, if any.
-        product_url:
-          description: Link to the NavigateAI dashboard for reviewing this visit.
-          title: Product Url
-          type: string
-        product_pdf_url:
-          description: Link to download a PDF report for this visit.
-          title: Product Pdf Url
-          type: string
-        location_id:
-          title: Location Id
-          type: string
-        work_order_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The work order this visit is associated with, if any.
-          title: Work Order Id
-        access_code_metadata:
-          anyOf:
-          - type: object
-          - type: 'null'
-          description: Metadata from the access code that initiated this visit, if applicable.
-          title: Access Code Metadata
-        notes:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Summary notes generated for this visit.
-          title: Notes
-        metadata:
-          description: Additional structured data captured for this visit.
-          title: Metadata
-          type: object
       required:
-      - id
-      - type
-      - visit_type
-      - visit_request_status
-      - visited_at
-      - visited_by
-      - video
-      - product_url
-      - product_pdf_url
-      - location_id
-      - work_order_id
-      - access_code_metadata
-      - notes
-      - metadata
-      title: Visit
-      type: object
-    LineItemRoomExternalSchema:
-      description: The room or area a line item applies to.
-      properties:
-        name:
-          description: Display name of the room or area (e.g. 'Bedroom 2', 'Kitchen'). Not guaranteed to be stable over time.
-          title: Name
-          type: string
-        room_type_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The [room type](/api-reference/room-types/room-type-object) ID.
-          title: Room Type Id
-      required:
-      - name
-      title: LineItemRoom
+      - text
+      title: TextEvidence
       type: object
     AudioEvidenceExternalSchema:
       properties:
@@ -738,6 +286,505 @@ components:
       - room
       title: LineItemRow
       type: object
+    AnswerExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        title:
+          description: The checklist question text.
+          title: Title
+          type: string
+        value:
+          description: The answer (e.g. "Good", "Poor", "Yes", "No").
+          title: Value
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Additional notes or justification for this answer.
+          title: Description
+        evidence:
+          description: Images and audio segments supporting this answer.
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/ImageEvidenceExternalSchema'
+            - $ref: '#/components/schemas/AudioEvidenceExternalSchema'
+          title: Evidence
+          type: array
+        area_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The room or area this answer applies to.
+          title: Area Name
+      required:
+      - id
+      - title
+      - value
+      - description
+      - evidence
+      - area_name
+      title: Answer
+      type: object
+    VisitTypeExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        display_name:
+          title: Display Name
+          type: string
+        slug:
+          description: URL-friendly identifier for this visit type.
+          title: Slug
+          type: string
+      required:
+      - id
+      - display_name
+      - slug
+      title: VisitType
+      type: object
+    LineItemRowApiResponse:
+      properties:
+        line_item_row:
+          $ref: '#/components/schemas/LineItemRowExternalSchema'
+      required:
+      - line_item_row
+      title: LineItemRowApiResponse
+      type: object
+    UserExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        email:
+          title: Email
+          type: string
+        first_name:
+          title: First Name
+          type: string
+        last_name:
+          title: Last Name
+          type: string
+        reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: External identifier for this user.
+          title: Reference Key
+      required:
+      - id
+      - email
+      - first_name
+      - last_name
+      - reference_key
+      title: User
+      type: object
+    LegacyScopeExternalSchema:
+      properties:
+        status:
+          enum:
+          - not_complete
+          - complete
+          title: Status
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        completed_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the scope was finalized.
+          title: Completed At
+        completed_by:
+          anyOf:
+          - $ref: '#/components/schemas/UserExternalSchema'
+          - type: 'null'
+          description: The user who finalized the scope.
+        location:
+          $ref: '#/components/schemas/LocationExternalSchema'
+        latest_visit:
+          $ref: '#/components/schemas/VisitExternalSchema'
+          description: The visit that produced this scope.
+        checklist_answers:
+          description: Inspection findings from the visit.
+          items:
+            $ref: '#/components/schemas/AnswerExternalSchema'
+          title: Checklist Answers
+          type: array
+        line_item_rows:
+          description: Line items identified during the scope.
+          items:
+            $ref: '#/components/schemas/LineItemRowExternalSchema'
+          title: Line Item Rows
+          type: array
+      required:
+      - status
+      - created_at
+      - completed_at
+      - completed_by
+      - location
+      - latest_visit
+      - checklist_answers
+      - line_item_rows
+      title: LegacyScope
+      type: object
+    LegacyScopeResponse:
+      properties:
+        scope:
+          $ref: '#/components/schemas/LegacyScopeExternalSchema'
+      required:
+      - scope
+      title: LegacyScopeResponse
+      type: object
+    CostComponentExternalSchema:
+      description: A cost component representing a portion of a line item's pricing (e.g. labor, material).
+      properties:
+        kind:
+          description: 'The type of cost component: "total", "labor", or "material".'
+          enum:
+          - total
+          - labor
+          - material
+          title: Kind
+          type: string
+        label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Optional display label for this component.
+          title: Label
+        unit_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Unit of measurement (e.g. "each", "sqft"). Defaults to "each" if omitted.
+          title: Unit Type
+        unit_cost_in_cents:
+          anyOf:
+          - minimum: 0
+            type: integer
+          - type: 'null'
+          description: Cost per unit in cents.
+          title: Unit Cost In Cents
+        quantity:
+          description: Number of units as a decimal string (e.g. "1", "2.5").
+          title: Quantity
+          type: string
+      required:
+      - kind
+      - quantity
+      title: CostComponent
+      type: object
+    VisitExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        type:
+          deprecated: true
+          description: 'Display name of the visit type. Deprecated: Prefer using visit_type instead.'
+          title: Type
+          type: string
+        visit_type:
+          $ref: '#/components/schemas/VisitTypeExternalSchema'
+          description: The visit type for this visit.
+        visit_request_status:
+          $ref: '#/components/schemas/ExternalVisitRequestStatus'
+        visited_at:
+          format: date-time
+          title: Visited At
+          type: string
+        visited_by:
+          $ref: '#/components/schemas/UserExternalSchema'
+        reviewed_by:
+          anyOf:
+          - $ref: '#/components/schemas/UserExternalSchema'
+          - type: 'null'
+          description: The user who reviewed and signed off on this visit, if any.
+        video:
+          anyOf:
+          - $ref: '#/components/schemas/VideoExternalSchema'
+          - type: 'null'
+          description: The video captured during this visit, if any.
+        product_url:
+          description: Link to the NavigateAI dashboard for reviewing this visit.
+          title: Product Url
+          type: string
+        product_pdf_url:
+          description: Link to download a PDF report for this visit.
+          title: Product Pdf Url
+          type: string
+        location_id:
+          title: Location Id
+          type: string
+        work_order_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The work order this visit is associated with, if any.
+          title: Work Order Id
+        access_code_metadata:
+          anyOf:
+          - type: object
+          - type: 'null'
+          description: Metadata from the access code that initiated this visit, if applicable.
+          title: Access Code Metadata
+        notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Summary notes generated for this visit.
+          title: Notes
+        metadata:
+          description: Additional structured data captured for this visit.
+          title: Metadata
+          type: object
+      required:
+      - id
+      - type
+      - visit_type
+      - visit_request_status
+      - visited_at
+      - visited_by
+      - video
+      - product_url
+      - product_pdf_url
+      - location_id
+      - work_order_id
+      - access_code_metadata
+      - notes
+      - metadata
+      title: Visit
+      type: object
+    ExternalVisitRequestStatus:
+      description: 'Customer facing visit statuses. Each VisitRequestStatus should map directly to a ExternalVisitRequestStatus.
+
+        But we don''t need ExternalVisitRequestStatus to directly map back to VisitRequestStatus.'
+      enum:
+      - visit_started
+      - uploading
+      - processing
+      - in_review
+      - completed
+      - cancelled
+      title: ExternalVisitRequestStatus
+      type: string
+    CreateLineItemRowRequest:
+      properties:
+        title:
+          title: Title
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        quantity:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          deprecated: true
+          description: 'Deprecated: Use cost_components instead.'
+          title: Quantity
+        unit_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          deprecated: true
+          description: 'Deprecated: Use cost_components instead.'
+          title: Unit Type
+        unit_cost_cents:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          deprecated: true
+          description: 'Deprecated: Use cost_components instead.'
+          title: Unit Cost Cents
+        cost_components:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/CostComponentExternalSchema'
+            minItems: 1
+            type: array
+          - type: 'null'
+          description: Granular cost breakdown. When provided, overrides legacy quantity/unit_type/unit_cost_cents fields.
+          title: Cost Components
+        price_reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Price Reference Key
+        notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Notes
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Custom Fields
+        area_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Area Name
+      required:
+      - title
+      title: CreateLineItemRowRequest
+      type: object
+    VideoExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        duration_ms:
+          title: Duration Ms
+          type: integer
+        height:
+          title: Height
+          type: integer
+        width:
+          title: Width
+          type: integer
+      required:
+      - id
+      - duration_ms
+      - height
+      - width
+      title: Video
+      type: object
+    ImageEvidenceExternalSchema:
+      properties:
+        type:
+          const: image
+          default: image
+          title: Type
+          type: string
+        image_id:
+          description: Use with the Get Image endpoint to retrieve the image file.
+          title: Image Id
+          type: string
+        reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reference Key
+        visit_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The visit this image was captured during.
+          title: Visit Id
+        is_selected:
+          default: false
+          description: Whether this image was explicitly selected as evidence.
+          title: Is Selected
+          type: boolean
+        is_starred:
+          default: false
+          description: Whether this image was starred as the primary evidence photo.
+          title: Is Starred
+          type: boolean
+      required:
+      - image_id
+      title: ImageEvidence
+      type: object
+    LineItemRoomExternalSchema:
+      description: The room or area a line item applies to.
+      properties:
+        name:
+          description: Display name of the room or area (e.g. 'Bedroom 2', 'Kitchen'). Not guaranteed to be stable over time.
+          title: Name
+          type: string
+        room_type_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The [room type](/api-reference/room-types/room-type-object) ID.
+          title: Room Type Id
+      required:
+      - name
+      title: LineItemRoom
+      type: object
+    LocationExternalSchema:
+      properties:
+        id:
+          title: Id
+          type: string
+        address_1:
+          title: Address 1
+          type: string
+        address_2:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address 2
+        city:
+          title: City
+          type: string
+        state:
+          title: State
+          type: string
+        zip_code:
+          title: Zip Code
+          type: string
+        lat:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lat
+        lon:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lon
+        reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Optional unique identifier for this location in your system.
+          title: Reference Key
+        market_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: ID of the market this location belongs to.
+          title: Market Id
+        market_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          deprecated: true
+          description: 'Deprecated: prefer market_id. Name of the geographic market this location belongs to.'
+          title: Market Name
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          description: Arbitrary key-value metadata. Supports partial updates.
+          title: Custom Fields
+      required:
+      - id
+      - address_1
+      - address_2
+      - city
+      - state
+      - zip_code
+      - lat
+      - lon
+      - reference_key
+      - market_id
+      - market_name
+      - custom_fields
+      title: Location
+      type: object
     CreateLocationLineItemRequest:
       properties:
         title:
@@ -796,53 +843,6 @@ components:
       required:
       - title
       title: CreateLocationLineItemRequest
-      type: object
-    LegacyScopeResponse:
-      properties:
-        scope:
-          $ref: '#/components/schemas/LegacyScopeExternalSchema'
-      required:
-      - scope
-      title: LegacyScopeResponse
-      type: object
-    CostComponentExternalSchema:
-      description: A cost component representing a portion of a line item's pricing (e.g. labor, material).
-      properties:
-        kind:
-          description: 'The type of cost component: "total", "labor", or "material".'
-          enum:
-          - total
-          - labor
-          - material
-          title: Kind
-          type: string
-        label:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Optional display label for this component.
-          title: Label
-        unit_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Unit of measurement (e.g. "each", "sqft"). Defaults to "each" if omitted.
-          title: Unit Type
-        unit_cost_in_cents:
-          anyOf:
-          - minimum: 0
-            type: integer
-          - type: 'null'
-          description: Cost per unit in cents.
-          title: Unit Cost In Cents
-        quantity:
-          description: Number of units as a decimal string (e.g. "1", "2.5").
-          title: Quantity
-          type: string
-      required:
-      - kind
-      - quantity
-      title: CostComponent
       type: object
   securitySchemes:
     ApiKeyAuth:

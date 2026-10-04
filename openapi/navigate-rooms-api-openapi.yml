@@ -102,25 +102,6 @@ components:
           title: Width In
       title: RoomMeasurements
       type: object
-    RoomResponse:
-      properties:
-        room:
-          $ref: '#/components/schemas/RoomExternalSchema'
-      required:
-      - room
-      title: RoomResponse
-      type: object
-    ListRoomsResponse:
-      properties:
-        rooms:
-          items:
-            $ref: '#/components/schemas/RoomExternalSchema'
-          title: Rooms
-          type: array
-      required:
-      - rooms
-      title: ListRoomsResponse
-      type: object
     RoomExternalSchema:
       description: A room at a location.
       properties:
@@ -163,6 +144,25 @@ components:
       - id
       - name
       title: Room
+      type: object
+    ListRoomsResponse:
+      properties:
+        rooms:
+          items:
+            $ref: '#/components/schemas/RoomExternalSchema'
+          title: Rooms
+          type: array
+      required:
+      - rooms
+      title: ListRoomsResponse
+      type: object
+    RoomResponse:
+      properties:
+        room:
+          $ref: '#/components/schemas/RoomExternalSchema'
+      required:
+      - room
+      title: RoomResponse
       type: object
   securitySchemes:
     ApiKeyAuth:

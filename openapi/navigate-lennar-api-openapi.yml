@@ -32,28 +32,34 @@ paths:
       - Lennar
 components:
   schemas:
-    AdditionalContext:
-      additionalProperties: true
+    PredictionResponse:
       properties:
-        images:
-          items:
-            $ref: '#/components/schemas/AdditionalContextImage'
-          title: Images
-          type: array
-      title: AdditionalContext
-      type: object
-    AdditionalContextImage:
-      properties:
-        image_url:
-          title: Image Url
-          type: string
-        description:
-          default: ''
-          title: Description
-          type: string
+        prediction:
+          $ref: '#/components/schemas/Prediction'
       required:
-      - image_url
-      title: AdditionalContextImage
+      - prediction
+      title: PredictionResponse
+      type: object
+    PredictionBoundingBox:
+      properties:
+        x1:
+          title: X1
+          type: number
+        y1:
+          title: Y1
+          type: number
+        x2:
+          title: X2
+          type: number
+        y2:
+          title: Y2
+          type: number
+      required:
+      - x1
+      - y1
+      - x2
+      - y2
+      title: PredictionBoundingBox
       type: object
     PredictionGeneratedMessage:
       properties:
@@ -80,27 +86,6 @@ components:
       - confidence
       title: PredictionGeneratedMessage
       type: object
-    PredictionBoundingBox:
-      properties:
-        x1:
-          title: X1
-          type: number
-        y1:
-          title: Y1
-          type: number
-        x2:
-          title: X2
-          type: number
-        y2:
-          title: Y2
-          type: number
-      required:
-      - x1
-      - y1
-      - x2
-      - y2
-      title: PredictionBoundingBox
-      type: object
     PredictionAnnotation:
       properties:
         title:
@@ -124,6 +109,19 @@ components:
       - confidence
       - bounding_box
       title: PredictionAnnotation
+      type: object
+    AdditionalContextImage:
+      properties:
+        image_url:
+          title: Image Url
+          type: string
+        description:
+          default: ''
+          title: Description
+          type: string
+      required:
+      - image_url
+      title: AdditionalContextImage
       type: object
     Message:
       properties:
@@ -174,6 +172,16 @@ components:
       - body
       title: Message
       type: object
+    AdditionalContext:
+      additionalProperties: true
+      properties:
+        images:
+          items:
+            $ref: '#/components/schemas/AdditionalContextImage'
+          title: Images
+          type: array
+      title: AdditionalContext
+      type: object
     PredictionRequest:
       properties:
         messages:
@@ -188,6 +196,20 @@ components:
       required:
       - messages
       title: PredictionRequest
+      type: object
+    PredictionAnnotatedImage:
+      properties:
+        image_url:
+          title: Image Url
+          type: string
+        annotations:
+          items:
+            $ref: '#/components/schemas/PredictionAnnotation'
+          title: Annotations
+          type: array
+      required:
+      - image_url
+      title: PredictionAnnotatedImage
       type: object
     Prediction:
       properties:
@@ -205,28 +227,6 @@ components:
       - generated_messages
       - annotated_images
       title: Prediction
-      type: object
-    PredictionResponse:
-      properties:
-        prediction:
-          $ref: '#/components/schemas/Prediction'
-      required:
-      - prediction
-      title: PredictionResponse
-      type: object
-    PredictionAnnotatedImage:
-      properties:
-        image_url:
-          title: Image Url
-          type: string
-        annotations:
-          items:
-            $ref: '#/components/schemas/PredictionAnnotation'
-          title: Annotations
-          type: array
-      required:
-      - image_url
-      title: PredictionAnnotatedImage
       type: object
   securitySchemes:
     ApiKeyAuth:

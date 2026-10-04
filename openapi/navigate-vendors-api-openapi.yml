@@ -132,14 +132,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    VendorOrganizationResponse:
-      properties:
-        vendor:
-          $ref: '#/components/schemas/VendorOrganizationExternalSchema'
-      required:
-      - vendor
-      title: VendorOrganizationResponse
-      type: object
     CreateVendorOrganizationRequest:
       additionalProperties: false
       properties:
@@ -168,6 +160,14 @@ components:
       - name
       - reference_key
       title: CreateVendorOrganizationRequest
+      type: object
+    VendorOrganizationResponse:
+      properties:
+        vendor:
+          $ref: '#/components/schemas/VendorOrganizationExternalSchema'
+      required:
+      - vendor
+      title: VendorOrganizationResponse
       type: object
     UpdateVendorOrganizationRequest:
       additionalProperties: false
@@ -209,23 +209,6 @@ components:
       required: []
       title: UpdateVendorOrganizationRequest
       type: object
-    ListVendorOrganizationsResponse:
-      properties:
-        vendors:
-          items:
-            $ref: '#/components/schemas/VendorOrganizationExternalSchema'
-          title: Vendors
-          type: array
-        next_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Next Cursor
-      required:
-      - vendors
-      - next_cursor
-      title: ListVendorOrganizationsResponse
-      type: object
     VendorOrganizationExternalSchema:
       properties:
         id:
@@ -261,6 +244,23 @@ components:
       - is_enabled
       - market_ids
       title: Vendor
+      type: object
+    ListVendorOrganizationsResponse:
+      properties:
+        vendors:
+          items:
+            $ref: '#/components/schemas/VendorOrganizationExternalSchema'
+          title: Vendors
+          type: array
+        next_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Cursor
+      required:
+      - vendors
+      - next_cursor
+      title: ListVendorOrganizationsResponse
       type: object
   securitySchemes:
     ApiKeyAuth:

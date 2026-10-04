@@ -302,109 +302,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    TextEvidenceExternalSchema:
-      properties:
-        type:
-          const: text
-          default: text
-          title: Type
-          type: string
-        text:
-          title: Text
-          type: string
-      required:
-      - text
-      title: TextEvidence
-      type: object
-    ImageEvidenceExternalSchema:
-      properties:
-        type:
-          const: image
-          default: image
-          title: Type
-          type: string
-        image_id:
-          description: Use with the Get Image endpoint to retrieve the image file.
-          title: Image Id
-          type: string
-        reference_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Reference Key
-        visit_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The visit this image was captured during.
-          title: Visit Id
-        is_selected:
-          default: false
-          description: Whether this image was explicitly selected as evidence.
-          title: Is Selected
-          type: boolean
-        is_starred:
-          default: false
-          description: Whether this image was starred as the primary evidence photo.
-          title: Is Starred
-          type: boolean
-      required:
-      - image_id
-      title: ImageEvidence
-      type: object
-    VendorOverrideLineItemRowStatusRequest:
-      properties:
-        status:
-          enum:
-          - complete
-          - not_complete
-          title: Status
-          type: string
-        edit_justification:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Edit Justification
-      required:
-      - status
-      title: VendorOverrideLineItemRowStatusRequest
-      type: object
-    VendorOrganizationExternalSchema:
-      properties:
-        id:
-          title: Id
-          type: string
-        name:
-          title: Name
-          type: string
-        email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Email
-        reference_key:
-          description: Optional unique identifier for this vendor in your system.
-          title: Reference Key
-          type: string
-        is_enabled:
-          description: Whether this vendor is enabled.
-          title: Is Enabled
-          type: boolean
-        market_ids:
-          description: IDs of the markets this vendor serves. A vendor with no market associations serves all markets.
-          items:
-            type: string
-          title: Market Ids
-          type: array
-      required:
-      - id
-      - name
-      - email
-      - reference_key
-      - is_enabled
-      - market_ids
-      title: Vendor
-      type: object
     WorkOrderProcessPhotosResponse:
       properties:
         visit_id:
@@ -548,20 +445,41 @@ components:
       - vendor_status_override
       title: LineItemRowProposal
       type: object
-    UploadPhotosResponse:
+    VendorOrganizationExternalSchema:
       properties:
-        images:
+        id:
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email
+        reference_key:
+          description: Optional unique identifier for this vendor in your system.
+          title: Reference Key
+          type: string
+        is_enabled:
+          description: Whether this vendor is enabled.
+          title: Is Enabled
+          type: boolean
+        market_ids:
+          description: IDs of the markets this vendor serves. A vendor with no market associations serves all markets.
           items:
-            $ref: '#/components/schemas/ImageEvidenceExternalSchema'
-          title: Images
+            type: string
+          title: Market Ids
           type: array
       required:
-      - images
-      title: UploadPhotosResponse
-      type: object
-    SetLineItemWorkOrderResponse:
-      properties: {}
-      title: SetLineItemWorkOrderResponse
+      - id
+      - name
+      - email
+      - reference_key
+      - is_enabled
+      - market_ids
+      title: Vendor
       type: object
     WorkOrderExternalSchema:
       properties:
@@ -618,68 +536,81 @@ components:
       - latest_line_item_row_proposals
       title: WorkOrder
       type: object
-    CreateWorkOrderRequest:
-      properties:
-        reference_key:
-          minLength: 1
-          title: Reference Key
-          type: string
-        default_vendor_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: ID of the vendor to assign as the default for this work order.
-          title: Default Vendor Id
-        line_item_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          description: Line item IDs to attach. Must belong to a completed scope and not already be assigned to a different work order.
-          title: Line Item Ids
-      required:
-      - reference_key
-      title: CreateWorkOrderRequest
-      type: object
-    ListWorkOrdersResponse:
-      properties:
-        work_orders:
-          items:
-            $ref: '#/components/schemas/WorkOrderThinExternalSchema'
-          title: Work Orders
-          type: array
-      required:
-      - work_orders
-      title: ListWorkOrdersResponse
-      type: object
-    LineItemEditVendorStatusOverrideExternalSchema:
+    VendorOverrideLineItemRowStatusRequest:
       properties:
         status:
-          anyOf:
-          - enum:
-            - suggested
-            - not_complete
-            - complete
-            - canceled
-            - deleted
-            - ignored
-            - not_started
-            - in_progress
-            type: string
-          - type: 'null'
-          description: The vendor's claimed status for this line item.
+          enum:
+          - complete
+          - not_complete
           title: Status
+          type: string
         edit_justification:
           anyOf:
           - type: string
           - type: 'null'
-          description: The vendor's reason for the status override.
           title: Edit Justification
       required:
       - status
-      - edit_justification
-      title: LineItemEditVendorStatusOverride
+      title: VendorOverrideLineItemRowStatusRequest
+      type: object
+    UploadPhotosResponse:
+      properties:
+        images:
+          items:
+            $ref: '#/components/schemas/ImageEvidenceExternalSchema'
+          title: Images
+          type: array
+      required:
+      - images
+      title: UploadPhotosResponse
+      type: object
+    OperationSuccessSchema:
+      properties:
+        success:
+          const: true
+          default: true
+          title: Success
+          type: boolean
+      title: OperationSuccessSchema
+      type: object
+    TextEvidenceExternalSchema:
+      properties:
+        type:
+          const: text
+          default: text
+          title: Type
+          type: string
+        text:
+          title: Text
+          type: string
+      required:
+      - text
+      title: TextEvidence
+      type: object
+    AudioEvidenceExternalSchema:
+      properties:
+        type:
+          const: audio
+          default: audio
+          title: Type
+          type: string
+        start_ms:
+          description: Start timestamp in the source video, in milliseconds.
+          title: Start Ms
+          type: integer
+        end_ms:
+          description: End timestamp in the source video, in milliseconds.
+          title: End Ms
+          type: integer
+        text:
+          description: Transcribed text from this audio segment.
+          title: Text
+          type: string
+      required:
+      - start_ms
+      - end_ms
+      - text
+      title: AudioEvidence
       type: object
     WorkOrderThinExternalSchema:
       description: Lightweight work order schema without line items for list endpoints.
@@ -716,15 +647,6 @@ components:
       - default_vendor
       title: WorkOrderSummary
       type: object
-    OperationSuccessSchema:
-      properties:
-        success:
-          const: true
-          default: true
-          title: Success
-          type: boolean
-      title: OperationSuccessSchema
-      type: object
     WorkOrderResponse:
       properties:
         work_order:
@@ -732,57 +654,6 @@ components:
       required:
       - work_order
       title: WorkOrderResponse
-      type: object
-    LineItemRoomExternalSchema:
-      description: The room or area a line item applies to.
-      properties:
-        name:
-          description: Display name of the room or area (e.g. 'Bedroom 2', 'Kitchen'). Not guaranteed to be stable over time.
-          title: Name
-          type: string
-        room_type_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The [room type](/api-reference/room-types/room-type-object) ID.
-          title: Room Type Id
-      required:
-      - name
-      title: LineItemRoom
-      type: object
-    AudioEvidenceExternalSchema:
-      properties:
-        type:
-          const: audio
-          default: audio
-          title: Type
-          type: string
-        start_ms:
-          description: Start timestamp in the source video, in milliseconds.
-          title: Start Ms
-          type: integer
-        end_ms:
-          description: End timestamp in the source video, in milliseconds.
-          title: End Ms
-          type: integer
-        text:
-          description: Transcribed text from this audio segment.
-          title: Text
-          type: string
-      required:
-      - start_ms
-      - end_ms
-      - text
-      title: AudioEvidence
-      type: object
-    SetLineItemWorkOrderRequest:
-      properties:
-        work_order_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Work Order Id
-      title: SetLineItemWorkOrderRequest
       type: object
     LineItemRowExternalSchema:
       properties:
@@ -905,9 +776,40 @@ components:
       - room
       title: LineItemRow
       type: object
-    WorkOrderStartProcessingResponse:
-      properties: {}
-      title: WorkOrderStartProcessingResponse
+    ListWorkOrdersResponse:
+      properties:
+        work_orders:
+          items:
+            $ref: '#/components/schemas/WorkOrderThinExternalSchema'
+          title: Work Orders
+          type: array
+      required:
+      - work_orders
+      title: ListWorkOrdersResponse
+      type: object
+    CreateWorkOrderRequest:
+      properties:
+        reference_key:
+          minLength: 1
+          title: Reference Key
+          type: string
+        default_vendor_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: ID of the vendor to assign as the default for this work order.
+          title: Default Vendor Id
+        line_item_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          description: Line item IDs to attach. Must belong to a completed scope and not already be assigned to a different work order.
+          title: Line Item Ids
+      required:
+      - reference_key
+      title: CreateWorkOrderRequest
       type: object
     CostComponentExternalSchema:
       description: A cost component representing a portion of a line item's pricing (e.g. labor, material).
@@ -947,6 +849,104 @@ components:
       - kind
       - quantity
       title: CostComponent
+      type: object
+    LineItemEditVendorStatusOverrideExternalSchema:
+      properties:
+        status:
+          anyOf:
+          - enum:
+            - suggested
+            - not_complete
+            - complete
+            - canceled
+            - deleted
+            - ignored
+            - not_started
+            - in_progress
+            type: string
+          - type: 'null'
+          description: The vendor's claimed status for this line item.
+          title: Status
+        edit_justification:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The vendor's reason for the status override.
+          title: Edit Justification
+      required:
+      - status
+      - edit_justification
+      title: LineItemEditVendorStatusOverride
+      type: object
+    ImageEvidenceExternalSchema:
+      properties:
+        type:
+          const: image
+          default: image
+          title: Type
+          type: string
+        image_id:
+          description: Use with the Get Image endpoint to retrieve the image file.
+          title: Image Id
+          type: string
+        reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reference Key
+        visit_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The visit this image was captured during.
+          title: Visit Id
+        is_selected:
+          default: false
+          description: Whether this image was explicitly selected as evidence.
+          title: Is Selected
+          type: boolean
+        is_starred:
+          default: false
+          description: Whether this image was starred as the primary evidence photo.
+          title: Is Starred
+          type: boolean
+      required:
+      - image_id
+      title: ImageEvidence
+      type: object
+    LineItemRoomExternalSchema:
+      description: The room or area a line item applies to.
+      properties:
+        name:
+          description: Display name of the room or area (e.g. 'Bedroom 2', 'Kitchen'). Not guaranteed to be stable over time.
+          title: Name
+          type: string
+        room_type_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The [room type](/api-reference/room-types/room-type-object) ID.
+          title: Room Type Id
+      required:
+      - name
+      title: LineItemRoom
+      type: object
+    SetLineItemWorkOrderResponse:
+      properties: {}
+      title: SetLineItemWorkOrderResponse
+      type: object
+    WorkOrderStartProcessingResponse:
+      properties: {}
+      title: WorkOrderStartProcessingResponse
+      type: object
+    SetLineItemWorkOrderRequest:
+      properties:
+        work_order_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Work Order Id
+      title: SetLineItemWorkOrderRequest
       type: object
   securitySchemes:
     ApiKeyAuth:

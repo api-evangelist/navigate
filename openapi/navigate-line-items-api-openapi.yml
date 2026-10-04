@@ -60,87 +60,41 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    TextEvidenceExternalSchema:
+    VendorOrganizationExternalSchema:
       properties:
-        type:
-          const: text
-          default: text
-          title: Type
+        id:
+          title: Id
           type: string
-        text:
-          title: Text
-          type: string
-      required:
-      - text
-      title: TextEvidence
-      type: object
-    UpdateLineItemRowRequest:
-      description: 'Request schema for updating a line item row.
-
-
-        All fields are optional. Omitting a field leaves it unchanged.
-
-        Some fields may be explicitly set to null to clear the value.'
-      properties:
-        title:
-          description: Updated line item title. Omit to leave unchanged.
-          title: Title
-          type: string
-        description:
-          description: Updated line item description. Omit to leave unchanged.
-          title: Description
-          type: string
-        price_reference_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Pricing item reference key. Set to null to clear. Omit to leave unchanged.
-          title: Price Reference Key
-        notes:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Line item notes. Set to null to clear. Omit to leave unchanged.
-          title: Notes
-        status:
-          description: Updated line item status. Omit to leave unchanged.
-          enum:
-          - not_complete
-          - complete
-          - rejected
-          title: Status
-          type: string
-        rejection_reason_option_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: ID of the selected [rejection reason option](/api-reference/rejection-reason-options/rejection-reason-option-object). May only be set when the resulting line item status is `rejected`. Will be cleared otherwise. Omit to leave unchanged.
-          title: Rejection Reason Option Id
-        rejection_reason_text:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Free text rejection reason for additional context. May only be set when the resulting line item status is `rejected`. Will be cleared otherwise. Omit to leave unchanged.
-          title: Rejection Reason Text
-      required: []
-      title: UpdateLineItemRowRequest
-      type: object
-    LineItemRoomExternalSchema:
-      description: The room or area a line item applies to.
-      properties:
         name:
-          description: Display name of the room or area (e.g. 'Bedroom 2', 'Kitchen'). Not guaranteed to be stable over time.
           title: Name
           type: string
-        room_type_id:
+        email:
           anyOf:
           - type: string
           - type: 'null'
-          description: The [room type](/api-reference/room-types/room-type-object) ID.
-          title: Room Type Id
+          title: Email
+        reference_key:
+          description: Optional unique identifier for this vendor in your system.
+          title: Reference Key
+          type: string
+        is_enabled:
+          description: Whether this vendor is enabled.
+          title: Is Enabled
+          type: boolean
+        market_ids:
+          description: IDs of the markets this vendor serves. A vendor with no market associations serves all markets.
+          items:
+            type: string
+          title: Market Ids
+          type: array
       required:
+      - id
       - name
-      title: LineItemRoom
+      - email
+      - reference_key
+      - is_enabled
+      - market_ids
+      title: Vendor
       type: object
     ImageEvidenceExternalSchema:
       properties:
@@ -178,63 +132,22 @@ components:
       - image_id
       title: ImageEvidence
       type: object
-    AudioEvidenceExternalSchema:
+    LineItemRoomExternalSchema:
+      description: The room or area a line item applies to.
       properties:
-        type:
-          const: audio
-          default: audio
-          title: Type
+        name:
+          description: Display name of the room or area (e.g. 'Bedroom 2', 'Kitchen'). Not guaranteed to be stable over time.
+          title: Name
           type: string
-        start_ms:
-          description: Start timestamp in the source video, in milliseconds.
-          title: Start Ms
-          type: integer
-        end_ms:
-          description: End timestamp in the source video, in milliseconds.
-          title: End Ms
-          type: integer
-        text:
-          description: Transcribed text from this audio segment.
-          title: Text
-          type: string
+        room_type_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The [room type](/api-reference/room-types/room-type-object) ID.
+          title: Room Type Id
       required:
-      - start_ms
-      - end_ms
-      - text
-      title: AudioEvidence
-      type: object
-    CreateLineItemRequest:
-      properties:
-        scope_id:
-          title: Scope Id
-          type: string
-        title:
-          title: Title
-          type: string
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        price_reference_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Price Reference Key
-        notes:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Notes
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Custom Fields
-      required:
-      - scope_id
-      - title
-      title: CreateLineItemRequest
+      - name
+      title: LineItemRoom
       type: object
     LineItemRowExternalSchema:
       properties:
@@ -357,13 +270,70 @@ components:
       - room
       title: LineItemRow
       type: object
-    LineItemRowApiResponse:
+    UpdateLineItemRowRequest:
+      description: 'Request schema for updating a line item row.
+
+
+        All fields are optional. Omitting a field leaves it unchanged.
+
+        Some fields may be explicitly set to null to clear the value.'
       properties:
-        line_item_row:
-          $ref: '#/components/schemas/LineItemRowExternalSchema'
+        title:
+          description: Updated line item title. Omit to leave unchanged.
+          title: Title
+          type: string
+        description:
+          description: Updated line item description. Omit to leave unchanged.
+          title: Description
+          type: string
+        price_reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Pricing item reference key. Set to null to clear. Omit to leave unchanged.
+          title: Price Reference Key
+        notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Line item notes. Set to null to clear. Omit to leave unchanged.
+          title: Notes
+        status:
+          description: Updated line item status. Omit to leave unchanged.
+          enum:
+          - not_complete
+          - complete
+          - rejected
+          title: Status
+          type: string
+        rejection_reason_option_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: ID of the selected [rejection reason option](/api-reference/rejection-reason-options/rejection-reason-option-object). May only be set when the resulting line item status is `rejected`. Will be cleared otherwise. Omit to leave unchanged.
+          title: Rejection Reason Option Id
+        rejection_reason_text:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Free text rejection reason for additional context. May only be set when the resulting line item status is `rejected`. Will be cleared otherwise. Omit to leave unchanged.
+          title: Rejection Reason Text
+      required: []
+      title: UpdateLineItemRowRequest
+      type: object
+    TextEvidenceExternalSchema:
+      properties:
+        type:
+          const: text
+          default: text
+          title: Type
+          type: string
+        text:
+          title: Text
+          type: string
       required:
-      - line_item_row
-      title: LineItemRowApiResponse
+      - text
+      title: TextEvidence
       type: object
     CostComponentExternalSchema:
       description: A cost component representing a portion of a line item's pricing (e.g. labor, material).
@@ -404,41 +374,71 @@ components:
       - quantity
       title: CostComponent
       type: object
-    VendorOrganizationExternalSchema:
+    CreateLineItemRequest:
       properties:
-        id:
-          title: Id
+        scope_id:
+          title: Scope Id
           type: string
-        name:
-          title: Name
+        title:
+          title: Title
           type: string
-        email:
+        description:
           anyOf:
           - type: string
           - type: 'null'
-          title: Email
-        reference_key:
-          description: Optional unique identifier for this vendor in your system.
-          title: Reference Key
-          type: string
-        is_enabled:
-          description: Whether this vendor is enabled.
-          title: Is Enabled
-          type: boolean
-        market_ids:
-          description: IDs of the markets this vendor serves. A vendor with no market associations serves all markets.
-          items:
-            type: string
-          title: Market Ids
-          type: array
+          title: Description
+        price_reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Price Reference Key
+        notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Notes
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Custom Fields
       required:
-      - id
-      - name
-      - email
-      - reference_key
-      - is_enabled
-      - market_ids
-      title: Vendor
+      - scope_id
+      - title
+      title: CreateLineItemRequest
+      type: object
+    LineItemRowApiResponse:
+      properties:
+        line_item_row:
+          $ref: '#/components/schemas/LineItemRowExternalSchema'
+      required:
+      - line_item_row
+      title: LineItemRowApiResponse
+      type: object
+    AudioEvidenceExternalSchema:
+      properties:
+        type:
+          const: audio
+          default: audio
+          title: Type
+          type: string
+        start_ms:
+          description: Start timestamp in the source video, in milliseconds.
+          title: Start Ms
+          type: integer
+        end_ms:
+          description: End timestamp in the source video, in milliseconds.
+          title: End Ms
+          type: integer
+        text:
+          description: Transcribed text from this audio segment.
+          title: Text
+          type: string
+      required:
+      - start_ms
+      - end_ms
+      - text
+      title: AudioEvidence
       type: object
   securitySchemes:
     ApiKeyAuth:

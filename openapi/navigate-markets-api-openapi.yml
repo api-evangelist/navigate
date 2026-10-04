@@ -112,24 +112,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    CreateMarketRequest:
-      additionalProperties: false
-      properties:
-        name:
-          description: Display name for the market.
-          minLength: 1
-          title: Name
-          type: string
-        slug:
-          description: URL-friendly identifier for the market. Must be unique within your organization. Only lowercase letters and underscores are allowed.
-          pattern: ^[a-z_]+$
-          title: Slug
-          type: string
-      required:
-      - name
-      - slug
-      title: CreateMarketRequest
-      type: object
     MarketExternalSchema:
       properties:
         id:
@@ -156,16 +138,23 @@ components:
       - reference_key
       title: Market
       type: object
-    ListMarketsResponse:
+    CreateMarketRequest:
+      additionalProperties: false
       properties:
-        markets:
-          items:
-            $ref: '#/components/schemas/MarketExternalSchema'
-          title: Markets
-          type: array
+        name:
+          description: Display name for the market.
+          minLength: 1
+          title: Name
+          type: string
+        slug:
+          description: URL-friendly identifier for the market. Must be unique within your organization. Only lowercase letters and underscores are allowed.
+          pattern: ^[a-z_]+$
+          title: Slug
+          type: string
       required:
-      - markets
-      title: ListMarketsResponse
+      - name
+      - slug
+      title: CreateMarketRequest
       type: object
     UpdateMarketRequest:
       additionalProperties: false
@@ -186,6 +175,17 @@ components:
           type: string
       required: []
       title: UpdateMarketRequest
+      type: object
+    ListMarketsResponse:
+      properties:
+        markets:
+          items:
+            $ref: '#/components/schemas/MarketExternalSchema'
+          title: Markets
+          type: array
+      required:
+      - markets
+      title: ListMarketsResponse
       type: object
     MarketResponse:
       properties:
