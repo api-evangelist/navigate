@@ -161,6 +161,23 @@ components:
       - reference_key
       title: CreateVendorOrganizationRequest
       type: object
+    ListVendorOrganizationsResponse:
+      properties:
+        vendors:
+          items:
+            $ref: '#/components/schemas/VendorOrganizationExternalSchema'
+          title: Vendors
+          type: array
+        next_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Cursor
+      required:
+      - vendors
+      - next_cursor
+      title: ListVendorOrganizationsResponse
+      type: object
     VendorOrganizationResponse:
       properties:
         vendor:
@@ -244,23 +261,6 @@ components:
       - is_enabled
       - market_ids
       title: Vendor
-      type: object
-    ListVendorOrganizationsResponse:
-      properties:
-        vendors:
-          items:
-            $ref: '#/components/schemas/VendorOrganizationExternalSchema'
-          title: Vendors
-          type: array
-        next_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Next Cursor
-      required:
-      - vendors
-      - next_cursor
-      title: ListVendorOrganizationsResponse
       type: object
   securitySchemes:
     ApiKeyAuth:

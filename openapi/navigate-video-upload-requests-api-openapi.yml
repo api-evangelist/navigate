@@ -157,22 +157,6 @@ components:
       - completed_at
       title: VideoUploadRequest
       type: object
-    ConfirmVideoUploadRequestResponse:
-      properties:
-        video_upload_request:
-          $ref: '#/components/schemas/VideoUploadRequestExternalSchema'
-      required:
-      - video_upload_request
-      title: ConfirmVideoUploadRequestResponse
-      type: object
-    CreateVideoUploadRequestResponse:
-      properties:
-        video_upload_request:
-          $ref: '#/components/schemas/VideoUploadRequestWithUploadUrlExternalSchema'
-      required:
-      - video_upload_request
-      title: CreateVideoUploadRequestResponse
-      type: object
     CreateVideoUploadRequestInput:
       properties:
         visit_id:
@@ -189,6 +173,52 @@ components:
       - file_name
       - file_size_bytes
       title: CreateVideoUploadRequestInput
+      type: object
+    GetVideoUploadRequestResponse:
+      properties:
+        video_upload_request:
+          $ref: '#/components/schemas/VideoUploadRequestWithUploadUrlExternalSchema'
+      required:
+      - video_upload_request
+      title: GetVideoUploadRequestResponse
+      type: object
+    CreateVideoUploadRequestResponse:
+      properties:
+        video_upload_request:
+          $ref: '#/components/schemas/VideoUploadRequestWithUploadUrlExternalSchema'
+      required:
+      - video_upload_request
+      title: CreateVideoUploadRequestResponse
+      type: object
+    ListVideoUploadRequestsResponse:
+      properties:
+        video_upload_requests:
+          items:
+            $ref: '#/components/schemas/VideoUploadRequestExternalSchema'
+          title: Video Upload Requests
+          type: array
+      required:
+      - video_upload_requests
+      title: ListVideoUploadRequestsResponse
+      type: object
+    ExternalUploadRequestStatus:
+      description: Customer-facing upload request statuses, lowercase for external API consistency.
+      enum:
+      - pending
+      - started
+      - done
+      - failed
+      - ignored
+      - cancelled
+      title: ExternalUploadRequestStatus
+      type: string
+    ConfirmVideoUploadRequestResponse:
+      properties:
+        video_upload_request:
+          $ref: '#/components/schemas/VideoUploadRequestExternalSchema'
+      required:
+      - video_upload_request
+      title: ConfirmVideoUploadRequestResponse
       type: object
     CancelVideoUploadRequestResponse:
       properties:
@@ -250,36 +280,6 @@ components:
       - upload_url
       title: VideoUploadRequestWithUploadUrl
       type: object
-    GetVideoUploadRequestResponse:
-      properties:
-        video_upload_request:
-          $ref: '#/components/schemas/VideoUploadRequestWithUploadUrlExternalSchema'
-      required:
-      - video_upload_request
-      title: GetVideoUploadRequestResponse
-      type: object
-    ListVideoUploadRequestsResponse:
-      properties:
-        video_upload_requests:
-          items:
-            $ref: '#/components/schemas/VideoUploadRequestExternalSchema'
-          title: Video Upload Requests
-          type: array
-      required:
-      - video_upload_requests
-      title: ListVideoUploadRequestsResponse
-      type: object
-    ExternalUploadRequestStatus:
-      description: Customer-facing upload request statuses, lowercase for external API consistency.
-      enum:
-      - pending
-      - started
-      - done
-      - failed
-      - ignored
-      - cancelled
-      title: ExternalUploadRequestStatus
-      type: string
   securitySchemes:
     ApiKeyAuth:
       type: http

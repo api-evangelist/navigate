@@ -60,6 +60,78 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
+    TextEvidenceExternalSchema:
+      properties:
+        type:
+          const: text
+          default: text
+          title: Type
+          type: string
+        text:
+          title: Text
+          type: string
+      required:
+      - text
+      title: TextEvidence
+      type: object
+    LineItemRowApiResponse:
+      properties:
+        line_item_row:
+          $ref: '#/components/schemas/LineItemRowExternalSchema'
+      required:
+      - line_item_row
+      title: LineItemRowApiResponse
+      type: object
+    CreateLineItemRequest:
+      properties:
+        scope_id:
+          title: Scope Id
+          type: string
+        title:
+          title: Title
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        price_reference_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Price Reference Key
+        notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Notes
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Custom Fields
+      required:
+      - scope_id
+      - title
+      title: CreateLineItemRequest
+      type: object
+    LineItemRoomExternalSchema:
+      description: The room or area a line item applies to.
+      properties:
+        name:
+          description: Display name of the room or area (e.g. 'Bedroom 2', 'Kitchen'). Not guaranteed to be stable over time.
+          title: Name
+          type: string
+        room_type_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The [room type](/api-reference/room-types/room-type-object) ID.
+          title: Room Type Id
+      required:
+      - name
+      title: LineItemRoom
+      type: object
     VendorOrganizationExternalSchema:
       properties:
         id:
@@ -96,6 +168,31 @@ components:
       - market_ids
       title: Vendor
       type: object
+    AudioEvidenceExternalSchema:
+      properties:
+        type:
+          const: audio
+          default: audio
+          title: Type
+          type: string
+        start_ms:
+          description: Start timestamp in the source video, in milliseconds.
+          title: Start Ms
+          type: integer
+        end_ms:
+          description: End timestamp in the source video, in milliseconds.
+          title: End Ms
+          type: integer
+        text:
+          description: Transcribed text from this audio segment.
+          title: Text
+          type: string
+      required:
+      - start_ms
+      - end_ms
+      - text
+      title: AudioEvidence
+      type: object
     ImageEvidenceExternalSchema:
       properties:
         type:
@@ -131,23 +228,6 @@ components:
       required:
       - image_id
       title: ImageEvidence
-      type: object
-    LineItemRoomExternalSchema:
-      description: The room or area a line item applies to.
-      properties:
-        name:
-          description: Display name of the room or area (e.g. 'Bedroom 2', 'Kitchen'). Not guaranteed to be stable over time.
-          title: Name
-          type: string
-        room_type_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The [room type](/api-reference/room-types/room-type-object) ID.
-          title: Room Type Id
-      required:
-      - name
-      title: LineItemRoom
       type: object
     LineItemRowExternalSchema:
       properties:
@@ -270,6 +350,45 @@ components:
       - room
       title: LineItemRow
       type: object
+    CostComponentExternalSchema:
+      description: A cost component representing a portion of a line item's pricing (e.g. labor, material).
+      properties:
+        kind:
+          description: 'The type of cost component: "total", "labor", or "material".'
+          enum:
+          - total
+          - labor
+          - material
+          title: Kind
+          type: string
+        label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Optional display label for this component.
+          title: Label
+        unit_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Unit of measurement (e.g. "each", "sqft"). Defaults to "each" if omitted.
+          title: Unit Type
+        unit_cost_in_cents:
+          anyOf:
+          - minimum: 0
+            type: integer
+          - type: 'null'
+          description: Cost per unit in cents.
+          title: Unit Cost In Cents
+        quantity:
+          description: Number of units as a decimal string (e.g. "1", "2.5").
+          title: Quantity
+          type: string
+      required:
+      - kind
+      - quantity
+      title: CostComponent
+      type: object
     UpdateLineItemRowRequest:
       description: 'Request schema for updating a line item row.
 
@@ -320,125 +439,6 @@ components:
           title: Rejection Reason Text
       required: []
       title: UpdateLineItemRowRequest
-      type: object
-    TextEvidenceExternalSchema:
-      properties:
-        type:
-          const: text
-          default: text
-          title: Type
-          type: string
-        text:
-          title: Text
-          type: string
-      required:
-      - text
-      title: TextEvidence
-      type: object
-    CostComponentExternalSchema:
-      description: A cost component representing a portion of a line item's pricing (e.g. labor, material).
-      properties:
-        kind:
-          description: 'The type of cost component: "total", "labor", or "material".'
-          enum:
-          - total
-          - labor
-          - material
-          title: Kind
-          type: string
-        label:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Optional display label for this component.
-          title: Label
-        unit_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Unit of measurement (e.g. "each", "sqft"). Defaults to "each" if omitted.
-          title: Unit Type
-        unit_cost_in_cents:
-          anyOf:
-          - minimum: 0
-            type: integer
-          - type: 'null'
-          description: Cost per unit in cents.
-          title: Unit Cost In Cents
-        quantity:
-          description: Number of units as a decimal string (e.g. "1", "2.5").
-          title: Quantity
-          type: string
-      required:
-      - kind
-      - quantity
-      title: CostComponent
-      type: object
-    CreateLineItemRequest:
-      properties:
-        scope_id:
-          title: Scope Id
-          type: string
-        title:
-          title: Title
-          type: string
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        price_reference_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Price Reference Key
-        notes:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Notes
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Custom Fields
-      required:
-      - scope_id
-      - title
-      title: CreateLineItemRequest
-      type: object
-    LineItemRowApiResponse:
-      properties:
-        line_item_row:
-          $ref: '#/components/schemas/LineItemRowExternalSchema'
-      required:
-      - line_item_row
-      title: LineItemRowApiResponse
-      type: object
-    AudioEvidenceExternalSchema:
-      properties:
-        type:
-          const: audio
-          default: audio
-          title: Type
-          type: string
-        start_ms:
-          description: Start timestamp in the source video, in milliseconds.
-          title: Start Ms
-          type: integer
-        end_ms:
-          description: End timestamp in the source video, in milliseconds.
-          title: End Ms
-          type: integer
-        text:
-          description: Transcribed text from this audio segment.
-          title: Text
-          type: string
-      required:
-      - start_ms
-      - end_ms
-      - text
-      title: AudioEvidence
       type: object
   securitySchemes:
     ApiKeyAuth:
