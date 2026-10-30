@@ -64,6 +64,136 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Navigate is a company surfaced as a portfolio company of fifth-wall and added to the API Evangelist network as a stub for enrichment. Sector: proptech. This profile is a lead awaiting the enrichment pipeline.
+Navigate (NavigateAI) is a proptech company building an AI copilot for the physical world, helping field teams across construction, commercial real estate, homebuilding, data centers, and the trades complete projects faster, at higher quality, and lower cost. Its platform combines AI Capture for mobile visual documentation of project features and quality, AI Insights for on-demand expert coaching and upskilling, and AI Workflows for automating documentation and communication. Co-founded by Eric Wu and David Sinsky, Navigate is backed by Khosla Ventures, Affinity Partners, and Fifth Wall, with strategic investors including Tishman Speyer, Lennar, and Helix Electric. Navigate publishes a real external REST API (OpenAPI 3.1, bearer API-key auth) at https://api.navigateai.co for programmatically managing locations, visits, video captures, scopes, line items, work orders, and vendors.
 
-Backed by: fifth-wall — https://www.navigate.ai/
+**Areas:** Company · PropTech · Construction · Real Estate · Artificial Intelligence · Field Service · Construction Technology
+
+## Navigate on APIs.io
+
+Everything profiled for Navigate is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/navigate/](https://apis.io/providers/navigate/)** — or go straight to one of the APIs or properties below.
+
+### APIs (16)
+
+- [Navigate Access codes API](https://apis.io/apis/navigate/navigate-access-codes-api/) — The Access codes API from Navigate — 1 operation(s) for access codes.
+- [Navigate Assets API](https://apis.io/apis/navigate/navigate-assets-api/) — The Assets API from Navigate — 2 operation(s) for assets.
+- [Navigate Lennar API](https://apis.io/apis/navigate/navigate-lennar-api/) — The Lennar API from Navigate — 1 operation(s) for lennar.
+- [Navigate Line items API](https://apis.io/apis/navigate/navigate-line-items-api/) — The Line items API from Navigate — 2 operation(s) for line items.
+- [Navigate Locations API](https://apis.io/apis/navigate/navigate-locations-api/) — The Locations API from Navigate — 2 operation(s) for locations.
+- [Navigate Markets API](https://apis.io/apis/navigate/navigate-markets-api/) — The Markets API from Navigate — 2 operation(s) for markets.
+- [Navigate Rejection reason options API](https://apis.io/apis/navigate/navigate-rejection-reason-options-api/) — The Rejection reason options API from Navigate — 2 operation(s) for rejection reason options.
+- [Navigate Room types API](https://apis.io/apis/navigate/navigate-room-types-api/) — The Room types API from Navigate — 1 operation(s) for room types.
+- [Navigate Rooms API](https://apis.io/apis/navigate/navigate-rooms-api/) — The Rooms API from Navigate — 2 operation(s) for rooms.
+- [Navigate Scopes API](https://apis.io/apis/navigate/navigate-scopes-api/) — The Scopes API from Navigate — 2 operation(s) for scopes.
+- [Navigate Scoping API](https://apis.io/apis/navigate/navigate-scoping-api/) — The Scoping API from Navigate — 3 operation(s) for scoping.
+- [Navigate Vendors API](https://apis.io/apis/navigate/navigate-vendors-api/) — The Vendors API from Navigate — 2 operation(s) for vendors.
+- [Navigate Video Upload Requests API](https://apis.io/apis/navigate/navigate-video-upload-requests-api/) — The Video Upload Requests API from Navigate — 5 operation(s) for video upload requests.
+- [Navigate Visit types API](https://apis.io/apis/navigate/navigate-visit-types-api/) — The Visit types API from Navigate — 1 operation(s) for visit types.
+- [Navigate Visits API](https://apis.io/apis/navigate/navigate-visits-api/) — The Visits API from Navigate — 7 operation(s) for visits.
+- [Navigate Work orders API](https://apis.io/apis/navigate/navigate-work-orders-api/) — The Work orders API from Navigate — 9 operation(s) for work orders.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [navigate-mcp.yml](https://apis.io/servers/navigate/navigate-mcp-yml/)
+
+#### Collections (16)
+
+Postman and Open Collection request collections.
+
+- [NavigateAI Access codes API](https://apis.io/collections/navigate/open-navigate-access-codes-api/)
+- [NavigateAI Access codes Assets API](https://apis.io/collections/navigate/open-navigate-assets-api/)
+- [NavigateAI Access codes Lennar API](https://apis.io/collections/navigate/open-navigate-lennar-api/)
+- [NavigateAI Access codes Line items API](https://apis.io/collections/navigate/open-navigate-line-items-api/)
+- [NavigateAI Access codes Locations API](https://apis.io/collections/navigate/open-navigate-locations-api/)
+- [NavigateAI Access codes Markets API](https://apis.io/collections/navigate/open-navigate-markets-api/)
+- [NavigateAI Access codes Rejection reason options API](https://apis.io/collections/navigate/open-navigate-rejection-reason-options-api/)
+- [NavigateAI Access codes Room types API](https://apis.io/collections/navigate/open-navigate-room-types-api/)
+- [NavigateAI Access codes Rooms API](https://apis.io/collections/navigate/open-navigate-rooms-api/)
+- [NavigateAI Access codes Scopes API](https://apis.io/collections/navigate/open-navigate-scopes-api/)
+- [NavigateAI Access codes Scoping API](https://apis.io/collections/navigate/open-navigate-scoping-api/)
+- [NavigateAI Access codes Vendors API](https://apis.io/collections/navigate/open-navigate-vendors-api/)
+- [NavigateAI Access codes Video Upload Requests API](https://apis.io/collections/navigate/open-navigate-video-upload-requests-api/)
+- [NavigateAI Access codes Visit types API](https://apis.io/collections/navigate/open-navigate-visit-types-api/)
+- [NavigateAI Access codes Visits API](https://apis.io/collections/navigate/open-navigate-visits-api/)
+- [NavigateAI Access codes Work orders API](https://apis.io/collections/navigate/open-navigate-work-orders-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Navigate Openapi Overlay](https://apis.io/overlays/navigate/navigate-openapi-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Navigate Authentication](https://apis.io/security/navigate/navigate-authentication/)
+- [Navigate Domain Security](https://apis.io/security/navigate/navigate-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.navigate.ai/)
+- [Support](https://www.navigate.ai/contact)
+- [Blog](https://www.navigate.ai/blog)
+- [Terms of service](https://www.navigate.ai/terms)
+- [Privacy policy](https://www.navigate.ai/privacy)
+
+## API Evangelist rating
+
+**Kin Score 30.5** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 44.4 |
+| Contract governance | 4.5 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 28.0 |
+| Access clarity | 27.6 |
+
+**Agent readiness 18.1** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 22.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/navigate/](https://apis.io/providers/navigate/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Navigate: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/navigate/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
